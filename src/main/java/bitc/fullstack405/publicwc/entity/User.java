@@ -1,21 +1,21 @@
 package bitc.fullstack405.publicwc.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Table(name = "user")
+@Getter
+@Setter
 @NoArgsConstructor
+//@DynamicInsert
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private String id;
 
     @Column(nullable = false)
@@ -25,16 +25,25 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String gender;
+    private boolean gender;
 
     @Column(nullable = false)
-    private String handicap;
+    @ColumnDefault("false")
+    private boolean handicap;
 
     @Column(nullable = false)
-    private int key;
+    private int passKey;
 
-    @OneToMany(mappedBy = "favorite", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "favoriteUser", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<WCInfo> productList = new ArrayList<>();
+    private List<WcInfo> favoriteWcList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "createUser", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<WcInfo> createWcList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bestUsers", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Best> userBestList = new ArrayList<>();
 
 }
