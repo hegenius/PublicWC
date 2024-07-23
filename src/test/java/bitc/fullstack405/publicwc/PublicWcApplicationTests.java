@@ -9,5 +9,4 @@ class PublicWcApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
