@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +19,8 @@ public class WcInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // 번호
 
-    @Column(nullable = false)
+    @Column(nullable = true)
+    @ColumnDefault("1")
     private int level; // 화장실 등급
 
     @Column(nullable = false)
@@ -46,15 +47,22 @@ public class WcInfo {
     @Column(nullable = false)
     private long longitude;  // 경도
 
-    @ManyToOne
-    @JoinColumn(name = "favoriteWcList")
+    @Column(nullable = true)
+    private String wcpass;
+
+//    @ManyToOne
+//    @JoinColumn(name = "favoriteWcList")
+//    @ToString.Exclude
+//    private Users favoriteUser;
+
+    @ManyToMany(mappedBy = "favoriteWcList")
     @ToString.Exclude
-    private User favoriteUser;
+    private List<Users> favoriteUsers = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "createWcList")
+    @JoinColumn(name = "createUserId")
     @ToString.Exclude
-    private User createUser;
+    private Users createUser;
 
     @OneToMany(mappedBy = "bestWc", cascade = CascadeType.ALL)
     @ToString.Exclude

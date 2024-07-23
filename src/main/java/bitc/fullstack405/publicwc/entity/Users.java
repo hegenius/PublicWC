@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 //@DynamicInsert
-public class User {
+public class Users {
 
     @Id
     private String id;
@@ -32,9 +32,16 @@ public class User {
     private boolean handicap;
 
     @Column(nullable = false)
+    @ColumnDefault("0")
     private int passKey;
 
-    @OneToMany(mappedBy = "favoriteUser", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "favoriteUser", cascade = CascadeType.ALL)
+//    @ToString.Exclude
+//    private List<WcInfo> favoriteWcList = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "userWcFavorites", joinColumns = @JoinColumn(name = "userId"),
+    inverseJoinColumns = @JoinColumn(name = "wcId"))
     @ToString.Exclude
     private List<WcInfo> favoriteWcList = new ArrayList<>();
 
