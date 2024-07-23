@@ -2,7 +2,6 @@ package bitc.fullstack405.publicwc.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import jakarta.persistence.Column;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
-public class DbConfig {
+public class DatabaseConfiguration {
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.hikari")

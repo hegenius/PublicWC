@@ -21,7 +21,7 @@ public class UserController {
     // 회원 가입 페이지 요청 처리
     @GetMapping("/signup")
     public String showSignupPage() {
-        return "signup";
+        return "/login/signUp";
     }
 
     // 회원 가입 폼 제출 처리
@@ -51,7 +51,7 @@ public class UserController {
         // 사용자 정보를 데이터베이스에 저장
         userService.saveUser(newUser);
         model.addAttribute("message", "회원 가입이 완료되었습니다. 로그인을 해주세요.");
-        return "login";
+        return "/login/login";
     }
 
     // 마이페이지 요청 처리
@@ -91,7 +91,7 @@ public class UserController {
             model.addAttribute("errorMessage", "사용자 정보를 수정할 수 없습니다.");
         }
 
-        return "mypage";
+        return "/login/signUp";
     }
 
     // 회원 탈퇴 처리
@@ -106,6 +106,6 @@ public class UserController {
             model.addAttribute("errorMessage", "사용자 정보를 찾을 수 없습니다.");
         }
 
-        return "redirect:/";
+        return "redirect:/login/login";
     }
 }

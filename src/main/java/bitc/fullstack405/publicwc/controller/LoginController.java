@@ -34,12 +34,12 @@ public class LoginController {
     }
 
     // 로그인 페이지 요청 처리
-    @GetMapping("/login")
+    @GetMapping("login/login")
     public String login() {
-        return "login";
+        return "/login/login";
     }
 
-    // 로그인 폼 제출 처리
+//     로그인 폼 제출 처리
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
         // 입력된 사용자 이름으로 사용자 정보를 조회
@@ -48,10 +48,10 @@ public class LoginController {
         // 사용자 정보가 존재하고 비밀번호가 일치하는지 확인
         if (user != null && userService.checkPassword(user, password)) {
             model.addAttribute("user", user);
-            return "redirect:/";
+            return "redirect:/login/login";
         } else {
             model.addAttribute("error", "Invalid username or password");
-            return "login";
+            return "/login/login";
         }
     }
 }
