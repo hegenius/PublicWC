@@ -2,22 +2,23 @@ package bitc.fullstack405.publicwc.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.query.sqm.mutation.internal.Handler;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+@Component
 public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 세션에서 사용자 정보를 가져옵니다.
-        Object userId = request.getSession().getAttribute("userId");
+        // 세션에서 사용자 정보 확인
+        Object user = request.getSession().getAttribute("user");
 
-        // 로그인 페이지와 회원가입 페이지는 예외로 합니다.
-        String uri = request.getRequestURI();
-        if (userId == null && !uri.equals("/login") && !uri.equals("/signup")) {
-            response.sendRedirect("/login");
-            return false;
+        // 인증되지 않은 사용자 처리
+        if (user == null) {
+            response.sendRedirect("/login"); // 로그인 페이지로 리다이렉트
+            return false; // 요청을 진행하지 않음
         }
-        return true;
+
+        return true; // 요청을 진행
     }
 }
