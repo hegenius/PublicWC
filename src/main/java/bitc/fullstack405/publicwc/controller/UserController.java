@@ -28,13 +28,13 @@ public class UserController {
 
     // 회원 가입 폼 제출 처리
     @PostMapping("/signup")
-    public ModelAndView signup(@RequestParam String userid,
+    public ModelAndView signup(@RequestParam String userId,
                                @RequestParam String password,
-                         @RequestParam String confirmPassword,
-                               @RequestParam String email,
+//                               @RequestParam String email,
+                               @RequestParam String confirmPassword,
                                @RequestParam String gender,
-                               @RequestParam boolean flexCheckDefault
-                         ) {
+                               @RequestParam String handicap
+    ) {
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/main");
@@ -44,15 +44,16 @@ public class UserController {
             return mv;
         }
 
-        boolean changeGender =  (gender.equals("true") ? true : false );
+        boolean changeGender = (gender.equals("man") ? true : false);
+        boolean changeHandicap = (handicap.equals("ok") ? true : false);
 
         // 새로운 사용자 객체 생성
         Users newUser = new Users();
-        newUser.setId(userid);
+        newUser.setId(userId);
         newUser.setPassword(password); // 비밀번호는 암호화됨
-        newUser.setEmail(email);
+        newUser.setEmail("123@gmail.com");
         newUser.setGender(changeGender);
-        newUser.setHandicap(flexCheckDefault);
+        newUser.setHandicap(changeHandicap);
 
         // 사용자 정보를 데이터베이스에 저장
         userService.saveUser(newUser);
