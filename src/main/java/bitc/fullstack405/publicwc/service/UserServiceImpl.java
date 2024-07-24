@@ -1,9 +1,9 @@
 package bitc.fullstack405.publicwc.service;
 
-import bitc.fullstack405.publicwc.model.User;
-import bitc.fullstack405.publicwc.repository.UserRepository;
+import bitc.fullstack405.publicwc.entity.Users;
+import bitc.fullstack405.publicwc.entity.WcInfo;
+import bitc.fullstack405.publicwc.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,31 +14,34 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UsersRepository userRepository;
 
-    @Override
-    public Optional<User> findByUsername(String username) {
-        return Optional.ofNullable(userRepository.findByUsername(username));
-    }
+//    @Override
+//    public Optional<Users> findByUsername(String username) {
+//        return Optional.ofNullable(userRepository.findByUsername(username));
+//    }
+
+//    @Override
+//    public Optional<Users> findById(Long userId) {
+//        return userRepository.findById(userId);
+//    }
 
     @Override
-    public Optional<User> findById(Long userId) {
-        return userRepository.findById(userId);
-    }
-
-    @Override
-    public void saveUser(User user) {
-        // 비밀번호 암호화
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public void saveUser(Users user) {
         userRepository.save(user);
     }
 
     @Override
-    public boolean checkPassword(User user, String rawPassword) {
-        // 암호화된 비밀번호와 입력된 비밀번호 비교
-        return passwordEncoder.matches(rawPassword, user.getPassword());
+    public void writeWc(WcInfo wcInfo) {
+
     }
 
-    @Override
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
+//    @Override
+//    public boolean checkPassword(Users user, String rawPassword) {
+//        return passwordEncoder.matches(rawPassword, user.getPassword());
+//    }
+
+    public void deleteUser(String userId) {
+        userRepository.deleteUsers(userId);
     }
+
+
 }

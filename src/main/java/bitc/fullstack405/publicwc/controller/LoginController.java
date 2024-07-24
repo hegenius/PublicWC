@@ -1,6 +1,5 @@
 package bitc.fullstack405.publicwc.controller;
 
-import bitc.fullstack405.publicwc.model.User;
 import bitc.fullstack405.publicwc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,15 +33,16 @@ public class LoginController {
     @PostMapping("/board2/login/loginProcess.do")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
         // 입력된 사용자 이름으로 사용자 정보를 조회
-        User user = userService.findByUsername(username).orElse(null);
+//        Users user = userService.findByUsername(username).orElse(null);
 
         // 사용자 정보가 존재하고 비밀번호가 일치하는지 확인
-        if (user != null && userService.checkPassword(user, password)) {
-            model.addAttribute("user", user);
-            return "redirect:/";
-        } else {
-            model.addAttribute("error", "Invalid username or password");
-            return "login";
-        }
+//        if (user != null && userService.checkPassword(user, password)) {
+//            model.addAttribute("user", user);
+//            return "redirect:/";
+//        } else {
+//            model.addAttribute("error", "Invalid username or password");
+//            return "login";
+//        }
+        return "";
     }
 }

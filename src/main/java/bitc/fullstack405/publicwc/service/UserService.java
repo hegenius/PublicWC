@@ -4,27 +4,16 @@ import bitc.fullstack405.publicwc.entity.Users;
 import bitc.fullstack405.publicwc.entity.WcInfo;
 import bitc.fullstack405.publicwc.repository.UsersRepository;
 import bitc.fullstack405.publicwc.repository.WcInfoRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class UserService {
-
-    @Autowired
-    private UsersRepository userRepository;
-    @Autowired
-    private WcInfoRepository wcInfoRepository;
+public interface UserService {
 
 //    회원가입하는 매서드
-    public void saveUser(Users user) {
-
-        userRepository.save(user);
-    }
+    public void saveUser(Users user);
 
 //    게시글 등록 매서드
-    public void writeWc(WcInfo wcInfo) {
+    public void writeWc(WcInfo wcInfo);
 
-        wcInfoRepository.save(wcInfo);
-    }
 
 }

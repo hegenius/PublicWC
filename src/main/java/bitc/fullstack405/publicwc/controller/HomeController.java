@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String index(HttpSession session, Model model) {
         // 세션에서 사용자 정보를 가져옴
         Object user = session.getAttribute("user");
