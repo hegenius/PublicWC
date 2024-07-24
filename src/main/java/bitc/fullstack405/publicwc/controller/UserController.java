@@ -45,7 +45,16 @@ public class UserController {
         }
 
         boolean changeGender = (gender.equals("man") ? true : false);
-        boolean changeHandicap = (handicap.equals("ok") ? true : false);
+
+        boolean changeHandicap = false;
+
+        if(handicap.equals("ok")) {
+            changeHandicap = true;
+        }
+        else if(handicap.equals("") || handicap == null) {
+            changeHandicap = false;
+        }
+//        boolean changeHandicap = (handicap.equals("ok") ? true : false);
 
         // 새로운 사용자 객체 생성
         Users newUser = new Users();

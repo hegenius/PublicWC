@@ -42,10 +42,10 @@ public class WcInfo {
     private String comment; // 상세글
 
     @Column(nullable = false)
-    private long latitude; // 위도
+    private String latitude; // 위도
 
     @Column(nullable = false)
-    private long longitude;  // 경도
+    private String longitude;  // 경도
 
     @Column(nullable = true)
     private String wcpass;
