@@ -19,7 +19,7 @@ public class LoginController {
     private UserService userService;
 
     // 메인 페이지 요청 처리
-    @GetMapping("/")
+    @GetMapping({"/", "/main"})
     public String home() {
         return "index";
     }

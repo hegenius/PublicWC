@@ -10,7 +10,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="/resources/static/css/style.css">
 
   <script>
       $(document).ready(function(){
@@ -78,8 +77,8 @@
 
     <section>
       <div class="col-sm-8 mx-auto">
-        <form class="d-flex mt-4" role="search">
-          <input class="form-control me-2 searchBar shadow" type="search" placeholder="주소를 입력하세요" aria-label="Search">
+        <form class="d-flex mt-4"  action="/search.do" method="get" role="search">
+          <input class="form-control me-2 searchBar shadow" type="search" name="juso" placeholder="주소를 입력하세요" aria-label="Search">
           <button class="searchBtn" type="submit" id="search-btn"><img src="/resources/static/images/thumb_down.svg" alt="싫어요 아이콘"></button>
         </form>
       </div>
