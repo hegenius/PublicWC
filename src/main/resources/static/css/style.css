@@ -1,0 +1,34 @@
+@charset "utf-8";
+
+@font-face {
+    font-family:'GmarketSans'; font-style:normal; font-weight:100;
+    src: url('//GmarketSansLight.woff') format('woff'),
+    url('//GmarketSansLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family:'GmarketSans'; font-style:normal; font-weight:400;
+    src: url('//GmarketSansMedium.woff') format('woff'),
+    url('//GmarketSansMedium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family:'GmarketSans'; font-style:normal; font-weight:700;
+    src: url('//GmarketSansBold.woff') format('woff'),
+    url('//GmarketSansBold.ttf') format('truetype');
+}
+
+* {box-sizing:border-box;}
+body { -bs-body-font-family:"GmarketSans"; font-family: "GmarketSans", sans-serif; line-height:1.5;}
+select, input, textarea, button {font-family:inherit;}
+input, textarea {font-weight:100;}
+img {vertical-align: top; image-rendering: -webkit-optimize-contrast;}
+a, a:hover, a:focus {text-decoration:none;}
+br {color:transparent; opacity:0;}
+
+/* 메인 index */
+/* 로그인 login */
+/* 회원가입 signUp */
+/* 목록 boardList */
+/* 상세페이지 boardDetail */
+/* 글쓰기 boardWrite */
