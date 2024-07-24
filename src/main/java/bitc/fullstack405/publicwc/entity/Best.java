@@ -12,16 +12,19 @@ public class Best {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int good;
+    private int id;
+
+    @Column(nullable = true)
+    private boolean good;
 
     @ManyToOne
-    @JoinColumn(name = "users_id")
+    @JoinColumn(name = "userId")
     @ToString.Exclude
-    private Users bestUser;
+    private Users bestUsers;
 
     @ManyToOne
-    @JoinColumn(name = "wcBestList")
+    @JoinColumn(name = "wcId")
     @ToString.Exclude
-    private WcInfo bestWC;
+    private WcInfo bestWc;
 
 }
