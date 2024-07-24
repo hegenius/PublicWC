@@ -11,6 +11,7 @@
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
   <style>
 
       @media (min-width: 1400px) {
@@ -65,8 +66,8 @@
   </div>
 
   <div class="col-sm-8 mx-auto">
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="d-flex" action="/search.do" method="get" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="juso">
       <button class="btn btn-outline-success" type="submit" id="search-btn">Search</button>
     </form>
   </div>

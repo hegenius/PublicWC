@@ -35,9 +35,9 @@ public class LoginController {
     }
 
     // 로그인 페이지 요청 처리
-    @GetMapping("login/login")
+    @GetMapping("/login/login")
     public String login() {
-        return "/login/login";
+        return "login/login";
     }
 
 //     로그인 폼 제출 처리
