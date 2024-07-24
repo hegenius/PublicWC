@@ -3,8 +3,8 @@ package bitc.fullstack405.publicwc.controller;
 // User 모델 클래스 임포트
 import bitc.fullstack405.publicwc.model.User;
 // UserService 임포트
-import bitc.fullstack405.publicwc.service.UserService;
 // 의존성 주입을 위한 어노테이션
+import bitc.fullstack405.publicwc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 // 스프링 MVC의 컨트롤러를 정의
 import org.springframework.stereotype.Controller;
