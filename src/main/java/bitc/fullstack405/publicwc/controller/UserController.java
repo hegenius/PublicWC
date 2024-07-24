@@ -18,10 +18,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // 기본 페이지 요청 처리
+    @GetMapping("/")
+    public String showHomePage() {
+        return "index"; // src/main/resources/templates/index.html
+    }
+
     // 회원 가입 페이지 요청 처리
     @GetMapping("/signup")
     public String showSignupPage() {
-        return "/login/signUp";
+        return "signup"; // src/main/resources/templates/signup.html
     }
 
     // 회원 가입 폼 제출 처리
@@ -37,7 +43,7 @@ public class UserController {
         // 비밀번호와 비밀번호 확인이 일치하는지 확인
         if (!password.equals(confirmPassword)) {
             model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
-            return "signup";
+            return "signup"; // 비밀번호 불일치 시 회원가입 페이지로 이동
         }
 
         // 새로운 사용자 객체 생성
@@ -51,7 +57,7 @@ public class UserController {
         // 사용자 정보를 데이터베이스에 저장
         userService.saveUser(newUser);
         model.addAttribute("message", "회원 가입이 완료되었습니다. 로그인을 해주세요.");
-        return "/login/login";
+        return "login"; // 회원가입 완료 후 로그인 페이지로 이동
     }
 
     // 마이페이지 요청 처리
@@ -66,7 +72,7 @@ public class UserController {
             model.addAttribute("errorMessage", "사용자 정보를 찾을 수 없습니다.");
         }
 
-        return "mypage";
+        return "mypage"; // src/main/resources/templates/mypage.html
     }
 
     // 마이페이지 정보 수정 처리
@@ -91,7 +97,7 @@ public class UserController {
             model.addAttribute("errorMessage", "사용자 정보를 수정할 수 없습니다.");
         }
 
-        return "/login/signUp";
+        return "mypage"; // 정보 수정 후 마이페이지로 이동
     }
 
     // 회원 탈퇴 처리
@@ -106,6 +112,6 @@ public class UserController {
             model.addAttribute("errorMessage", "사용자 정보를 찾을 수 없습니다.");
         }
 
-        return "redirect:/login/login";
+        return "redirect:/"; // 탈퇴 후 기본 페이지로 리다이렉트
     }
 }
