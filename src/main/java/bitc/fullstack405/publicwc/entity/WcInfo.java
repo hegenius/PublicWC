@@ -50,10 +50,6 @@ public class WcInfo {
     @Column(nullable = true)
     private String wcpass;
 
-//    @ManyToOne
-//    @JoinColumn(name = "favoriteWcList")
-//    @ToString.Exclude
-//    private Users favoriteUser;
 
     @ManyToMany(mappedBy = "favoriteWcList")
     @ToString.Exclude
