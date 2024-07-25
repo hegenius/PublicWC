@@ -12,39 +12,38 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-//@DynamicInsert
 public class Users {
+
     @Id
-    private String id; // 아이디
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(nullable = false)
-    private String password; // 비밀번호
+    private String password;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
-    private String email; // 이메일
-
-    @Column(nullable = false)
-    private String gender; // 성별
+    private boolean gender;
 
     @Column(nullable = false)
     @ColumnDefault("false")
-    private String handicap; // 장애인
+    private boolean handicap;
 
     @Column(nullable = false)
     @ColumnDefault("0")
-    private int passKey; // 화장실 비번 키
+    private int passkey;
 
-    @ManyToMany
-    @JoinTable(name = "userWcFavorites", joinColumns = @JoinColumn(name = "userId"),
-    inverseJoinColumns = @JoinColumn(name = "wcId"))
+    @OneToMany(mappedBy = "favoriteUser", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<WcInfo> favoriteWcList = new ArrayList<>();
+    private List<WcInfo> favoriteWCList = new ArrayList<>();
 
     @OneToMany(mappedBy = "createUser", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<WcInfo> createWcList = new ArrayList<>();
+    private List<WcInfo> createWCList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "bestUsers", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bestUser", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Best> userBestList = new ArrayList<>();
 
