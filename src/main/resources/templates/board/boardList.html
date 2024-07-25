@@ -13,7 +13,6 @@
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/resources/static/css/style.css">
 
 </head>
 
@@ -28,17 +27,7 @@
   </div>
 
   <section class="boardBg p-5 mt-5 shadow">
-
-    <div class="listMap">
-      <div th:replace="~{/board/KakaoMapView :: mapView}"></div>
-      <div class="mapSearch">
-        <form class="d-flex mt-4"  action="/search.do" method="get" role="search">
-          <input class="form-control me-2 searchBar" type="search" name="juso" placeholder="주소를 입력하세요" aria-label="Search">
-          <button class="searchBtn" type="submit" id="search-btn"><img src="/images/search.svg" alt="검색 아이콘"></button>
-        </form>
-      </div>
-    </div>
-
+    <div th:replace="~{/board/KakaoMapView2 :: mapView}"></div>
 
     <!--    화장실 레벨 안내 부분 시작 -->
     <div class="stepBox d-flex text-center my-5">
@@ -185,16 +174,14 @@
     <!--    페이징 start -->
     <div class="mt-3">
       <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a href="#" class="page-link">&laquo;</a>
+        <li class="page-item" th:classappend="${boardList.getPrePage() == 0} ? 'disabled'">
+          <a href="#" class="page-link" th:href="@{/PublicWC/board/board(pageNum=${boardList.getPrePage()})}">&laquo;</a>
         </li>
-
-        <li class="page-item" >
-          <a href="#" class="page-link" >1</a>
+        <li class="page-item" th:each="page : ${#numbers.sequence(boardList.getNavigateFirstPage(), boardList.getNavigateLastPage())}" th:classappend="${page == boardList.getPageNum()} ? 'active'">
+          <a href="#" class="page-link" th:href="@{/PublicWC/board/board(pageNum=${page})}" th:text="${page}">1</a>
         </li>
-
-        <li class="page-item" >
-          <a href="#" class="page-link">&raquo;</a>
+        <li class="page-item" th:classappend="${boardList.getNextPage() == 0} ? 'disabled'">
+          <a href="#" class="page-link" th:href="@{/PublicWC/board/board(pageNum=${boardList.getNextPage()})}">&raquo;</a>
         </li>
       </ul>
     </div>
