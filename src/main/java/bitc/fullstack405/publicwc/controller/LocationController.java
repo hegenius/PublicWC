@@ -1,5 +1,6 @@
 package bitc.fullstack405.publicwc.controller;
 
+import bitc.fullstack405.publicwc.entity.WcInfo;
 import bitc.fullstack405.publicwc.service.JusoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import bitc.fullstack405.publicwc.service.LocationService;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api") // API 경로를 통일하기 위한 기본 경로 설정
@@ -32,10 +38,10 @@ public class LocationController {
         }
     }
 
-    @GetMapping("/address")
-    public String getAddress(@RequestParam String juso) {
-        return jusoService.getAddress(juso);
-    }
+//    @GetMapping("/address")
+//    public String getAddress(@RequestParam String juso) {
+//        return jusoService.getAddress(juso);
+//    }
 
     @GetMapping("/search.do")
     public ModelAndView searchMap(@RequestParam String juso) {
@@ -45,5 +51,13 @@ public class LocationController {
         mv.setViewName("/board/KakaoMapView2");
         return mv;
     }
-    ;
+
+    @PostMapping("/wclist.do")
+    public List<WcInfo> parsingWcList() {
+//        Map<String, List<WcInfo>> data = new HashMap<>();
+        List<WcInfo> data = new ArrayList<>();
+//        data.add();
+        return data;
+    }
+
 }
