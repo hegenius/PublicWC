@@ -18,25 +18,25 @@ import java.util.Map;
 @RequestMapping("/api") // API 경로를 통일하기 위한 기본 경로 설정
 public class LocationController {
 
-    private final LocationService locationService;
+//    private final LocationController locationService;
 
     @Autowired
     JusoService jusoService;
 
-    @Autowired
-    public LocationController(LocationService locationService) {
-        this.locationService = locationService;
-    }
-
-    @GetMapping("/get-location") // GET 메서드로 변경
-    public ResponseEntity<String> getLocation(@RequestParam double lat, @RequestParam double lon) {
-        try {
-            String address = locationService.getAddress(lat, lon);
-            return new ResponseEntity<>(address, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>("주소를 가져오는데 실패했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @Autowired
+//    public LocationController(LocationService locationService) {
+//        this.locationService = locationService;
+//    }
+//
+//    @GetMapping("/get-location") // GET 메서드로 변경
+//    public ResponseEntity<String> getLocation(@RequestParam double lat, @RequestParam double lon) {
+//        try {
+//            String address = locationService.(lat, lon);
+//            return new ResponseEntity<>(address, HttpStatus.OK);
+//        } catch (RuntimeException e) {
+//            return new ResponseEntity<>("주소를 가져오는데 실패했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 //    @GetMapping("/address")
 //    public String getAddress(@RequestParam String juso) {
