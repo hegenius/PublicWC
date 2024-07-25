@@ -25,14 +25,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(Users user) {
-        // 비밀번호 암호화 없이 저장 (단순히 사용자 정보 저장)
+        // 사용자 정보를 저장 (비밀번호 암호화 로직은 필요에 따라 추가)
         userRepository.save(user);
     }
 
     @Override
     public boolean checkPassword(Users user, String rawPassword) {
-        // 비밀번호 확인 로직을 제거했습니다.
-        // 비밀번호 확인 기능이 필요하다면 별도의 로직을 추가해야 합니다.
+        // 비밀번호 비교 로직
         return user.getPassword().equals(rawPassword); // 비밀번호 비교 (단순 비교)
     }
 

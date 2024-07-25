@@ -33,14 +33,14 @@ public class LoginController {
     @PostMapping("/board2/login/loginProcess.do")
     public String login(@RequestParam String email, @RequestParam String password, Model model) {
         // 입력된 이메일로 사용자 정보를 조회
-        Users users = userService.findByEmail(email).orElse(null); // User에서 Users로 변경
+        Users users = userService.findByEmail(email).orElse(null); // Users 엔티티 사용
 
         // 사용자 정보가 존재하고 비밀번호가 일치하는지 확인
-        if (users != null && userService.checkPassword(users, password)) { // user에서 users로 변경
+        if (users != null && userService.checkPassword(users, password)) { // Users 엔티티 사용
             model.addAttribute("users", users); // 세션에 사용자 정보 추가
             return "redirect:/"; // 로그인 성공 시 메인 페이지로 리다이렉트
         } else {
-            model.addAttribute("error", "Invalid email or password"); // 오류 메시지 설정
+            model.addAttribute("error", "아이디 또는 비밀번호가 올바르지 않습니다."); // 오류 메시지 설정
             return "login"; // 로그인 페이지로 다시 이동
         }
     }

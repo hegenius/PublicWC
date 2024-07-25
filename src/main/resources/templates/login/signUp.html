@@ -11,67 +11,52 @@
           crossorigin="anonymous"></script>
 
   <script>
-      $(document).ready(function(){
-          $("#btn-cancel").on("click", function(){
-              history.back();
-          });
+    $(document).ready(function(){
+      $("#btn-cancel").on("click", function(){
+        history.back();
       });
+    });
   </script>
-
-
 </head>
 <body>
 <header th:replace="~{/layout/header :: headerNavbar}"></header>
 
 <main class="container-fluid mt-5">
   <h1 class="text-center">회원가입</h1>
-  <p class="text-center">우화에 오신 것을 환영합니다.</p>
   <section>
     <div class="row">
-      <div class="col-sm-4 mx-auto">
+      <div class="col-sm-6 mx-auto">
         <div class="border rounded-3 p-3">
-          <form action="/board2/login/loginProcess.do" method="post">
+          <form th:action="@{/users/signup}" method="post">
             <div class="mt-3">
-              <label for="users-id" class="form-label">아이디</label>
-              <input type="text" class="form-control" id="users-id" name="userId" placeholder="아이디를 입력하세요">
+              <label for="users-email" class="form-label">이메일</label>
+              <input type="email" class="form-control" id="users-email" name="email" placeholder="이메일을 입력하세요" required>
             </div>
             <div class="mt-3">
               <label for="users-pw" class="form-label">비밀번호</label>
-              <input type="text" class="form-control" id="users-pw" name="userPw" placeholder="비밀번호를 입력하세요">
+              <input type="password" class="form-control" id="users-pw" name="password" placeholder="비밀번호를 입력하세요" required>
             </div>
             <div class="mt-3">
-              <label for="users-pw2" class="form-label">비밀번호 확인</label>
-              <input type="text" class="form-control" id="users-pw2" name="userPw2" placeholder="비밀번호를 확인하세요">
+              <label for="users-pw-confirm" class="form-label">비밀번호 확인</label>
+              <input type="password" class="form-control" id="users-pw-confirm" name="confirmPassword" placeholder="비밀번호를 다시 입력하세요" required>
             </div>
-
-            <div class="d-flex my-3">
-              <div class="form-check me-3">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                <label class="form-check-label" for="flexRadioDefault1">
-                  남자
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                <label class="form-check-label" for="flexRadioDefault2">
-                  여자
-                </label>
-              </div>
+            <div class="mt-3">
+              <label for="users-gender" class="form-label">성별</label>
+              <select class="form-select" id="users-gender" name="gender">
+                <option value="male">남성</option>
+                <option value="female">여성</option>
+              </select>
             </div>
-
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                장애인 여부
-              </label>
+            <div class="mt-3">
+              <label for="users-handicap" class="form-label">장애 여부</label>
+              <select class="form-select" id="users-handicap" name="handicap">
+                <option value="true">있음</option>
+                <option value="false">없음</option>
+              </select>
             </div>
-
-            <div class="mt-3 d-grid gap-2 mt-4">
+            <div class="mt-3 d-grid gap-2">
               <button type="submit" class="btn btn-primary">회원가입</button>
               <button type="reset" class="btn btn-secondary" id="btn-cancel">취소</button>
-            </div>
-            <div class="mt-1 d-flex justify-content-end">
-              <a href="#" class="btn btn-link">회원탈퇴</a>
             </div>
           </form>
         </div>
