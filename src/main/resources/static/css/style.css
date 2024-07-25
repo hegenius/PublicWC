@@ -36,7 +36,7 @@ h1, h2, h3, h4 {font-weight:bold;}
 .logo {font-size:2rem;}
 
 /* common */
-.container {margin-bottom: 100px;}
+.container {margin-bottom: 80px;}
 
 .mainConWrap {margin-top:80px;}
 .mainConWrap .txt1 {font-size: 1.4rem; margin-bottom: 0!important;}
@@ -65,6 +65,10 @@ label {font-weight:bold;}
 
 .boardBg {background-color: #fff;  border-radius:20px;}
 .listBox {margin-bottom: 20px;}
+
+.iconWrap {position: absolute; bottom:0; right:0;}
+.iconWrap p {margin-bottom:0;}
+
 
 /* 메인 index */
 .container {margin-top: -500px;}

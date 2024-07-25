@@ -1,13 +1,34 @@
 package bitc.fullstack405.publicwc.repository;
 
-import bitc.fullstack405.publicwc.entity.WcInfo; // WcInfo 엔티티 임포트
-import org.springframework.data.jpa.repository.JpaRepository; // JpaRepository 임포트
-import org.springframework.stereotype.Repository; // Repository 임포트
+import bitc.fullstack405.publicwc.entity.WcInfo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-@Repository // 이 클래스가 Spring Data JPA의 레포지토리임을 지정
+
 public interface WcInfoRepository extends JpaRepository<WcInfo, Integer> {
-    // 도로명 주소로 화장실을 검색하는 메소드
-    List<WcInfo> findByAddr1ContainingOrAddr2Containing(String addr1, String addr2);
+
+//    @Query(
+//            "SELECT wi.time, wi.addr1, wi.wcpass, wi.latitude, wi.longitude " +
+//                    "FROM WcInfo wi WHERE wi.id = :id")
+//    List<Object[]> wcinfoList(@Param("id") Integer id); // 화장실 목록 리스트
+
+
+//    주소기반 전체 컬럼 목록 리스트
+    @Query("SELECT wi FROM WcInfo wi WHERE wi.addr1 LIKE %:addr1%")
+    List<WcInfo> wcList(@Param("addr1") String addr1);
+
+//    1등급인 모든 화장실 리스트
+    @Query("SELECT wi FROM WcInfo wi WHERE wi.level = 1")
+    List<WcInfo> wcList1();
+
+//    2등급인 모든 화장실 리스트
+    @Query("SELECT wi FROM WcInfo wi WHERE wi.level = 2")
+    List<WcInfo> wcList2();
+
+//    3등급인 모든 화장실 리스트
+    @Query("SELECT wi FROM WcInfo wi WHERE wi.level = 3")
+    List<WcInfo> wcList3();
 }
