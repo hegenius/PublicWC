@@ -13,7 +13,9 @@
 
 </head>
 <body>
-<div id="map" style="width:100%;height:350px;"></div>
+
+<div th:fragment="mapView">
+<div id="map" class="mapSize"></div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=00e9042c7f04c04f3d386355eeaeb634&libraries=services"></script>
 
 <script>
@@ -105,6 +107,8 @@
     }
 </script>
 
+
+</div>
 
 </body>
 </html>
