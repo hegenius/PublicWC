@@ -36,8 +36,8 @@ dependencies {
 //
 //    implementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
 //    implementation 'jakarta.transaction:jakarta.transaction-api:2.0.0'
-//    implementation 'jakarta.json:jakarta.json-api:2.1.0'
+    implementation 'jakarta.json:jakarta.json-api:2.1.0'
 //    implementation 'org.eclipse:yasson:1.0.1'
-//    implementation 'jakarta.ws.rs:jakarta.ws.rs-api:2.1.6'
+    implementation 'jakarta.ws.rs:jakarta.ws.rs-api:2.1.6'
 //    implementation 'org.glassfish.jersey.core:jersey-client:2.35'
 }
