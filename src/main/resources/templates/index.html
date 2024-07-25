@@ -12,14 +12,27 @@
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css">
 
-  <script>
-      // 메인 검색버튼
-      $(document).ready(function () {
-          $("#search-btn").on("click", function () {
-              location.href = "/search.do";
-          });
-      });
-  </script>
+    <style>
+
+        .autocomplete-suggestions {
+            border: 1px solid #d4d4d4;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            z-index: 1000;
+            background-color: white;
+        }
+
+        .autocomplete-suggestion {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .autocomplete-suggestion:hover {
+            background-color: #e9ecef;
+        }
+
+    </style>
 
 </head>
 <body>
