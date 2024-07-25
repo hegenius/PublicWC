@@ -14,6 +14,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UsersRepository userRepository;
 
+<<<<<<< Updated upstream
 //    @Override
 //    public Optional<Users> findByUsername(String username) {
 //        return Optional.ofNullable(userRepository.findByUsername(username));
@@ -23,6 +24,10 @@ public class UserServiceImpl implements UserService {
 //    public Optional<Users> findById(Long userId) {
 //        return userRepository.findById(userId);
 //    }
+=======
+    // BCryptPasswordEncoder 객체 생성
+//    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+>>>>>>> Stashed changes
 
     @Override
     public void saveUser(Users user) {
