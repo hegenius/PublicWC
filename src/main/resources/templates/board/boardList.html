@@ -13,72 +13,64 @@
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/resources/static/css/style.css">
 
 </head>
 
 <body>
 <header th:replace="~{/layout/header :: headerNavbar}"></header>
 
-<header th:fragment="headerNavbar" class="header" >
-  <div>
-    <nav class="navbar navbar-expand-sm">
-      <div class="container-fluid">
-        <h1 class="mt-2 ms-4 text-white logo"><a href="#" class="nav-link">우화</a></h1>
-        <ul class="d-flex me-4 menuTxt">
-          <li class="me-3">
-            <div>
-              <a href="#" class="text-white" style="">key <span>0</span></a>
-            </div>
-          </li>
-          <li class="me-3">
-            <div th:if="${session.userId} == null">
-              <a href="#" class="text-white" th:href="@{/login/login.do}">로그인</a>
-            </div>
-            <!--          <div th:unless="${session.userId} == null">-->
-            <!--            <button type="button" class="btn btn-outline-warning" id="btn-logout">로그아웃</button>-->
-            <!--          </div>-->
-          </li>
-          <li>
-            <div>
-              <a href="#" class="text-white" th:href="@{/login/login.do}">회원가입</a>
-            </div>
-            <!--          <div>-->
-            <!--            <button type="button" class="btn btn-outline-warning" id="btn-edit">회원수정</button>-->
-            <!--          </div>-->
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <script>
-        $("#btn-logout").on("click", function () {
-            const confirmed = confirm("로그아웃 하시겠습니까?");
-
-            if (confirmed) {
-                location.href = "/board/login/logout.do";
-            }
-        });
-    </script>
-
-  </div>
-</header>
-
 <!-- 목록 페이지 시작-->
 <main class="container">
   <div class="mainConWrap text-center text-white">
     <h2>목록</h2>
-    <p>우리들의 공공화장실, 목록페이지입니다.</p>
+    <p>우리들의 공공화장실, 우화의 목록페이지입니다.</p>
   </div>
 
   <section class="boardBg p-5 mt-5 shadow">
-    <div class="box">
-      Level1. 개방형 화장실 <br> Level2. 반 개방 화장실 <br>Level3. 보안 화장실 <br>
+
+    <div class="listMap">
+      <div th:replace="~{/board/KakaoMapView :: mapView}"></div>
+      <div class="mapSearch">
+        <form class="d-flex mt-4"  action="/search.do" method="get" role="search">
+          <input class="form-control me-2 searchBar" type="search" name="juso" placeholder="주소를 입력하세요" aria-label="Search">
+          <button class="searchBtn" type="submit" id="search-btn"><img src="/images/search.svg" alt="검색 아이콘"></button>
+        </form>
+      </div>
     </div>
+
+
+    <!--    화장실 레벨 안내 부분 시작 -->
+    <div class="stepBox d-flex text-center my-5">
+      <div class="col-sm-4 stepBox01">
+        <div class="box_img">
+          <img src="/images/step_icon01.svg" alt="1단계 아이콘">
+        </div>
+        <p><strong>Level 1.</strong> 개방형 화장실</p>
+        <p>국가가 관리하는 개방형 공공화장실</p>
+      </div>
+      <div class="col-sm-4 stepBox02">
+        <div class="box_img">
+          <img src="/images/step_icon02.svg" alt="2단계 아이콘">
+        </div>
+        <p><strong>Level 2.</strong> 반 개방 화장실</p>
+        <p>개방되어있지만 사람들이 잘 모르는<br> 일반 상가 및 건물 화장실</p>
+      </div>
+      <div class="col-sm-4 stepBox03">
+        <div class="box_img">
+          <img src="/images/step_icon03.svg" alt="3단계 아이콘">
+        </div>
+        <p><strong>Level 3.</strong> 보안 화장실</p>
+        <p>비밀번호 있는 일반 상가 및 건물화장실<br> (글작성 시 키 3개 부여, 받은 키로 확인 가능)</p>
+      </div>
+    </div>
+    <!--    화장실 레벨 안내 부분 끝 -->
+
     <div class="row listWrap">
       <div class="col-sm-6">
         <div class="d-flex position-relative">
           <div class="box_img">
-            <img src="/images/lock_open.svg" alt="1단계">
+            <img src="/images/step_icon01.svg" alt="1단계 아이콘">
           </div>
           <div class="iconWrap">
             <div class="d-flex icon">
@@ -88,17 +80,17 @@
           </div>
         </div>
         <hr>
-        <div class="listBox">
-          <span><img src="/images/time.svg" alt="시간 아이콘"></span>
-          <span>개방시간 : 06:00 ~ 24:00 </span>
+        <div class="listBox d-flex">
+          <p><img src="/images/time.svg" alt="시간 아이콘"></p>
+          <p>개방시간 : <span>06:00 ~ 24:00</span></p>
         </div>
-        <div class="listBox">
-          <span><img src="/images/address.svg" alt="주소 아이콘"></span>
-          <span>주소 : 부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span>
+        <div class="listBox d-flex">
+          <p><img src="/images/address.svg" alt="주소 아이콘"></p>
+          <p>주소 : <span>부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span></p>
         </div>
-        <div class="listBox">
-          <span><img src="/images/key.svg" alt="비밀번호 아이콘"></span>
-          <span>키 : *********</span>
+        <div class="listBox d-flex">
+          <p><img src="/images/key.svg" alt="비밀번호 아이콘"></p>
+          <p>키 : <span>*********</span></p>
         </div>
         <button type="button" class="btn btn-primary mt-2">자세히 보기</button>
       </div> <!-- col-sm-6-->
@@ -106,7 +98,7 @@
       <div class="col-sm-6">
         <div class="d-flex position-relative">
           <div class="box_img">
-            <img src="/images/lock_open.svg" alt="1단계">
+            <img src="/images/step_icon03.svg" alt="3단계 아이콘">
           </div>
           <div class="iconWrap">
             <div class="d-flex icon">
@@ -116,17 +108,17 @@
           </div>
         </div>
         <hr>
-        <div class="listBox">
-          <span><img src="/images/time.svg" alt="시간 아이콘"></span>
-          <span>개방시간 : 06:00 ~ 24:00 </span>
+        <div class="listBox d-flex">
+          <p><img src="/images/time.svg" alt="시간 아이콘"></p>
+          <p>개방시간 : <span>06:00 ~ 24:00</span></p>
         </div>
-        <div class="listBox">
-          <span><img src="/images/address.svg" alt="주소 아이콘"></span>
-          <span>주소 : 부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span>
+        <div class="listBox d-flex">
+          <p><img src="/images/address.svg" alt="주소 아이콘"></p>
+          <p>주소 : <span>부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span></p>
         </div>
-        <div class="listBox">
-          <span><img src="/images/key.svg" alt="비밀번호 아이콘"></span>
-          <span>키 : *********</span>
+        <div class="listBox d-flex">
+          <p><img src="/images/key.svg" alt="비밀번호 아이콘"></p>
+          <p>키 : <span>*********</span></p>
         </div>
         <button type="button" class="btn btn-primary mt-2">자세히 보기</button>
       </div> <!-- col-sm-6-->
@@ -136,7 +128,7 @@
       <div class="col-sm-6">
         <div class="d-flex position-relative">
           <div class="box_img">
-            <img src="/images/lock_open.svg" alt="1단계">
+            <img src="/images/step_icon02.svg" alt="2단계 아이콘">
           </div>
           <div class="iconWrap">
             <div class="d-flex icon">
@@ -146,17 +138,17 @@
           </div>
         </div>
         <hr>
-        <div class="listBox">
-          <span><img src="/images/time.svg" alt="시간 아이콘"></span>
-          <span>개방시간 : 06:00 ~ 24:00 </span>
+        <div class="listBox d-flex">
+          <p><img src="/images/time.svg" alt="시간 아이콘"></p>
+          <p>개방시간 : <span>06:00 ~ 24:00</span></p>
         </div>
-        <div class="listBox">
-          <span><img src="/images/address.svg" alt="주소 아이콘"></span>
-          <span>주소 : 부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span>
+        <div class="listBox d-flex">
+          <p><img src="/images/address.svg" alt="주소 아이콘"></p>
+          <p>주소 : <span>부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span></p>
         </div>
-        <div class="listBox">
-          <span><img src="/images/key.svg" alt="비밀번호 아이콘"></span>
-          <span>키 : *********</span>
+        <div class="listBox d-flex">
+          <p><img src="/images/key.svg" alt="비밀번호 아이콘"></p>
+          <p>키 : <span>*********</span></p>
         </div>
         <button type="button" class="btn btn-primary mt-2">자세히 보기</button>
       </div> <!-- col-sm-6-->
@@ -164,7 +156,7 @@
       <div class="col-sm-6">
         <div class="d-flex position-relative">
           <div class="box_img">
-            <img src="/images/lock_open.svg" alt="1단계">
+            <img src="/images/step_icon01.svg" alt="1단계 아이콘">
           </div>
           <div class="iconWrap">
             <div class="d-flex icon">
@@ -174,17 +166,17 @@
           </div>
         </div>
         <hr>
-        <div class="listBox">
-          <span><img src="/images/time.svg" alt="시간 아이콘"></span>
-          <span>개방시간 : 06:00 ~ 24:00 </span>
+        <div class="listBox d-flex">
+          <p><img src="/images/time.svg" alt="시간 아이콘"></p>
+          <p>개방시간 : <span>06:00 ~ 24:00</span></p>
         </div>
-        <div class="listBox">
-          <span><img src="/images/address.svg" alt="주소 아이콘"></span>
-          <span>주소 : 부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span>
+        <div class="listBox d-flex">
+          <p><img src="/images/address.svg" alt="주소 아이콘"></p>
+          <p>주소 : <span>부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span></p>
         </div>
-        <div class="listBox">
-          <span><img src="/images/key.svg" alt="비밀번호 아이콘"></span>
-          <span>키 : *********</span>
+        <div class="listBox d-flex">
+          <p><img src="/images/key.svg" alt="비밀번호 아이콘"></p>
+          <p>키 : <span>*********</span></p>
         </div>
         <button type="button" class="btn btn-primary mt-2">자세히 보기</button>
       </div> <!-- col-sm-6-->
