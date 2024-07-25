@@ -1,6 +1,6 @@
 package bitc.fullstack405.publicwc.controller;
 
-import bitc.fullstack405.publicwc.model.User;
+import bitc.fullstack405.publicwc.entity.Users;
 import bitc.fullstack405.publicwc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,13 +26,13 @@ public class UserController {
 
     // 회원 가입 폼 제출 처리
     @PostMapping("/signup")
-    public String signup(@RequestParam String username,
-                         @RequestParam String password,
-                         @RequestParam String confirmPassword,
-                         @RequestParam String email,
-                         @RequestParam String gender,
-                         @RequestParam boolean isDisabled,
-                         Model model) {
+    public String signup(
+            @RequestParam String password,
+            @RequestParam String confirmPassword,
+            @RequestParam String email,
+            @RequestParam boolean gender,
+            @RequestParam boolean handicap, // 장애 부분을 handicap으로 변경
+            Model model) {
 
         // 비밀번호와 비밀번호 확인이 일치하는지 확인
         if (!password.equals(confirmPassword)) {
@@ -41,12 +41,11 @@ public class UserController {
         }
 
         // 새로운 사용자 객체 생성
-        User newUser = new User();
-        newUser.setUsername(username);
+        Users newUser = new Users();
         newUser.setPassword(password); // 비밀번호는 암호화됨
         newUser.setEmail(email);
         newUser.setGender(gender);
-        newUser.setDisabled(isDisabled);
+        newUser.setHandicap(handicap); // handicap 설정
 
         // 사용자 정보를 데이터베이스에 저장
         userService.saveUser(newUser);
@@ -57,14 +56,12 @@ public class UserController {
     // 마이페이지 요청 처리
     @GetMapping("/mypage")
     public String showMyPage(@SessionAttribute("userId") Long userId, Model model) {
-        Optional<User> userOptional = userService.findById(userId);
+        Optional<Users> userOptional = userService.findById(userId);
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("errorMessage", "사용자 정보를 찾을 수 없습니다.");
-        }
+        userOptional.ifPresentOrElse(
+                user -> model.addAttribute("user", user),
+                () -> model.addAttribute("errorMessage", "사용자 정보를 찾을 수 없습니다.")
+        );
 
         return "mypage";
     }
@@ -73,19 +70,18 @@ public class UserController {
     @PostMapping("/mypage/update")
     public String updateUserInfo(@SessionAttribute("userId") Long userId,
                                  @RequestParam String email,
-                                 @RequestParam String gender,
-                                 @RequestParam boolean isDisabled,
+                                 @RequestParam boolean gender,
+                                 @RequestParam boolean handicap, // handicap으로 변경
                                  Model model) {
-        Optional<User> userOptional = userService.findById(userId);
+        Optional<Users> userOptional = userService.findById(userId);
 
         if (userOptional.isPresent()) {
-            User user = userOptional.get();
+            Users user = userOptional.get();
             user.setEmail(email);
             user.setGender(gender);
-            user.setDisabled(isDisabled);
+            user.setHandicap(handicap); // handicap 설정
 
             userService.saveUser(user);
-
             model.addAttribute("message", "정보가 성공적으로 수정되었습니다.");
         } else {
             model.addAttribute("errorMessage", "사용자 정보를 수정할 수 없습니다.");
@@ -97,7 +93,7 @@ public class UserController {
     // 회원 탈퇴 처리
     @PostMapping("/mypage/delete")
     public String deleteUser(@SessionAttribute("userId") Long userId, Model model) {
-        Optional<User> userOptional = userService.findById(userId);
+        Optional<Users> userOptional = userService.findById(userId);
 
         if (userOptional.isPresent()) {
             userService.deleteUser(userId);
@@ -106,6 +102,6 @@ public class UserController {
             model.addAttribute("errorMessage", "사용자 정보를 찾을 수 없습니다.");
         }
 
-        return "redirect:/";
+        return "redirect:/"; // 탈퇴 후 메인 페이지로 리다이렉트
     }
 }

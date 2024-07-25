@@ -17,12 +17,14 @@
 //        this.locationService = locationService;
 //    }
 //
-//    @GetMapping("/get-location") // GET 메서드로 변경
+//    @GetMapping("/get-location") // GET 메서드로 위치 정보를 가져옴
 //    public ResponseEntity<String> getLocation(@RequestParam double lat, @RequestParam double lon) {
 //        try {
+//            // 위도와 경도로 주소를 가져옴
 //            String address = locationService.getAddress(lat, lon);
 //            return new ResponseEntity<>(address, HttpStatus.OK);
 //        } catch (RuntimeException e) {
+//            // 주소를 가져오지 못한 경우 에러 메시지 반환
 //            return new ResponseEntity<>("주소를 가져오는데 실패했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
 //    }
