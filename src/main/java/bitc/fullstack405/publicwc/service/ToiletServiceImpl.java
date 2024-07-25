@@ -16,9 +16,8 @@ public class ToiletServiceImpl implements ToiletService {
     public List<WcInfo> searchToiletsByAddress(String address) {
         String[] addressParts = address.split(" ");
         String addr1 = addressParts.length > 0 ? addressParts[0] : "";
-        String addr2 = addressParts.length > 1 ? addressParts[1] : "";
 
-        return wcInfoRepository.findByAddr1ContainingOrAddr2Containing(addr1, addr2);
+        return wcInfoRepository.wcList(addr1);
     }
 
     @Override

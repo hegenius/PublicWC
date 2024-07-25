@@ -15,35 +15,36 @@ import java.util.List;
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
-    private boolean gender;
+    private String gender;
 
     @Column(nullable = false)
     @ColumnDefault("false")
-    private boolean handicap;
+    private String handicap;
 
     @Column(nullable = false)
     @ColumnDefault("0")
     private int passkey;
 
-    @OneToMany(mappedBy = "favoriteUser", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(name = "userWcFavorites", joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "wcId"))
     @ToString.Exclude
-    private List<WcInfo> favoriteWCList = new ArrayList<>();
+    private List<WcInfo> favoriteWcList = new ArrayList<>();
 
     @OneToMany(mappedBy = "createUser", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<WcInfo> createWCList = new ArrayList<>();
+    private List<WcInfo> createWcList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "bestUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bestUsers", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Best> userBestList = new ArrayList<>();
 

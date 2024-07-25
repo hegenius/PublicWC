@@ -26,14 +26,14 @@ public class LoginController {
     // 로그인 페이지 요청 처리
     @GetMapping("/board2/login")
     public String login() {
-        return "login";
+        return "login/login";
     }
 
     // 로그인 폼 제출 처리
     @PostMapping("/board2/login/loginProcess.do")
-    public String login(@RequestParam String email, @RequestParam String password, Model model) {
+    public String login(@RequestParam String userId, @RequestParam String password, Model model) {
         // 입력된 이메일로 사용자 정보를 조회
-        Users users = userService.findByEmail(email).orElse(null); // Users 엔티티 사용
+        Users users = userService.findById(userId).orElse(null); // Users 엔티티 사용
 
         // 사용자 정보가 존재하고 비밀번호가 일치하는지 확인
         if (users != null && userService.checkPassword(users, password)) { // Users 엔티티 사용

@@ -29,7 +29,7 @@ public class UserController {
                         @RequestParam String userPw,
                         Model model,
                         HttpSession session) {
-        Optional<Users> userOptional = userService.findByEmail(userId);
+        Optional<Users> userOptional = userService.findById(userId);
 
         if (userOptional.isPresent() && userOptional.get().getPassword().equals(userPw)) {
             // 로그인 성공
@@ -45,7 +45,7 @@ public class UserController {
     // 회원 가입 페이지 요청 처리
     @GetMapping("/signup")
     public String showSignupPage() {
-        return "signup";
+        return "login/signUp";
     }
 
     // 회원 가입 폼 제출 처리
@@ -53,8 +53,8 @@ public class UserController {
     public String signup(@RequestParam String password,
                          @RequestParam String confirmPassword,
                          @RequestParam String email,
-                         @RequestParam boolean gender,
-                         @RequestParam boolean handicap,
+                         @RequestParam String gender,
+                         @RequestParam String handicap,
                          Model model) {
 
         // 비밀번호와 비밀번호 확인이 일치하는지 확인
@@ -78,7 +78,7 @@ public class UserController {
 
     // 마이페이지 요청 처리
     @GetMapping("/mypage")
-    public String showMyPage(@SessionAttribute("userId") Long userId, Model model) {
+    public String showMyPage(@SessionAttribute("userId") String userId, Model model) {
         Optional<Users> userOptional = userService.findById(userId);
 
         userOptional.ifPresentOrElse(
@@ -91,10 +91,10 @@ public class UserController {
 
     // 마이페이지 정보 수정 처리
     @PostMapping("/mypage/update")
-    public String updateUserInfo(@SessionAttribute("userId") Long userId,
+    public String updateUserInfo(@SessionAttribute("userId") String userId,
                                  @RequestParam String email,
-                                 @RequestParam boolean gender,
-                                 @RequestParam boolean handicap,
+                                 @RequestParam String gender,
+                                 @RequestParam String handicap,
                                  Model model) {
         Optional<Users> userOptional = userService.findById(userId);
 
@@ -115,7 +115,7 @@ public class UserController {
 
     // 회원 탈퇴 처리
     @PostMapping("/mypage/delete")
-    public String deleteUser(@SessionAttribute("userId") Long userId, Model model) {
+    public String deleteUser(@SessionAttribute("userId") String userId, Model model) {
         Optional<Users> userOptional = userService.findById(userId);
 
         if (userOptional.isPresent()) {
