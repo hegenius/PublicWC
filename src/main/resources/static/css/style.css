@@ -75,9 +75,8 @@ label {font-weight:bold;}
 /* 메인 index */
 .container {margin-top: -500px;}
 .sectionBg {background:#fff;}
-.searchBar {padding:20px; border-radius:50px; border:2px solid #0637a3;}
-.searchBtn {padding:20px; border-radius:50px; border:2px solid #0637a3;}
-
+.searchBar {width:700px; height:70px; padding:20px; border-radius:50px; border:2px solid #0637a3;}
+.searchBtn {width:70px; height:70px; border-radius:50px; border:2px solid #0637a3;}
 
 @media (min-width: 1400px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
@@ -97,7 +96,7 @@ label {font-weight:bold;}
 /*.mainBtn01 {border-radius: 50px; background-color: #d30e58; color:#fff; padding:15px 20px; margin-right:15px; background-image:url("../images/mainIcon01.svg"); }*/
 /*.mainBtn01:before {content:""; display: block; clear: both;}*/
 .mainBtn01 {width:200px; height:200px; border:3px solid #f50859; border-radius: 50%; background-color: #fff; margin:auto; background-image: url("../images/person.png"); background-position: center; background-repeat:no-repeat;background-size:60%; }
-.mainBtn01:hover {border:3px solid #cd0749;}
+.mainBtn01:hover {border:3px solid #f50859;}
 .pointTxt {color:#f50859; font-weight: bold; font-size:1.2rem;}
 .mainBtn02 {border-radius: 50px; background-color: #fff;  padding:15px 20px;}
 .favoriteWrap .box_img img {background-color:#fff; border:1px solid #ccc;}
