@@ -1,6 +1,5 @@
-// <script src="https://t1.kakaocdn.net/kakao_js_sdk/${VERSION}/kakao.min.js"
-//         integrity="${INTEGRITY_VALUE}" crossorigin="anonymous"></script>
 
+$(document).ready(function (){
 // 마커를 담을 배열입니다
 var markers = [];
 
@@ -24,16 +23,15 @@ searchPlaces();
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
-
-    var keyword = document.getElementById('keyword').value;
-
+    var keyword = document.getElementById("address-input").value;
+    // var keyword = "부산 부산진구 중앙대로 730"
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
         alert('키워드를 입력해주세요!');
         return false;
     }
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch( keyword, placesSearchCB);
+    ps.keywordSearch(keyword, placesSearchCB);
 }
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -70,10 +68,10 @@ function displayPlaces(places) {
         listStr = '';
 
     // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
+    // removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커를 제거합니다
-    removeMarker();
+    // removeMarker();
 
     for ( var i=0; i<places.length; i++ ) {
 
@@ -111,8 +109,8 @@ function displayPlaces(places) {
     }
 
     // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-    listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
+    // listEl.appendChild(fragment);
+    // menuEl.scrollTop = 0;
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
@@ -120,7 +118,6 @@ function displayPlaces(places) {
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
-
     var el = document.createElement('li'),
         itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
             '<div class="info">' +
@@ -218,3 +215,4 @@ function removeAllChildNods(el) {
     }
 }
 
+});

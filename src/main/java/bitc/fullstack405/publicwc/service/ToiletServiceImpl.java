@@ -5,6 +5,7 @@ import bitc.fullstack405.publicwc.repository.WcInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ToiletServiceImpl implements ToiletService {
@@ -18,6 +19,9 @@ public class ToiletServiceImpl implements ToiletService {
         String addr1 = addressParts.length > 0 ? addressParts[0] : "";
 
         return wcInfoRepository.wcList(addr1);
+
+
+
     }
 
     @Override
