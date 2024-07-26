@@ -18,7 +18,10 @@ public class AuthController {
     private UserService userService;
 
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLoginPage(@RequestParam(value = "signupSuccess", required = false) String signupSuccess, Model model) {
+        if ("true".equals(signupSuccess)) {
+            model.addAttribute("signupSuccess", "회원가입이 완료되었습니다. 로그인해 주세요.");
+        }
         return "login/login";
     }
 
@@ -74,6 +77,13 @@ public class AuthController {
 
         session.setAttribute("userId", newUser.getId());
 
-        return "redirect:/";
+        // 회원가입 성공 후 로그인 페이지로 리다이렉트
+        return "redirect:/auth/login?signupSuccess=true";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화
+        return "redirect:/auth/login";
     }
 }
