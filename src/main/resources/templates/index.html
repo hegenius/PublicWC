@@ -37,7 +37,7 @@
     <script src="/js/UserCrrentLocation.js"></script>
 
     <div class="mx-auto text-center mt-5">
-      <button type="button" class="mainBtn01 shadow-lg"></button>
+      <button type="button" class="mainBtn01"></button>
       <p class="text-center mt-4 pointTxt">급할때 누르세요! 급똥버튼</p>
     </div>
   </section>
@@ -45,28 +45,26 @@
   <br><br><br>
 
 <!-- 즐겨찾기 목록 시작-->
-<!--  <section class="favoriteWrap">-->
-<!--    <h3 class="mb-4">즐겨찾기 리스트</h3>-->
-<!--    <div class="row listWrap" th:text="${session.mySessionAttribute}" th:unless="${session == null}">-->
+  <section class="favoriteWrap">
+    <h3 class="mb-4">즐겨찾기 리스트</h3>
+    <div class="row listWrap" th:text="${session.mySessionAttribute}" th:unless="${session == null}"></div>
 
-<!--    </div>-->
-
-<!--    &lt;!&ndash;    페이징 start &ndash;&gt;-->
+    <!--    페이징 start -->
 <!--    <div class="mt-3">-->
 <!--      <ul class="pagination justify-content-center">-->
 <!--        <li class="page-item" th:classappend="${boardList.getPrePage() == 0} ? 'disabled'">-->
-<!--          <a href="#" class="page-link" th:href="@{/PublicWC/board/board(pageNum=${boardList.getPrePage()})}">&laquo;</a>-->
+<!--          <a href="#" class="page-link" th:href="@{/PublicWC/board(pageNum=${boardList.getPrePage()})}">&laquo;</a>-->
 <!--        </li>-->
 <!--        <li class="page-item" th:each="page : ${#numbers.sequence(boardList.getNavigateFirstPage(), boardList.getNavigateLastPage())}" th:classappend="${page == boardList.getPageNum()} ? 'active'">-->
-<!--          <a href="#" class="page-link" th:href="@{/PublicWC/board/board(pageNum=${page})}" th:text="${page}">1</a>-->
+<!--          <a href="#" class="page-link" th:href="@{/PublicWC/board(pageNum=${page})}" th:text="${page}">1</a>-->
 <!--        </li>-->
 <!--        <li class="page-item" th:classappend="${boardList.getNextPage() == 0} ? 'disabled'">-->
-<!--          <a href="#" class="page-link" th:href="@{/PublicWC/board/board(pageNum=${boardList.getNextPage()})}">&raquo;</a>-->
+<!--          <a href="#" class="page-link" th:href="@{/PublicWC/board(pageNum=${boardList.getNextPage()})}">&raquo;</a>-->
 <!--        </li>-->
 <!--      </ul>-->
 <!--    </div>-->
-<!--  </section>-->
-  <!-- 즐겨찾기 목록 시작-->
+  </section>
+<!--   즐겨찾기 목록 시작-->
 
 </main> <!-- container end -->
 
@@ -75,6 +73,6 @@
 
 
 
-<footer th:replace="~{/layout/footer :: footer}"></footer>
+<footer th:replace="~{/layout/Footer :: footer}"></footer>
 </body>
 </html>
