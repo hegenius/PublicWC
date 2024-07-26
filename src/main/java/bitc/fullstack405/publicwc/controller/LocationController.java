@@ -2,6 +2,7 @@ package bitc.fullstack405.publicwc.controller;
 
 import bitc.fullstack405.publicwc.entity.WcInfo;
 import bitc.fullstack405.publicwc.service.JusoService;
+import bitc.fullstack405.publicwc.service.ToiletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,9 @@ public class LocationController {
 
     @Autowired
     JusoService jusoService;
+
+    @Autowired
+    ToiletService toiletService;
 
 //    @Autowired
 //    public LocationController(LocationService locationService) {
@@ -62,15 +66,14 @@ public class LocationController {
 
         mv.addObject("jusoValue", juso);
         mv.setViewName("/board/boardList");
+
         return mv;
     }
 
-    @PostMapping("/wclist.do")
-    public List<WcInfo> parsingWcList() {
-//        Map<String, List<WcInfo>> data = new HashMap<>();
-        List<WcInfo> data = new ArrayList<>();
-//        data.add();
-        return data;
+    @PostMapping("/wcInfoList")
+    public List<WcInfo> getWcInfoList() {
+        List<WcInfo> wcInfoList = toiletService.parsingWc();
+        return wcInfoList;
     }
 
 }

@@ -16,7 +16,7 @@
 
 
 <header th:replace="~{/layout/Header :: headerNavbar}"></header>
-
+<div id="data-container" th:testWcData="${testData}"></div>
 <!-- 목록 페이지 시작-->
 <main class="container">
     <div class="mainConWrap text-center text-white">
@@ -38,7 +38,7 @@
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=00e9042c7f04c04f3d386355eeaeb634&libraries=services"></script>
         </script>
 
-        <script src="/js/KakaoMapJs.js"></script>
+        <script src="/js/KakaoMapJs2.js"></script>
 
         <!--  주소 검색창 시작 -->
         <div class="col-sm-8 mx-auto">

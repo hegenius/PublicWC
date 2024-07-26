@@ -50,6 +50,8 @@ public class WcInfo {
     @Column(nullable = true)
     private String wcpass;
 
+    @Column(nullable = true)
+    private String point;
 
     @ManyToMany(mappedBy = "favoriteWcList")
     @ToString.Exclude

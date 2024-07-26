@@ -11,4 +11,5 @@ public interface ToiletService {
     WcInfo addWcInfo(WcInfo wcInfo);
     WcInfo updateWcInfo(int id, WcInfo wcInfo);
     void deleteWcInfo(int id);
+    List<WcInfo> parsingWc();
 }
