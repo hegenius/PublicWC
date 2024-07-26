@@ -10,11 +10,10 @@
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css">
-
 </head>
 
 <body>
-<header th:fragment="headerNavbar" class="header" >
+<header th:fragment="headerNavbar" class="header">
 
   <div>
     <nav class="navbar navbar-expand-sm">
@@ -33,20 +32,20 @@
             </div>
           </li>
           <li class="me-3">
-            <div th:if="${session.username} == null">
+            <div th:if="${session.userId} == null">
               <a href="#" class="text-white" th:href="@{/auth/login}">로그인</a>
             </div>
-            <!--          <div th:unless="${session.username} == null">-->
-            <!--            <button type="button" class="text-white" id="btn-logout">로그아웃</button>-->
-            <!--          </div>-->
+            <div th:unless="${session.userId} == null">
+              <a href="#" class="text-white" id="btn-logout">로그아웃</a>
+            </div>
           </li>
           <li>
-            <div>
+            <div th:if="${session.userId} == null">
               <a href="#" class="text-white" th:href="@{/auth/signup}">회원가입</a>
             </div>
-            <!--          <div>-->
-            <!--            <button type="button" class="text-white" id="btn-edit">마이페이지</button>-->
-            <!--          </div>-->
+            <div th:unless="${session.userId} == null">
+              <a href="#" class="text-white" id="btn-edit">마이페이지</a>
+            </div>
           </li>
         </ul>
       </div>
@@ -63,15 +62,17 @@
             const confirmed = confirm("로그아웃 하시겠습니까?");
 
             if (confirmed) {
-                location.href = "/board/login/logout.do";
+                location.href = "/";
             }
+        });
+
+        $("#btn-edit").on("click", function () {
+            location.href = "/auth/signup";
         });
     </script>
 
   </div>
-
 </header>
-
 
 
 </body>
