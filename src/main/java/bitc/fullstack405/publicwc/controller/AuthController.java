@@ -19,7 +19,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login";
+        return "login/login";
     }
 
     @PostMapping("/login")
@@ -34,13 +34,13 @@ public class AuthController {
             return "redirect:/users/mypage";
         } else {
             model.addAttribute("error", "아이디 또는 비밀번호가 올바르지 않습니다.");
-            return "login";
+            return "login/login";
         }
     }
 
     @GetMapping("/signup")
     public String showSignupPage() {
-        return "signup";
+        return "login/signUp";
     }
 
     @PostMapping("/signup")
