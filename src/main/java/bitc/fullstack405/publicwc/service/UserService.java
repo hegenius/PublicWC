@@ -1,47 +1,17 @@
 package bitc.fullstack405.publicwc.service;
-
-import bitc.fullstack405.publicwc.model.User;
-import bitc.fullstack405.publicwc.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
+import bitc.fullstack405.publicwc.entity.WcInfo;
+import bitc.fullstack405.publicwc.entity.Users; // 경로 수정
+import bitc.fullstack405.publicwc.entity.WcInfo;
 
 import java.util.Optional;
 
-@Service
-public class UserService {
+public interface UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+//    게시글 등록 매서드
+    public void writeWc(WcInfo wcInfo);
 
-    // BCryptPasswordEncoder 객체 생성
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-    // 사용자 이름으로 User 객체를 검색하는 메서드
-    public Optional<User> findByUsername(String username) {
-        return Optional.ofNullable(userRepository.findByUsername(username));
-    }
-
-    // 사용자 ID로 User 객체를 검색하는 메서드
-    public Optional<User> findById(Long userId) {
-        return userRepository.findById(userId);
-    }
-
-    // User 객체를 저장하는 메서드
-    public void saveUser(User user) {
-        // 비밀번호 암호화
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-    }
-
-    // 비밀번호를 확인하는 메서드
-    public boolean checkPassword(User user, String rawPassword) {
-        // 암호화된 비밀번호와 입력된 비밀번호 비교
-        return passwordEncoder.matches(rawPassword, user.getPassword());
-    }
-
-    // 회원 탈퇴 메서드
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
-    }
+    Optional<Users> findById(String userId); // ID로 사용자 조회
+    void saveUser(Users user); // 사용자 저장
+    boolean checkPassword(Users user, String rawPassword); // 비밀번호 확인
+    void deleteUser(String userId); // 사용자 삭제
 }

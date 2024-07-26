@@ -13,12 +13,6 @@ java {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
 repositories {
     mavenCentral()
 }
@@ -35,13 +29,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    implementation 'jakarta.json:jakarta.json-api:2.1.0'
+    implementation 'jakarta.ws.rs:jakarta.ws.rs-api:2.1.6'
     implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
     implementation 'jakarta.el:jakarta.el-api:6.0.1'
     implementation 'org.hibernate:hibernate-validator:8.0.1.Final'
-//    Spring Security 의존성 추가
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-}
 
-tasks.named('test') {
-    useJUnitPlatform()
 }
