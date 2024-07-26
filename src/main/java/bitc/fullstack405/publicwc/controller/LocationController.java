@@ -3,6 +3,7 @@ package bitc.fullstack405.publicwc.controller;
 import bitc.fullstack405.publicwc.entity.WcInfo;
 import bitc.fullstack405.publicwc.service.JusoService;
 import bitc.fullstack405.publicwc.service.ToiletService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,9 +71,19 @@ public class LocationController {
         return mv;
     }
 
+//    @PostMapping("/wcInfoList")
+//    public Object getWcInfoList() {
+//        List<WcInfo> wcInfoList = toiletService.parsingWc();
+//
+//        Gson gson = new Gson();
+//        String str = gson.toJson(wcInfoList.toArray());
+//        return str;
+//    }
+
     @PostMapping("/wcInfoList")
-    public List<WcInfo> getWcInfoList() {
+    public Object getWcInfoList() {
         List<WcInfo> wcInfoList = toiletService.parsingWc();
+
         return wcInfoList;
     }
 

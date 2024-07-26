@@ -39,10 +39,10 @@ $(document).ready(function () {
 
             $.ajax({
                 url: "/api/wcInfoList",
-                method: "POST",
+                type: "POST",
                 dataType: "json",
-                success: function (wcInfoList) {
-
+                success: function (response) {
+                    var wcInfoList = response.data || response;
                     alert(wcInfoList.length)
                     displayPlaces(wcInfoList);
                 },
