@@ -30,7 +30,7 @@ public class Users {
     @ColumnDefault("false")
     private String handicap;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     @ColumnDefault("0")
     private int passkey;
 

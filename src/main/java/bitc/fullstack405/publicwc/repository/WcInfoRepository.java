@@ -31,7 +31,4 @@ public interface WcInfoRepository extends JpaRepository<WcInfo, Integer> {
 //    3등급인 모든 화장실 리스트
     @Query("SELECT wi FROM WcInfo wi WHERE wi.level = 3")
     List<WcInfo> wcList3();
-
-    @Query("SELECT wi FROM WcInfo wi WHERE wi.point = 'a'")
-    List<WcInfo> pointWc();
 }
