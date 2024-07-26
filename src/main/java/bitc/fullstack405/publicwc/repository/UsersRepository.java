@@ -24,6 +24,7 @@ public interface UsersRepository extends JpaRepository<Users, String> {
     int updatePassword(@Param("id") String id, @Param("password") String password);
 
     @Modifying
+    @Transactional
     @Query("UPDATE Users u SET u.email = :email WHERE u.id = :id")
     int updateEmail(@Param("id") String id, @Param("email") String email);
 
@@ -32,6 +33,3 @@ public interface UsersRepository extends JpaRepository<Users, String> {
     @Query("DELETE FROM Users u WHERE u.id = :id")
     void deleteUsers(@Param("id") String id);
 }
-
-
-

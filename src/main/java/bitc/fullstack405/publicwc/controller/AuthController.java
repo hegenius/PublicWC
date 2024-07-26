@@ -29,9 +29,9 @@ public class AuthController {
                         HttpSession session) {
         Optional<Users> userOptional = userService.findById(username);
 
-        if (userOptional.isPresent() && userOptional.get().getPassword().equals(password)) {
+        if (userOptional.isPresent() && userService.checkPassword(userOptional.get(), password)) {
             session.setAttribute("userId", userOptional.get().getId());
-            return "redirect:/users/mypage";
+            return "redirect:/";
         } else {
             model.addAttribute("error", "아이디 또는 비밀번호가 올바르지 않습니다.");
             return "login/login";
@@ -50,16 +50,17 @@ public class AuthController {
                          @RequestParam String userEmail,
                          @RequestParam String gender,
                          @RequestParam String handicap,
-                         Model model) {
+                         Model model,
+                         HttpSession session) {
 
         if (!password.equals(password2)) {
             model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
-            return "signup";
+            return "login/signUp";
         }
 
         if (userService.findById(username).isPresent()) {
             model.addAttribute("error", "이미 사용 중인 ID입니다.");
-            return "signup";
+            return "login/signUp";
         }
 
         Users newUser = new Users();
@@ -70,6 +71,9 @@ public class AuthController {
         newUser.setHandicap(handicap);
 
         userService.saveUser(newUser);
-        return "redirect:/auth/login"; // 로그인 페이지로 리다이렉트
+
+        session.setAttribute("userId", newUser.getId());
+
+        return "redirect:/";
     }
 }
