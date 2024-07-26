@@ -35,6 +35,54 @@ h1, h2, h3, h4 {font-weight:bold;}
 .menuTxt {font-size:0.9rem; color:#f4f4f4;}
 .logo {font-size:2rem;}
 
+.keyTxt {
+    position: relative;
+    display: inline-block;
+}
+
+.keyTxt span {
+    cursor: pointer;
+}
+
+.arrow_box {
+    display: none;
+    position: absolute;
+    width: 180px;
+    padding:10px;
+    top:35px;
+    left: -78px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    font-size: 14px;
+}
+
+.arrow_box:after {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -10px;
+    border: solid transparent;
+    border-color: rgba(51, 51, 51, 0);
+    border-bottom-color: #333;
+    border-width: 10px;
+    pointer-events: none;
+    content: ' ';
+}
+
+span:hover + p.arrow_box {
+    display: block;
+}
+
+
+
+
+
+
 /* common */
 .container {margin-bottom: 80px;}
 
@@ -96,10 +144,8 @@ label {font-weight:bold;}
 }
 
 
-/*.mainBtn01 {border-radius: 50px; background-color: #d30e58; color:#fff; padding:15px 20px; margin-right:15px; background-image:url("../images/mainIcon01.svg"); }*/
-/*.mainBtn01:before {content:""; display: block; clear: both;}*/
-.mainBtn01 {width:200px; height:200px; border:3px solid #f50859; border-radius: 50%; background-color: #fff; margin:auto; background-image: url("../images/person.png"); background-position: center; background-repeat:no-repeat;background-size:60%; }
-.mainBtn01:hover {border:3px solid #f50859;}
+.mainBtn01 {width:180px; height:180px; border:3px solid #f50859; border-radius: 50%; background-color: #fff; margin:auto; background-image: url("../images/person.png"); background-position: center; background-repeat:no-repeat;background-size:60%; }
+.mainBtn01:hover {box-shadow:5px 5px 5px 3px rgba(0, 0, 0, .3);}
 .pointTxt {color:#f50859; font-weight: bold; font-size:1.2rem;}
 .mainBtn02 {border-radius: 50px; background-color: #fff;  padding:15px 20px;}
 .favoriteWrap .box_img img {background-color:#fff; border:1px solid #ccc;}
