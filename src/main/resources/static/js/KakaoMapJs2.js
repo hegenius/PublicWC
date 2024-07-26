@@ -43,7 +43,6 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (response) {
                     var wcInfoList = response.data || response;
-                    alert(wcInfoList.length)
                     displayPlaces(wcInfoList);
                 },
                 error: function () {
@@ -107,7 +106,7 @@ $(document).ready(function () {
                 itemEl.onmouseout = function () {
                     infowindow.close();
                 };
-            })(marker, places[i].point);
+            })(marker, places[i].detailAddr);
 
             fragment.appendChild(itemEl);
         }
@@ -149,7 +148,7 @@ $(document).ready(function () {
     function underListItem(index, place) {
 
         var timeText = place.time;
-        var addressText = place.addr1;
+        var addressText = place.addr1 + place.detailAddr;
         var keyText = '********';
 
         var div = document.createElement('div');
