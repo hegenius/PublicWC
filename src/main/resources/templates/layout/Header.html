@@ -36,7 +36,7 @@
               <a href="#" class="text-white" th:href="@{/auth/login}">로그인</a>
             </div>
             <div th:unless="${session.userId} == null">
-              <a href="#" class="text-white" id="btn-logout">로그아웃</a>
+              <a href="/auth/logout" class="text-white" id="btn-logout">로그아웃</a>
             </div>
           </li>
           <li>
