@@ -35,4 +35,8 @@ dependencies {
     implementation 'jakarta.el:jakarta.el-api:6.0.1'
     implementation 'org.hibernate:hibernate-validator:8.0.1.Final'
 
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation 'com.google.code.gson:gson:2.11.0'
+
+
 }

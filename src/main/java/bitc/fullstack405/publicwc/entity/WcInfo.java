@@ -50,15 +50,15 @@ public class WcInfo {
     @Column(nullable = true)
     private String wcpass;
 
+    @Column(nullable = true)
+    private String point;
+
+    @Column(nullable = false)
+    private String createUserId;
 
     @ManyToMany(mappedBy = "favoriteWcList")
     @ToString.Exclude
     private List<Users> favoriteUsers = new ArrayList<>();
-
-    @ManyToOne
-    @JoinColumn(name = "createUserId")
-    @ToString.Exclude
-    private Users createUser;
 
     @OneToMany(mappedBy = "bestWc", cascade = CascadeType.ALL)
     @ToString.Exclude

@@ -55,4 +55,9 @@ public class ToiletServiceImpl implements ToiletService {
     public void deleteWcInfo(int id) {
         wcInfoRepository.deleteById(id);
     }
+
+    @Override
+    public List<WcInfo> parsingWc() {
+        return wcInfoRepository.pointWc();
+    }
 }
