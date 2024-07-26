@@ -1,5 +1,6 @@
 package bitc.fullstack405.publicwc.repository;
 
+import bitc.fullstack405.publicwc.dto.WcInfoWithBestDTO;
 import bitc.fullstack405.publicwc.entity.WcInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,6 +33,17 @@ public interface WcInfoRepository extends JpaRepository<WcInfo, Integer> {
     @Query("SELECT wi FROM WcInfo wi WHERE wi.level = 3")
     List<WcInfo> wcList3();
 
+//    서면역 근처 화장실들 포인트 찝어놓은거
     @Query("SELECT wi FROM WcInfo wi WHERE wi.point = 'a'")
     List<WcInfo> pointWc();
+
+    @Query("SELECT new bitc.fullstack405.publicwc.dto.WcInfoWithBestDTO(" +
+            "wi.id, wi.level, wi.name, wi.addr1, wi.detailAddr, wi.time, wi.comment, wi.wcpass, " +
+            "SUM(CASE WHEN b.good = true THEN 1 ELSE 0 END), " +
+            "SUM(CASE WHEN b.good = false THEN 1 ELSE 0 END)) " +
+            "FROM WcInfo wi " +
+            "LEFT JOIN Best b ON wi.id = b.bestWc.id " +
+            "WHERE wi.id = :wcId " +
+            "GROUP BY wi.id, wi.level, wi.name, wi.addr1, wi.detailAddr, wi.time, wi.comment, wi.wcpass")
+    WcInfoWithBestDTO findWcInfoWithBestDetails(@Param("wcId") int wcId);
 }
