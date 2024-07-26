@@ -37,6 +37,7 @@ public interface WcInfoRepository extends JpaRepository<WcInfo, Integer> {
     @Query("SELECT wi FROM WcInfo wi WHERE wi.point = 'a'")
     List<WcInfo> pointWc();
 
+//    게시글 상세보기 좋아요 싫어요 구현
     @Query("SELECT new bitc.fullstack405.publicwc.dto.WcInfoWithBestDTO(" +
             "wi.id, wi.level, wi.name, wi.addr1, wi.detailAddr, wi.time, wi.comment, wi.wcpass, " +
             "SUM(CASE WHEN b.good = true THEN 1 ELSE 0 END), " +
