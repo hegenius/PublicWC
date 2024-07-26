@@ -71,15 +71,6 @@ public class LocationController {
         return mv;
     }
 
-//    @PostMapping("/wcInfoList")
-//    public Object getWcInfoList() {
-//        List<WcInfo> wcInfoList = toiletService.parsingWc();
-//
-//        Gson gson = new Gson();
-//        String str = gson.toJson(wcInfoList.toArray());
-//        return str;
-//    }
-
     @PostMapping("/wcInfoList")
     public Object getWcInfoList() {
         List<WcInfo> wcInfoList = toiletService.parsingWc();
