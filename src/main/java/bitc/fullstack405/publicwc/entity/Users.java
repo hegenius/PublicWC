@@ -40,10 +40,6 @@ public class Users {
     @ToString.Exclude
     private List<WcInfo> favoriteWcList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "createUser", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private List<WcInfo> createWcList = new ArrayList<>();
-
     @OneToMany(mappedBy = "bestUsers", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Best> userBestList = new ArrayList<>();
