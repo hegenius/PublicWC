@@ -21,28 +21,27 @@ public class FavoriteServiceImle implements FavoriteService {
     @Autowired
     private FavoriteRepository favoriteRepository;
 
-    // 특정 사용자의 즐겨찾기 리스트에 화장실을 추가하는 메서드
-    public void addFavorite(String userId, int wcId) {
-        // userId로 사용자를 찾고, 없으면 예외 발생
-        Users user = usersRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // wcId로 화장실을 찾고, 없으면 예외 발생
-        WcInfo wcInfo = wcInfoRepository.findById(wcId)
-                .orElseThrow(() -> new RuntimeException("WcInfo not found"));
-
-        Favorite favorite = favoriteRepository.findByUser(user);
-
-        // 중복 추가 방지
-        if (favorite.getFavoriteWc() == wcInfo) {
-            throw new RuntimeException("Already favorite");
-        }
+//    // 특정 사용자의 즐겨찾기 리스트에 화장실을 추가하는 메서드
+//    public void addFavorite(String userId, int wcId) {
+//        // userId로 사용자를 찾고, 없으면 예외 발생
+//        Users user = usersRepository.findById(userId)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        // wcId로 화장실을 찾고, 없으면 예외 발생
+//        WcInfo wcInfo = wcInfoRepository.findById(wcId)
+//                .orElseThrow(() -> new RuntimeException("WcInfo not found"));
+//
+//        Favorite favorite = favoriteRepository.findByUser(user);
+//
+//        // 중복 추가 방지
+//        if (favorite.getFavoriteWc() == wcInfo) {
+//            throw new RuntimeException("Already favorite");
+//        }
 
         // 사용자 즐겨찾기 리스트에 화장실 추가
-        favoriteRepository.
+//        favoriteRepository.
 
                 // 변경 사항 저장
-                        usersRepository.save(user);
-    }
-
+//                        usersRepository.save(user);
+//    }
 }

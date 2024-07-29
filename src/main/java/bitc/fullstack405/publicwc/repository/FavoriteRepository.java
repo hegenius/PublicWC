@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
 
-    @Query("SELECT fa FROM Favorite fa WHERE fa.favoriteUsers == :user")
-    Favorite findByUser(@Param("user")Users users);
+//    @Query("SELECT fa FROM Favorite fa WHERE fa.favoriteUsers == :user")
+//    Favorite findByUser(@Param("user")Users users);
 
 }

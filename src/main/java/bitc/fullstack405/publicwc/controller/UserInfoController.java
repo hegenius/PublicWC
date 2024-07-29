@@ -41,26 +41,26 @@ public class UserInfoController {
     }
 
     // 특정 사용자의 즐겨찾기 리스트에 화장실을 추가하는 엔드포인트
-    @PostMapping("/{userId}/favorites/{wcId}")
-    public ResponseEntity<String> addFavorite(@PathVariable String userId, @PathVariable int wcId) {
-        try {
-            userService.addFavorite(userId, wcId); // UserService를 통해 즐겨찾기 추가
-            return ResponseEntity.ok("Favorite added successfully"); // 성공 메시지 반환
-            } catch (RuntimeException e) {
-                return ResponseEntity.badRequest().body(e.getMessage());
-            }
-        }
+//    @PostMapping("/{userId}/favorites/{wcId}")
+//    public ResponseEntity<String> addFavorite(@PathVariable String userId, @PathVariable int wcId) {
+//        try {
+//            userService.addFavorite(userId, wcId); // UserService를 통해 즐겨찾기 추가
+//            return ResponseEntity.ok("Favorite added successfully"); // 성공 메시지 반환
+//            } catch (RuntimeException e) {
+//                return ResponseEntity.badRequest().body(e.getMessage());
+//            }
+//        }
 
-    @GetMapping("/{userId}/favorites/{wcId}")
-    public ResponseEntity<Boolean> isFavorite(@PathVariable String userId, @PathVariable int wcId) {
-        Optional<Users> userOptional = userService.findById(userId);
-        if (userOptional.isPresent()) {
-            Users user = userOptional.get();
-            boolean isFavorite = user.getFavoriteWcList().stream()
-                    .anyMatch(wc -> wc.getId() == wcId);
-            return ResponseEntity.ok(isFavorite);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @GetMapping("/{userId}/favorites/{wcId}")
+//    public ResponseEntity<Boolean> isFavorite(@PathVariable String userId, @PathVariable int wcId) {
+//        Optional<Users> userOptional = userService.findById(userId);
+//        if (userOptional.isPresent()) {
+//            Users user = userOptional.get();
+//            boolean isFavorite = user.getFavoriteWcList().stream()
+//                    .anyMatch(wc -> wc.getId() == wcId);
+//            return ResponseEntity.ok(isFavorite);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 }
