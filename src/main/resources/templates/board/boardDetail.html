@@ -17,7 +17,7 @@
   <script>
     $(document).ready(function() {
       // 현재 로그인된 사용자의 ID를 세션 또는 다른 방법으로 설정
-      const userId = '현재 사용자 ID'; // 서버에서 현재 사용자 ID를 동적으로 설정
+      const userId = 'addmin'; // 서버에서 현재 사용자 ID를 동적으로 설정
 
       $('#favorite-icon').click(function() {
         const isFavorite = $(this).data('favorite');
@@ -65,7 +65,8 @@
         <div class="d-flex">
           <p class="me-3"><img src="/images/thumb_up.svg" alt="좋아요 아이콘"><span class="ms-1">10</span></p>
           <p class="me-3"><img src="/images/thumb_down.svg" alt="싫어요 아이콘"><span class="ms-1">0</span></p>
-          <p><img src="/images/favorites_off.svg" alt="즐겨찾기 아이콘"></p>
+          <p id="favorite-icon" data-wc-id="123">
+            <img src="/images/favorites_off.svg" alt="즐겨찾기 아이콘"></p>
           <!--          <span><img src="/images/favorites_on.svg" alt="선택된 즐겨찾기 아이콘"></span>-->
         </div>
       </div>
