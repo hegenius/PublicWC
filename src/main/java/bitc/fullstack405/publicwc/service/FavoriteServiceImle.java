@@ -9,6 +9,8 @@ import bitc.fullstack405.publicwc.repository.WcInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FavoriteServiceImle implements FavoriteService {
 
@@ -54,6 +56,11 @@ public class FavoriteServiceImle implements FavoriteService {
 //            throw new RuntimeException("Already favorite");
 //        }
 
+    }
+
+    @Override
+    public List<Favorite> selectFavoriteList() {
+        return favoriteRepository.findAll();
     }
 
 

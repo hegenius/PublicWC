@@ -1,5 +1,6 @@
 package bitc.fullstack405.publicwc.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,11 +19,13 @@ public class Best {
     @Column(nullable = true)
     private boolean good;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userId")
     @ToString.Exclude
     private Users bestUsers;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "wcId")
     @ToString.Exclude

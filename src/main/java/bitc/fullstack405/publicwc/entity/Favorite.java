@@ -1,5 +1,6 @@
 package bitc.fullstack405.publicwc.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,11 +17,13 @@ public class Favorite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userId")
     @ToString.Exclude
     private Users favoriteUsers;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "wcId")
     @ToString.Exclude

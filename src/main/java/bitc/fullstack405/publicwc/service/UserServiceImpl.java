@@ -43,8 +43,8 @@ public class UserServiceImpl implements UserService {
         usersRepository.deleteUsers(userId);
     }
 
-    @Override
-    public void addFavorite(String userId, int wcId) {
-
-    }
+//    @Override
+//    public void addFavorite(String userId, int wcId) {
+//
+//    }
 }

@@ -1,5 +1,6 @@
 package bitc.fullstack405.publicwc.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -34,10 +35,12 @@ public class Users {
     @ColumnDefault("0")
     private int passkey;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "favoriteUsers", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Favorite> userFavoriteList = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "bestUsers", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Best> userBestList = new ArrayList<>();

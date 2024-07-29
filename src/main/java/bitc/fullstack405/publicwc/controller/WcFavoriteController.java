@@ -1,5 +1,6 @@
 package bitc.fullstack405.publicwc.controller;
 
+import bitc.fullstack405.publicwc.entity.Favorite;
 import bitc.fullstack405.publicwc.entity.WcInfo;
 import bitc.fullstack405.publicwc.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class WcFavoriteController {
   public ModelAndView selectFavoriteList() throws Exception {
     ModelAndView mv = new ModelAndView("/index");
 
-    List<WcInfo> favoriteList = favoriteService.selectFavoriteList();
+    List<Favorite> favoriteList = favoriteService.selectFavoriteList();
     mv.addObject("favoriteList", favoriteList);
 
     return mv;

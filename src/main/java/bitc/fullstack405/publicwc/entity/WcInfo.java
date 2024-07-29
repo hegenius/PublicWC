@@ -1,5 +1,6 @@
 package bitc.fullstack405.publicwc.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -56,10 +57,12 @@ public class WcInfo {
     @Column(nullable = false)
     private String createUserId;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "favoriteWc")
     @ToString.Exclude
     private List<Favorite> wcFavoriteList = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "bestWc", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Best> wcBestList = new ArrayList<>();
