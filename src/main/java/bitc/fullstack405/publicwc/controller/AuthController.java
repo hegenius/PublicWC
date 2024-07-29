@@ -86,4 +86,10 @@ public class AuthController {
         session.invalidate(); // 세션 무효화
         return "redirect:/";
     }
+
+    @GetMapping("/wcDtail")
+    public String wcDetail() {
+        return "board/boardDetail";
+    }
+
 }
