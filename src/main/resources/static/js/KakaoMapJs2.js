@@ -8,6 +8,7 @@ $(document).ready(function () {
             level: 3 // 지도의 확대 레벨
         };
 
+
 // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
@@ -88,6 +89,8 @@ $(document).ready(function () {
                 marker = addMarker(placePosition, i),
                 itemEl = underListItem(i, places[i]);
 
+
+
             bounds.extend(placePosition);
 
             (function (marker, title) {
@@ -115,35 +118,20 @@ $(document).ready(function () {
         listEl.appendChild(fragment);
         // menuEl.scrollTop = 0;
 
+
+        // "자세히 보기" 버튼 클릭 이벤트 추가
+        var detailButton = document.getElementById('detailButton');
+        detailButton.addEventListener('click', function() {
+            // var url = '/targetPage?time=' + encodeURIComponent(timeText) +
+            //     '&address=' + encodeURIComponent(addressText) +
+            //     '&key=' + encodeURIComponent(keyText);
+
+            window.location.href = "/auth/wcDtail";
+        });
+
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
     }
-
-
-// 검색결과 항목을 Element로 반환하는 함수입니다
-    function getListItem(index, places) {
-        // var el = document.createElement('li')
-        var el = document.createElement('li')
-        var itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
-            '<div class="info">' +
-            '   <h5>' + places.place_name + '</h5>';
-
-        if (places.road_address_name) {
-            itemStr += '    <span>' + places.road_address_name + '</span>' +
-                '   <span class="jibun gray">' + places.address_name + '</span>';
-        } else {
-            itemStr += '    <span>' + places.address_name + '</span>';
-        }
-
-        itemStr += '  <span class="tel">' + places.phone + '</span>' +
-            '</div>';
-
-        el.innerHTML = itemStr;
-        el.className = 'item';
-
-        return el;
-    }
-
 
     function underListItem(index, place) {
 
@@ -185,10 +173,12 @@ $(document).ready(function () {
             <p>키 : <span>${keyText}</span></p>
         </div>
         <div>
-            <button class="btn btn-primary mt-2">자세히 보기</button>
+            <button class="btn btn-primary mt-2" id="detailButton">자세히 보기</button>
         </div>
     `;
         div.innerHTML = itemStr;
+
+
 
         return div;
     }
