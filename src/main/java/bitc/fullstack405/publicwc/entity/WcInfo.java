@@ -56,9 +56,9 @@ public class WcInfo {
     @Column(nullable = false)
     private String createUserId;
 
-    @ManyToMany(mappedBy = "favoriteWcList")
+    @OneToMany(mappedBy = "favoriteWc")
     @ToString.Exclude
-    private List<Users> favoriteUsers = new ArrayList<>();
+    private List<Favorite> wcFavoriteList = new ArrayList<>();
 
     @OneToMany(mappedBy = "bestWc", cascade = CascadeType.ALL)
     @ToString.Exclude

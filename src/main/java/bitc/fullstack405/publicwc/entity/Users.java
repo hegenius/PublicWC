@@ -34,11 +34,9 @@ public class Users {
     @ColumnDefault("0")
     private int passkey;
 
-    @ManyToMany
-    @JoinTable(name = "userWcFavorites", joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "wcId"))
+    @OneToMany(mappedBy = "favoriteUsers", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<WcInfo> favoriteWcList = new ArrayList<>();
+    private List<Favorite> userFavoriteList = new ArrayList<>();
 
     @OneToMany(mappedBy = "bestUsers", cascade = CascadeType.ALL)
     @ToString.Exclude
