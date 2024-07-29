@@ -15,16 +15,20 @@
   <link rel="stylesheet" href="/css/style.css">
 
   <script>
+
     $(document).ready(function() {
       // const userId = $("user-id"); // Thymeleaf에서 사용자 ID를 가져옴
       // const wcId = $("wcId"); // Thymeleaf에서 화장실 ID를 가져옴
 
+      const userId = $("#userIdInput").val();
+      const wcId = $("#wcIdInput").val();
+
       // 페이지 로드 시 즐겨찾기 상태 확인
-      $.get(`/users/${userId}/favorites/${wcId}`, function(isFavorite) {
-        const iconSrc = isFavorite ? '/images/favorites_on.svg' : '/images/favorites_off.svg';
-        $('#favorite-icon img').attr('src', iconSrc);
-        $('#favorite-icon').data('favorite', isFavorite);
-      });
+      // $.get(`/users/${userId}/favorites/${wcId}`, function(isFavorite) {
+      //   const iconSrc = isFavorite ? '/images/favorites_on.svg' : '/images/favorites_off.svg';
+      //   $('#favorite-icon img').attr('src', iconSrc);
+      //   $('#favorite-icon').data('favorite', isFavorite);
+      // });
 
       // 즐겨찾기 버튼 클릭 이벤트
       $('#favorite-icon').click(function() {
@@ -33,9 +37,11 @@
         const iconSrc = newFavoriteStatus ? '/images/favorites_on.svg' : '/images/favorites_off.svg';
 
         $.ajax({
-          url: `/users/${userId}/favorites/${wcId}`,
+          url: "/users/favorites",
           type: 'POST',
-          success: function(response) {
+          data: {userIdParam : userId, wcIdParam : wcId},
+          dataType: "json",
+          success: function() {
             $('#favorite-icon img').attr('src', iconSrc);
             $('#favorite-icon').data('favorite', newFavoriteStatus);
           },
@@ -66,7 +72,6 @@
 
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=00e9042c7f04c04f3d386355eeaeb634&libraries=services"></script>
-    </script>
 
     <div class="map_wrap listMap">
       <div id="map" class="mapSize"></div>
@@ -75,6 +80,8 @@
     <script src="/js/ListKakaoMap.js"></script>
     <!--  카카오맵 include 끝 -->
 
+    <input type="hidden" th:value="${userId}" id="userIdInput">
+    <input type="hidden" th:value="${wcId}" id="wcIdInput">
     <div class="mt-5">
       <h3>부산공공화장실</h3>
       <hr>

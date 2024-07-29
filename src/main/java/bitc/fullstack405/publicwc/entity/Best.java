@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Best {
 
     @Id
