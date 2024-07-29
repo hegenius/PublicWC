@@ -3,11 +3,14 @@ package bitc.fullstack405.publicwc.controller;
 import bitc.fullstack405.publicwc.entity.Users;
 import bitc.fullstack405.publicwc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
@@ -35,5 +38,12 @@ public class UserInfoController {
         } else {
             return "redirect:/auth/login";
         }
+    }
+
+    // 특정 사용자의 즐겨찾기 리스트에 화장실을 추가하는 엔드포인트
+    @PostMapping("/{userId}/favorites/{wcId}")
+    public ResponseEntity<String> addFavorite(@PathVariable String userId, @PathVariable int wcId) {
+        userService.addFavorite(userId, wcId); // UserService를 통해 즐겨찾기 추가
+        return ResponseEntity.ok("Favorite added successfully"); // 성공 메시지 반환
     }
 }

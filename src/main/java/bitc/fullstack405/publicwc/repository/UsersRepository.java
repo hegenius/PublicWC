@@ -32,4 +32,5 @@ public interface UsersRepository extends JpaRepository<Users, String> {
     @Transactional
     @Query("DELETE FROM Users u WHERE u.id = :id")
     void deleteUsers(@Param("id") String id);
+
 }
