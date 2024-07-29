@@ -44,4 +44,9 @@ public interface WcInfoRepository extends JpaRepository<WcInfo, Integer> {
             "WHERE wi.id = :wcId " +
             "GROUP BY wi.id, wi.level, wi.name, wi.addr1, wi.detailAddr, wi.time, wi.comment, wi.wcpass")
     WcInfoWithBestDTO findWcInfoWithBestDetails(@Param("wcId") int wcId);
+    
+//    회원이 찜한 즐겨찾기 리스트 조회
+    @Query("SELECT wi FROM WcInfo wi")
+    List<WcInfo> favoriteWcLists();
+
 }
