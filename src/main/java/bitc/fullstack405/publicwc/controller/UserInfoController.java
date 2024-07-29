@@ -22,6 +22,12 @@ public class UserInfoController {
     @Autowired
     private UserService userService;
 
+    // 메인 페이지 요청 처리
+    @GetMapping("/")
+    public String home() {
+        return "index";
+    }
+
     @GetMapping("/mypage")
     public String showMyPage(HttpSession session, Model model) {
         String userId = (String) session.getAttribute("userId");
