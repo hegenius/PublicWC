@@ -12,9 +12,6 @@ $(document).ready(function (wcId) {
 // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
-// 장소 검색 객체를 생성합니다
-    var ps = new kakao.maps.services.Places();
-
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
     var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
 
@@ -28,9 +25,6 @@ $(document).ready(function (wcId) {
             alert('키워드를 입력해주세요!');
             return false;
         }
-
-        // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-        // ps.keywordSearch(keyword, placesSearchCB);
 
         $.ajax({
             url: "/location/wcInfoList",
@@ -51,7 +45,6 @@ $(document).ready(function (wcId) {
 
     }
 
-// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
     function placesSearchCB(data, status, pagination) {
 
         if (status === kakao.maps.services.Status.OK) {
@@ -75,10 +68,8 @@ $(document).ready(function (wcId) {
     function displayPlaces(places) {
         // var listEl = document.getElementById('placesList'),
         var listEl = document.getElementById('underList'),
-            menuEl = document.getElementById('menu_wrap'),
             fragment = document.createDocumentFragment(),
-            bounds = new kakao.maps.LatLngBounds(),
-            listStr = '';
+            bounds = new kakao.maps.LatLngBounds()
 
         // 검색 결과 목록에 추가된 항목들을 제거합니다
         removeAllChildNods(listEl);
@@ -118,11 +109,6 @@ $(document).ready(function (wcId) {
 
         // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
         listEl.appendChild(fragment);
-        // menuEl.scrollTop = 0;
-
-
-        // "자세히 보기" 버튼 클릭 이벤트 추가
-        addDetailButtonListeners();
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
@@ -130,6 +116,7 @@ $(document).ready(function (wcId) {
 
     function underListItem(index, place) {
 
+        var wcId = place.id;
         var timeText = place.time;
         var addressText = place.addr1 + place.detailAddr;
         var keyText = '********';
@@ -168,27 +155,12 @@ $(document).ready(function (wcId) {
             <p>키 : <span>${keyText}</span></p>
         </div>
         <div>
-            <button class="btn btn-primary mt-2 detailButton">자세히 보기</button>
-        </div>
+        <a href="/location/wcDetail?wcId=${wcId}" class="btn btn-primary mt-2">자세히 보기</a>
+    </div>
     `;
         div.innerHTML = itemStr;
 
         return div;
-    }
-
-    // 여러 개의 '자세히 보기' 버튼에 대해 클릭 이벤트 리스너를 등록
-    function addDetailButtonListeners() {
-        var detailButtons = document.querySelectorAll('.detailButton');
-
-        detailButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-
-                var wcID = "";
-
-                // window.location.href = "/auth/wcDtail";
-                location.href = "/location/wcDtail";
-            });
-        });
     }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다

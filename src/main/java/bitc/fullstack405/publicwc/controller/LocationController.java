@@ -3,7 +3,9 @@ package bitc.fullstack405.publicwc.controller;
 import bitc.fullstack405.publicwc.entity.WcInfo;
 import bitc.fullstack405.publicwc.service.JusoService;
 import bitc.fullstack405.publicwc.service.ToiletService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -73,10 +75,14 @@ public class LocationController {
         return wcInfoList;
     }
 
-    @GetMapping("/wcDtail")
-    public ModelAndView wcDetail() {
+    @GetMapping("/wcDetail")
+    public ModelAndView wcDetail(@RequestParam("wcId") String wcId, HttpSession session) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("board/boardDetail");
+
+        mv.addObject("userId", session.getAttribute("userId"));
+        mv.addObject("wcId", wcId);
+
         return mv;
     }
 
