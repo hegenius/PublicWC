@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function (wcId) {
 // 마커를 담을 배열입니다
     var markers = [];
 
@@ -30,7 +30,25 @@ $(document).ready(function () {
         }
 
         // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-        ps.keywordSearch(keyword, placesSearchCB);
+        // ps.keywordSearch(keyword, placesSearchCB);
+
+        $.ajax({
+            url: "/api/wcInfoList",
+            type: "POST",
+            dataType: "json",
+            success: function (response) {
+                var wcInfoList = response.data || response;
+                placesSearchCB(wcInfoList, kakao.maps.services.Status.OK)
+            },
+            error: function () {
+                console.log("Request failed: " + textStatus);
+                console.log("Error thrown: " + errorThrown);
+                console.log("Response text: " + jqXHR.responseText);
+                alert("An error occurred while processing your request. Please check the console for more details.");
+                placesSearchCB(null, kakao.maps.services.Status.ERROR())
+            }
+        });
+
     }
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -38,21 +56,7 @@ $(document).ready(function () {
 
         if (status === kakao.maps.services.Status.OK) {
 
-            $.ajax({
-                url: "/api/wcInfoList",
-                type: "POST",
-                dataType: "json",
-                success: function (response) {
-                    var wcInfoList = response.data || response;
-                    displayPlaces(wcInfoList);
-                },
-                error: function () {
-                    console.log("Request failed: " + textStatus);
-                    console.log("Error thrown: " + errorThrown);
-                    console.log("Response text: " + jqXHR.responseText);
-                    alert("An error occurred while processing your request. Please check the console for more details.");
-                }
-            });
+            displayPlaces(data);
 
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -89,8 +93,6 @@ $(document).ready(function () {
                 marker = addMarker(placePosition, i),
                 itemEl = underListItem(i, places[i]);
 
-
-
             bounds.extend(placePosition);
 
             (function (marker, title) {
@@ -120,14 +122,7 @@ $(document).ready(function () {
 
 
         // "자세히 보기" 버튼 클릭 이벤트 추가
-        var detailButton = document.getElementById('detailButton');
-        detailButton.addEventListener('click', function() {
-            // var url = '/targetPage?time=' + encodeURIComponent(timeText) +
-            //     '&address=' + encodeURIComponent(addressText) +
-            //     '&key=' + encodeURIComponent(keyText);
-
-            window.location.href = "/auth/wcDtail";
-        });
+        addDetailButtonListeners();
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
@@ -173,14 +168,26 @@ $(document).ready(function () {
             <p>키 : <span>${keyText}</span></p>
         </div>
         <div>
-            <button class="btn btn-primary mt-2" id="detailButton">자세히 보기</button>
+            <button class="btn btn-primary mt-2 detailButton">자세히 보기</button>
         </div>
     `;
         div.innerHTML = itemStr;
 
-
-
         return div;
+    }
+
+    // 여러 개의 '자세히 보기' 버튼에 대해 클릭 이벤트 리스너를 등록
+    function addDetailButtonListeners() {
+        var detailButtons = document.querySelectorAll('.detailButton');
+
+        detailButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+
+                
+
+                window.location.href = '/auth/wcDtail?wcId=' + wcId
+            });
+        });
     }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
