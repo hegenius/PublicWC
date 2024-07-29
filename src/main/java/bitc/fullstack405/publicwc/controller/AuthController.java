@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.servlet.ModelAndView;
+
 import java.util.Optional;
 
 @Controller
@@ -88,8 +90,10 @@ public class AuthController {
     }
 
     @GetMapping("/wcDtail")
-    public String wcDetail() {
-        return "board/boardDetail";
+    public ModelAndView wcDetail() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("board/boardDetail");
+        return mv;
     }
 
 }

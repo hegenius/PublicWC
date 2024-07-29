@@ -183,9 +183,10 @@ $(document).ready(function (wcId) {
         detailButtons.forEach(function(button) {
             button.addEventListener('click', function() {
 
-                
+                var wcID = "";
 
-                window.location.href = '/auth/wcDtail?wcId=' + wcId
+                // window.location.href = "/auth/wcDtail";
+                location.href = "/auth/wcDtail";
             });
         });
     }
