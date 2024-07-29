@@ -14,7 +14,6 @@
 
 <body>
 <header th:fragment="headerNavbar" class="header">
-
   <div>
     <nav class="navbar navbar-expand-sm">
       <div class="container-fluid">
@@ -32,19 +31,19 @@
             </div>
           </li>
           <li class="me-3">
-            <div th:if="${session.userId} == null">
+            <div th:if="${session.userId == null}">
               <a href="#" class="text-white" th:href="@{/auth/login}">로그인</a>
             </div>
-            <div th:unless="${session.userId} == null">
+            <div th:unless="${session.userId == null}">
               <a href="/auth/logout" class="text-white" id="btn-logout">로그아웃</a>
             </div>
           </li>
           <li>
-            <div th:if="${session.userId} == null">
+            <div th:if="${session.userId == null}">
               <a href="#" class="text-white" th:href="@{/auth/signup}">회원가입</a>
             </div>
-            <div th:unless="${session.userId} == null">
-              <a href="#" class="text-white" id="btn-edit">마이페이지</a>
+            <div th:unless="${session.userId == null}">
+              <a href="/users/mypage" class="text-white" id="btn-edit">마이페이지</a>
             </div>
           </li>
         </ul>
@@ -52,28 +51,22 @@
     </nav>
 
     <script>
-        $( function () {
-            $( '[data-toggle="popover"]' ).popover()
-        } );
+      $(function () {
+        $('[data-toggle="popover"]').popover();
+      });
+
+      $("#btn-logout").on("click", function () {
+        const confirmed = confirm("로그아웃 하시겠습니까?");
+        if (confirmed) {
+          location.href = "/auth/logout";
+        }
+      });
+
+      $("#btn-edit").on("click", function () {
+        location.href = "/users/mypage";
+      });
     </script>
-
-    <script>
-        $("#btn-logout").on("click", function () {
-            const confirmed = confirm("로그아웃 하시겠습니까?");
-
-            if (confirmed) {
-                location.href = "/";
-            }
-        });
-
-        $("#btn-edit").on("click", function () {
-            location.href = "/auth/signup";
-        });
-    </script>
-
   </div>
 </header>
-
-
 </body>
 </html>
