@@ -1,6 +1,42 @@
 <div th:fragment="favoriteView(item)">
 <!--  즐겨찾기 리스트 데이터 -->
-    <div class="mt-5"> [[${favoriteList}]]</div>
-<!--    <script src="/js/favoritesListJs.js" ></script>-->
 
+<!--    <p th:text="${favoriteList}"></p>-->
+    <div class="row listWrap">
+    <div class="col-sm-6 mb-5" th:each="item : ${favoriteList}">
+        <div class="d-flex position-relative">
+            <div class="box_img">
+                <img th:src="@{/images/step_icon01.svg}+${imagePath}" alt="1단계 아이콘">
+<!--                <img src="/images/step_icon01.svg" alt="1단계 아이콘">-->
+            </div>
+            <div class="iconWrap">
+                <div class="d-flex icon">
+                    <p class="me-3">
+                        <img src="/images/thumb_up.svg" alt="좋아요 아이콘">
+                        <span class="ms-1">10</span>
+                    </p>
+                    <p>
+                        <img src="/images/thumb_down.svg" alt="싫어요 아이콘"><span class="ms-1">0</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="listBox d-flex">
+            <img src="/images/time.svg" alt="시간 아이콘">
+            <p>개방시간 : <span th:text="${item.time}">${timeText}</span></p>
+        </div>
+        <div class="listBox d-flex">
+            <img src="/images/address.svg" alt="위치 아이콘">
+            <p>주소 : <span th:text="${item.addr1}">${addressText}</span></p>
+        </div>
+        <div class="listBox d-flex">
+            <img src="/images/key.svg" alt="키 아이콘">
+            <p>키 : <span th:text="${item.wcpass}">${keyText}</span></p>
+        </div>
+        <div>
+            <button class="btn btn-primary mt-2" id="detailButton">자세히 보기</button>
+        </div>
+    </div>
+</div>
 </div>
