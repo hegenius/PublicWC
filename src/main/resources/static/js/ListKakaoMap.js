@@ -186,7 +186,7 @@ $(document).ready(function (wcId) {
                 var wcID = "";
 
                 // window.location.href = "/auth/wcDtail";
-                location.href = "/auth/wcDtail";
+                location.href = "/location/wcDtail";
             });
         });
     }

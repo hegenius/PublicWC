@@ -89,11 +89,6 @@ public class AuthController {
         return "redirect:/";
     }
 
-    @GetMapping("/wcDtail")
-    public ModelAndView wcDetail() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("board/boardDetail");
-        return mv;
-    }
+
 
 }

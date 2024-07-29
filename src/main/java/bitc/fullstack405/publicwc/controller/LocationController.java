@@ -4,19 +4,20 @@ import bitc.fullstack405.publicwc.entity.WcInfo;
 import bitc.fullstack405.publicwc.service.JusoService;
 import bitc.fullstack405.publicwc.service.ToiletService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/location") // API 경로를 통일하기 위한 기본 경로 설정
 public class LocationController {
 
 //    private final LocationController locationService;
 
-    @Autowired
-    JusoService jusoService;
+//    @Autowired
+//    JusoService jusoService;
 
     @Autowired
     ToiletService toiletService;
@@ -65,10 +66,18 @@ public class LocationController {
     }
 
     @PostMapping("/wcInfoList")
+    @ResponseBody
     public Object getWcInfoList() {
         List<WcInfo> wcInfoList = toiletService.parsingWc();
 
         return wcInfoList;
+    }
+
+    @GetMapping("/wcDtail")
+    public ModelAndView wcDetail() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("board/boardDetail");
+        return mv;
     }
 
 }
