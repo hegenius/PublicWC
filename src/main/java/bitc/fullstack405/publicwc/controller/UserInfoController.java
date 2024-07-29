@@ -52,7 +52,8 @@ public class UserInfoController {
         if (!password.equals(password2)) {
             model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
             // 현재 페이지로 리다이렉트하여 오류 메시지를 표시
-            return "login/myPage";
+//            return "users/myPage";
+            return "redirect:/users/mypage";
         }
 
         Optional<Users> userOptional = userService.findById(userId);
