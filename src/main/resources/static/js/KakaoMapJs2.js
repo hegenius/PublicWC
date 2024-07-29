@@ -33,7 +33,7 @@ $(document).ready(function (wcId) {
         // ps.keywordSearch(keyword, placesSearchCB);
 
         $.ajax({
-            url: "/api/wcInfoList",
+            url: "/location/wcInfoList",
             type: "POST",
             dataType: "json",
             success: function (response) {
