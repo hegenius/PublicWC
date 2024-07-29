@@ -31,8 +31,11 @@ public interface WcInfoRepository extends JpaRepository<WcInfo, Integer> {
     List<WcInfo> findAllLevel3();
 
 //    서면역 근처 화장실들 포인트 찝어놓은거
-    @Query("SELECT wi FROM WcInfo wi WHERE wi.point = 'a'")
+    @Query("SELECT wi FROM WcInfo wi WHERE wi.point = '내위치'")
     List<WcInfo> pointWc();
+
+//    @Query("SELECT wi.id, wi.addr1, wi.addr2, wi.comment, wi.createUserId, wi.detailAddr, wi.latitude, wi.level, wi.longitude, wi.point, wi.time FROM WcInfo wi WHERE wi.point = 'a'")
+//    List<WcInfo> pointWc();
 
 //    게시글 상세보기 좋아요 싫어요 구현
     @Query("SELECT new bitc.fullstack405.publicwc.dto.WcInfoWithBestDTO(" +
