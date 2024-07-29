@@ -48,12 +48,12 @@
   <section th:if="${session.userId != null}">
     <div class="favoriteWrap">
       <h3 class="mb-4">즐겨찾기 리스트</h3>
-      <div th:replace="~{/board/favoriteList :: favoriteView(${list})}"></div>
       <div class="row mt-3">
         <div class="col-sm text-end">
           <button type="button" class="btn btn-secondary">글쓰기</button>
         </div>
       </div>
+      <div th:replace="~{/board/favoriteList :: favoriteView(${list})}"></div>
     </div>
   </section>
   <!--  회원 즐겨찾기 리스트 end -->

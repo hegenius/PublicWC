@@ -112,7 +112,7 @@ label {font-weight:bold;}
 }
 
 .boardBg {background-color: #fff; border-radius:20px;}
-.listBox img {margin-top: -2px; margin-right: 10px;}
+/*.listBox img {margin-top: -2px; margin-right: 10px;}*/
 
 .iconWrap {position: absolute; bottom:0; right:0;}
 .iconWrap p {margin-bottom:0;}
@@ -123,8 +123,8 @@ label {font-weight:bold;}
 /* 메인 index */
 .container {margin-top: -500px;}
 .sectionBg {background:#fff;}
-.searchBar {padding:20px; border-radius:50px; border:2px solid #0637a3;}
-.searchBtn {padding:20px; margin-left: 10px; border-radius:50px; border:2px solid #0637a3;}
+.searchBar {padding:20px; border-radius:50px; border:3px solid #0637a3;}
+.searchBtn {padding:20px; margin-left: 10px; border-radius:50px; border:3px solid #0637a3; background-color: #fff;}
 
 .form-group {position:relative; width:100%;}
 
@@ -223,17 +223,22 @@ label {font-weight:bold;}
 
 
 
-
-
     /* 목록 boardList */
     .listWrap {margin-bottom: 50px;}
+    .listWrap button {font-size:0.9rem;}
+    .mapSearch {width:80%; margin:0 auto;}
+
     .stepBox {padding:30px; margin: 20px 0;}
     .stepBox p {margin-top:20px; margin-bottom:0;}
     .stepBox div p:last-of-type {font-size:0.9rem;}
+
     .box_img img {border-radius:10px; padding: 20px 30px; background-color:#f4f4f4;}
 
-    .mapSearch {width:80%; margin:0 auto;}
-    .listWrap button {font-size:0.9rem;}
+    .listBox {position: relative;}
+    .listBox p {margin-left: 30px; font-weight: bold;}
+    .listBox span {word-break: keep-all; font-weight: normal;}
+    .listBox img {position: absolute; top:0; left: 0;}
+
 
 /* 상세페이지 boardDetail */
 
