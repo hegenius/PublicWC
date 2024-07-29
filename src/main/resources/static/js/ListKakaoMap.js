@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function (wcId) {
 // 마커를 담을 배열입니다
     var markers = [];
 
@@ -8,11 +8,9 @@ $(document).ready(function () {
             level: 3 // 지도의 확대 레벨
         };
 
+
 // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
-
-// 장소 검색 객체를 생성합니다
-    var ps = new kakao.maps.services.Places();
 
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
     var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
@@ -28,20 +26,30 @@ $(document).ready(function () {
             return false;
         }
 
-        // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-        ps.keywordSearch(keyword, placesSearchCB);
+        $.ajax({
+            url: "/location/wcInfoList",
+            type: "POST",
+            dataType: "json",
+            success: function (response) {
+                var wcInfoList = response.data || response;
+                placesSearchCB(wcInfoList, kakao.maps.services.Status.OK)
+            },
+            error: function () {
+                console.log("Request failed: " + textStatus);
+                console.log("Error thrown: " + errorThrown);
+                console.log("Response text: " + jqXHR.responseText);
+                alert("An error occurred while processing your request. Please check the console for more details.");
+                placesSearchCB(null, kakao.maps.services.Status.ERROR())
+            }
+        });
+
     }
 
-// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
     function placesSearchCB(data, status, pagination) {
+
         if (status === kakao.maps.services.Status.OK) {
 
-            // 정상적으로 검색이 완료됐으면
-            // 검색 목록과 마커를 표출합니다
             displayPlaces(data);
-
-            // 페이지 번호를 표출합니다
-            displayPagination(pagination);
 
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -60,10 +68,8 @@ $(document).ready(function () {
     function displayPlaces(places) {
         // var listEl = document.getElementById('placesList'),
         var listEl = document.getElementById('underList'),
-            menuEl = document.getElementById('menu_wrap'),
             fragment = document.createDocumentFragment(),
-            bounds = new kakao.maps.LatLngBounds(),
-            listStr = '';
+            bounds = new kakao.maps.LatLngBounds()
 
         // 검색 결과 목록에 추가된 항목들을 제거합니다
         removeAllChildNods(listEl);
@@ -74,18 +80,12 @@ $(document).ready(function () {
         for (var i = 0; i < places.length; i++) {
 
             // 마커를 생성하고 지도에 표시합니다
-            var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+            var placePosition = new kakao.maps.LatLng(places[i].latitude, places[i].longitude),
                 marker = addMarker(placePosition, i),
-                // itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-                itemEl = underListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+                itemEl = underListItem(i, places[i]);
 
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-            // LatLngBounds 객체에 좌표를 추가합니다
             bounds.extend(placePosition);
 
-            // 마커와 검색결과 항목에 mouseover 했을때
-            // 해당 장소에 인포윈도우에 장소명을 표시합니다
-            // mouseout 했을 때는 인포윈도우를 닫습니다
             (function (marker, title) {
                 kakao.maps.event.addListener(marker, 'mouseover', function () {
                     displayInfowindow(marker, title);
@@ -102,49 +102,23 @@ $(document).ready(function () {
                 itemEl.onmouseout = function () {
                     infowindow.close();
                 };
-            })(marker, places[i].place_name);
+            })(marker, places[i].detailAddr);
 
             fragment.appendChild(itemEl);
         }
 
         // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
         listEl.appendChild(fragment);
-        // menuEl.scrollTop = 0;
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
     }
 
+    function underListItem(index, place) {
 
-// 검색결과 항목을 Element로 반환하는 함수입니다
-    function getListItem(index, places) {
-        // var el = document.createElement('li')
-        var el = document.createElement('li')
-        var itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
-            '<div class="info">' +
-            '   <h5>' + places.place_name + '</h5>';
-
-        if (places.road_address_name) {
-            itemStr += '    <span>' + places.road_address_name + '</span>' +
-                '   <span class="jibun gray">' + places.address_name + '</span>';
-        } else {
-            itemStr += '    <span>' + places.address_name + '</span>';
-        }
-
-        itemStr += '  <span class="tel">' + places.phone + '</span>' +
-            '</div>';
-
-        el.innerHTML = itemStr;
-        el.className = 'item';
-
-        return el;
-    }
-
-
-    function underListItem(index, places) {
-
-        var timeText = '06:00 ~ 24:00';
-        var addressText = (places.road_address_name ? places.road_address_name : places.address_name);
+        var wcId = place.id;
+        var timeText = place.time;
+        var addressText = place.addr1 + place.detailAddr;
         var keyText = '********';
 
         var div = document.createElement('div');
@@ -181,8 +155,8 @@ $(document).ready(function () {
             <p>키 : <span>${keyText}</span></p>
         </div>
         <div>
-            <button class="btn btn-primary mt-2">자세히 보기</button>
-        </div>
+        <a href="/location/wcDetail?wcId=${wcId}" class="btn btn-primary mt-2">자세히 보기</a>
+    </div>
     `;
         div.innerHTML = itemStr;
 

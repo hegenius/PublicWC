@@ -3,27 +3,23 @@ package bitc.fullstack405.publicwc.controller;
 import bitc.fullstack405.publicwc.entity.WcInfo;
 import bitc.fullstack405.publicwc.service.JusoService;
 import bitc.fullstack405.publicwc.service.ToiletService;
-import com.google.gson.Gson;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import bitc.fullstack405.publicwc.service.LocationService;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@RestController
-@RequestMapping("/api") // API 경로를 통일하기 위한 기본 경로 설정
+@Controller
+@RequestMapping("/location") // API 경로를 통일하기 위한 기본 경로 설정
 public class LocationController {
 
 //    private final LocationController locationService;
 
-    @Autowired
-    JusoService jusoService;
+//    @Autowired
+//    JusoService jusoService;
 
     @Autowired
     ToiletService toiletService;
@@ -72,10 +68,22 @@ public class LocationController {
     }
 
     @PostMapping("/wcInfoList")
+    @ResponseBody
     public Object getWcInfoList() {
         List<WcInfo> wcInfoList = toiletService.parsingWc();
 
         return wcInfoList;
+    }
+
+    @GetMapping("/wcDetail")
+    public ModelAndView wcDetail(@RequestParam("wcId") String wcId, HttpSession session) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("board/boardDetail");
+
+        mv.addObject("userId", session.getAttribute("userId"));
+        mv.addObject("wcId", wcId);
+
+        return mv;
     }
 
 }

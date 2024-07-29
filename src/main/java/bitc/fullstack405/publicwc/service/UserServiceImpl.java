@@ -18,9 +18,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UsersRepository usersRepository;
 
-    @Autowired
-    private WcInfoRepository wcInfoRepository;
-
     @Override
     public void writeWc(WcInfo wcInfo) {
         // 구현이 필요한 경우 구현하세요.

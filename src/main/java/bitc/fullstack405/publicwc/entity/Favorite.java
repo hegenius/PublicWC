@@ -1,16 +1,15 @@
 package bitc.fullstack405.publicwc.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "favorite")
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Favorite {
 
     @Id

@@ -1,6 +1,5 @@
 package bitc.fullstack405.publicwc.repository;
 
-import bitc.fullstack405.publicwc.entity.Best;
 import bitc.fullstack405.publicwc.entity.Favorite;
 import bitc.fullstack405.publicwc.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
