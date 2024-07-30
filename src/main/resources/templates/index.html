@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>우리들의 공공화장실, 우화</title>
@@ -44,25 +44,24 @@
 
   <br><br><br>
 
-<!--  회원 즐겨찾기 리스트 start -->
-<!--  <section th:if="${session.userId != null}">-->
-    <div class="favoriteWrap">
-      <h3 class="mb-4">즐겨찾기 리스트</h3>
-      <div class="row mt-3">
-        <div class="col-sm text-end">
-          <button type="button" class="btn btn-secondary">글쓰기</button>
-        </div>
+  <!-- 회원 즐겨찾기 리스트 start -->
+  <!-- <section th:if="${session.userId != null}"> -->
+  <div class="favoriteWrap">
+    <h3 class="mb-4">즐겨찾기 리스트</h3>
+    <div class="row mt-3">
+      <div class="col-sm text-end">
+        <button type="button" class="btn btn-secondary" onclick="location.href='/board/write'">글쓰기</button>
       </div>
-<!--      <div th:replace="~{/board/favoriteList :: favoriteView(${list})}"></div>-->
     </div>
-<!--  </section>-->
-  <!--  회원 즐겨찾기 리스트 end -->
+    <!-- <div th:replace="~{/board/favoriteList :: favoriteView(${list})}"></div> -->
+  </div>
+  <!-- </section> -->
+  <!-- 회원 즐겨찾기 리스트 end -->
 
-<!--   비회원 -->
-<div th:unless="${session != null}"></div>
+  <!-- 비회원 -->
+  <div th:unless="${session != null}"></div>
 
 </main> <!-- container end -->
-
 
 <footer th:replace="~{/layout/Footer :: footer}"></footer>
 </body>
