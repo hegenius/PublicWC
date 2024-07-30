@@ -61,16 +61,17 @@ public class BoardController {
 //    }
 
     @PostMapping("/write")
-    public String submitPost(@ModelAttribute WcInfo wcinfo, @RequestParam("addr1")) {
+    public String submitPost(@ModelAttribute WcInfo wcinfo, @RequestParam("latitude") String lati, @RequestParam("longitude") String longi) {
 
         // 파라미터를 WcInfo 객체로 변환
-//        String latitude = allParams.getOrDefault("latitude", "");
-//        String longitude = allParams.getOrDefault("longitude", "");
+        String latitude = "173812873.892";
+        String longitude = "12839.1298";
 
         toiletService.addWcInfo(wcinfo);
 
         // 저장 완료 후 목록 페이지로 리다이렉트
-        return "redirect:/board/list?message=게시물이%20성공적으로%20등록되었습니다.";
+//        return "redirect:/board/list?message=게시물이%20성공적으로%20등록되었습니다.";
+        return "index";
     }
 
     @GetMapping("/list")
