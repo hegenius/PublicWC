@@ -13,24 +13,19 @@ public class ToiletServiceImpl implements ToiletService {
     @Autowired
     private WcInfoRepository wcInfoRepository;
 
-    @Override
-    public List<WcInfo> searchToiletsByAddress(String address) {
-        return wcInfoRepository.findByAddr1Containing(address);
-    }
-
-    @Override
-    public List<WcInfo> searchToiletsByLevel(int level) {
-        switch (level) {
-            case 1:
-                return wcInfoRepository.findAllByLevel(1);
-            case 2:
-                return wcInfoRepository.findAllByLevel(2);
-            case 3:
-                return wcInfoRepository.findAllByLevel(3);
-            default:
-                return List.of(); // 잘못된 등급일 경우 빈 리스트 반환
-        }
-    }
+//    @Override
+//    public List<WcInfo> searchToiletsByLevel(int level) {
+//        switch (level) {
+//            case 1:
+//                return wcInfoRepository.findAllByLevel(1);
+//            case 2:
+//                return wcInfoRepository.findAllByLevel(2);
+//            case 3:
+//                return wcInfoRepository.findAllByLevel(3);
+//            default:
+//                return List.of(); // 잘못된 등급일 경우 빈 리스트 반환
+//        }
+//    }
 
     @Override
     public List<WcInfo> getAllToilets() {

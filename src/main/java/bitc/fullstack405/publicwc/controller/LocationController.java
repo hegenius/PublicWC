@@ -112,3 +112,4 @@ public class LocationController {
 //        가져온 카운트 수 클라이언트로 반환
         return map;
     }
+}

@@ -16,20 +16,20 @@ public class WcController {
     @Autowired
     private ToiletService toiletService;
 
-    @GetMapping
-    public ResponseEntity<List<WcInfo>> getWcs(
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) Integer level) {
-        List<WcInfo> wcInfos;
-        if (address != null) {
-            wcInfos = toiletService.searchToiletsByAddress(address);
-        } else if (level != null) {
-            wcInfos = toiletService.searchToiletsByLevel(level);
-        } else {
-            wcInfos = toiletService.getAllToilets(); // 모든 화장실 조회 메서드
-        }
-        return new ResponseEntity<>(wcInfos, HttpStatus.OK);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<WcInfo>> getWcs(
+//            @RequestParam(required = false) String address,
+//            @RequestParam(required = false) Integer level) {
+//        List<WcInfo> wcInfos;
+//        if (address != null) {
+//            wcInfos = toiletService.searchToiletsByAddress(address);
+//        } else if (level != null) {
+//            wcInfos = toiletService.searchToiletsByLevel(level);
+//        } else {
+//            wcInfos = toiletService.getAllToilets(); // 모든 화장실 조회 메서드
+//        }
+//        return new ResponseEntity<>(wcInfos, HttpStatus.OK);
+//    }
 
     @PostMapping
     public ResponseEntity<WcInfo> addWc(@RequestBody WcInfo wcInfo) {
