@@ -6,7 +6,7 @@
     <div class="row listWrap">
     <div class="col-sm-6 mb-5" th:each="item : ${favoriteList}">
         <div class="d-flex position-relative">
-            <div th:switch="${item.level}" class="box_img">
+            <div th:switch="${item.favoriteWc.level}" class="box_img">
                 <p th:case="1"><img th:src="@{/images/step_icon01.svg}" alt="1단계 아이콘"></p>
                 <p th:case="2"><img th:src="@{/images/step_icon02.svg}" alt="2단계 아이콘"></p>
                 <p th:case="3"><img th:src="@{/images/step_icon03.svg}" alt="3단계 아이콘"></p>
@@ -26,18 +26,18 @@
         <hr>
         <div class="listBox d-flex">
             <img src="/images/time.svg" alt="시간 아이콘">
-            <p>개방시간 : <span th:text="${item.time}">${timeText}</span></p>
+            <p>개방시간 : <span th:text="${item.favoriteWc.time}">${timeText}</span></p>
         </div>
         <div class="listBox d-flex">
             <img src="/images/address.svg" alt="위치 아이콘">
-            <p>주소 : <span th:text="${item.addr1}">${addressText}</span></p>
+            <p>주소 : <span th:text="${item.favoriteWc.addr1}">${addressText}</span></p>
         </div>
         <div class="listBox d-flex">
             <img src="/images/key.svg" alt="키 아이콘">
-            <p>키 : <span th:text="${item.wcpass}">${keyText}</span></p>
+            <p>키 : <span th:text="${item.favoriteWc.wcpass}">${keyText}</span></p>
         </div>
         <div>
-            <a th:href="@{//wcDetail?wcId(id=1)}" class="btn btn-primary mt-2" id="detailButton" >자세히 보기</a>
+<!--            <a th:href="@{//wcDetail?wcId(id=1)}" class="btn btn-primary mt-2" id="detailButton" >자세히 보기</a>-->
         </div>
     </div>
     </div>

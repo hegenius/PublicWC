@@ -73,11 +73,12 @@ $(document).ready(function (){
 
     function makeMarker(loc) {
 
-        var imageSrc = "/images/marker.gif" // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        var imageSize = new kakao.maps.Size(70, 70)  // 마커 이미지의 크기
+        var imageSrc = "/images/locMarker.png" // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        var imageSize = new kakao.maps.Size(30, 50)  // 마커 이미지의 크기
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
 
         var newMarker = new kakao.maps.Marker({
+            // image: markerImage,
             position: loc
         });
 

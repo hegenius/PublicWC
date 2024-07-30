@@ -24,7 +24,7 @@ public class UserInfoController {
     private FavoriteService favoriteService;
 
     // 메인 페이지 요청 처리
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home() {
         return "index";
     }

@@ -59,9 +59,8 @@ public class FavoriteServiceImle implements FavoriteService {
     }
 
     @Override
-    public List<Favorite> selectFavoriteList() {
-        return favoriteRepository.findAll();
+    public List<Favorite> selectFavoriteList(Users user) {
+        return favoriteRepository.findByUser(user);
     }
-
 
 }
