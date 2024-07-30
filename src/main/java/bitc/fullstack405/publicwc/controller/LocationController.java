@@ -1,12 +1,11 @@
 package bitc.fullstack405.publicwc.controller;
 
+import bitc.fullstack405.publicwc.entity.Favorite;
+import bitc.fullstack405.publicwc.entity.Users;
 import bitc.fullstack405.publicwc.entity.WcInfo;
-import bitc.fullstack405.publicwc.service.BestService;
-import bitc.fullstack405.publicwc.service.JusoService;
-import bitc.fullstack405.publicwc.service.ToiletService;
+import bitc.fullstack405.publicwc.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/location") // API 경로를 통일하기 위한 기본 경로 설정
@@ -29,6 +29,9 @@ public class LocationController {
 
     @Autowired
     BestService bestService;
+
+    @Autowired
+    FavoriteService favoriteService;
 
 //    @Autowired
 //    public LocationController(LocationService locationService) {
@@ -116,7 +119,7 @@ public class LocationController {
     @ResponseBody
     @PostMapping("/hateTest")
     public Object hateTest(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
-//        카운트 업
+//        카운트 다운
         bestService.hateCountUp(userId, wcId);
 //        현재 카운트 수 가져오기
         int likeCount = bestService.getLikeCount(userId, wcId);
@@ -127,5 +130,18 @@ public class LocationController {
         map.put("hateCount", hateCount);
 //        가져온 카운트 수 클라이언트로 반환
         return map;
+    }
+
+    // 즐겨찾기부분
+    @ResponseBody
+    @PostMapping("/favorites")
+    public Object addFavorite(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
+        
+        Optional<Users> user = favoriteService.getUserById(userId);
+        Optional<WcInfo> wcInfo = favoriteService.getWcInfoById(wcId);
+
+        Favorite favorite = favoriteService.addFavorite(user.orElse(null), wcInfo.orElse(null));
+
+        return favorite;
     }
 }

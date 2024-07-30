@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FavoriteServiceImle implements FavoriteService {
@@ -23,39 +24,12 @@ public class FavoriteServiceImle implements FavoriteService {
     @Autowired
     private FavoriteRepository favoriteRepository;
 
-    @Override
-    public void addFavorite(String userId, int wcId) {
-
-        // userId로 사용자를 찾고, 없으면 예외 발생
-        Users user = usersRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // wcId로 화장실을 찾고, 없으면 예외 발생
-        WcInfo wcInfo = wcInfoRepository.findById(wcId)
-                .orElseThrow(() -> new RuntimeException("WcInfo not found"));
-
-        var newFavorite = new Favorite();
-        newFavorite.setFavoriteUsers(user);
-        newFavorite.setFavoriteWc(wcInfo);
-
-        favoriteRepository.save(newFavorite);
-    }
 
     @Override
     public void removeFavorite(String userId, int wcId) {
-
     }
-
     @Override
     public void updateFavorite(String userId, int wcId) {
-
-//        Favorite favorite = favoriteRepository.findByUser(user);
-//
-//        // 중복 추가 방지
-//        if (favorite.getFavoriteWc() == wcInfo) {
-//            throw new RuntimeException("Already favorite");
-//        }
-
     }
 
     @Override
@@ -63,4 +37,41 @@ public class FavoriteServiceImle implements FavoriteService {
         return favoriteRepository.findByUser(user);
     }
 
+    @Override
+    public Favorite addFavorite(Users user, WcInfo wcInfo) {
+
+        Favorite favorite = new Favorite();
+
+        favorite.setFavoriteUsers(user);
+        favorite.setFavoriteWc(wcInfo);
+
+        Favorite result = favoriteRepository.save(favorite);
+
+        return result;
+    }
+
+    @Override
+    public Optional<Users> getUserById(String userId) {
+        return usersRepository.findById(userId);
+    }
+
+    @Override
+    public Optional<WcInfo> getWcInfoById(int wcId) {
+        return wcInfoRepository.findById(wcId);
+    }
+
 }
+
+//// userId로 사용자를 찾고, 없으면 예외 발생
+//Users user = usersRepository.findById(userId)
+//        .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//// wcId로 화장실을 찾고, 없으면 예외 발생
+//WcInfo wcInfo = wcInfoRepository.findById(wcId)
+//        .orElseThrow(() -> new RuntimeException("WcInfo not found"));
+//
+//var newFavorite = new Favorite();
+//        newFavorite.setFavoriteUsers(user);
+//        newFavorite.setFavoriteWc(wcInfo);
+//
+//        favoriteRepository.save(newFavorite);
