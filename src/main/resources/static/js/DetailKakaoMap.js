@@ -29,8 +29,10 @@ $(document).ready(function () {
         // GeoLocation을 이용해서 접속 위치를 얻어옵니다
         navigator.geolocation.getCurrentPosition(function (position) {
 
-            var lat = position.coords.latitude, // 위도
-                lon = position.coords.longitude; // 경도
+            // var lat = position.coords.latitude, // 위도
+            //     lon = position.coords.longitude;
+            var lat = 35.1560448378911, // 위도
+                lon = 129.059564755963; // 경도
 
             var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
                 message = '<div style="padding:5px;">내 위치</div>'; // 인포윈도우에 표시될 내용입니다
