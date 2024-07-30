@@ -58,6 +58,23 @@
           }
         });
       });
+
+      $("#favorite-button").on("click", function () {
+
+        $.ajax({
+          url: "/location/favorites",
+          type: "POST",
+          data: {userId: userId, wcId: wcId},
+          success: function (favData) {
+            if (favData != null) {
+              $("#favorite-button").attr("src", "/images/favorites_on.svg");
+            }
+          },
+          error: function (errData) {
+            alert("error")
+          }
+        })
+      })
     });
   </script>
 
@@ -105,8 +122,8 @@
           </p>
 
           <p class="me-3"><img src="/images/thumb_down.svg" alt="싫어요 아이콘" id="hate-button"><span class="ms-1" id="hate">0</span></p>
-          <p id="favorite-icon" data-wc-id="512" data-favorite="false">
-            <img src="/images/favorites_off.svg" alt="즐겨찾기 아이콘"></p>
+          <p>
+            <img src="/images/favorites_off.svg" id="favorite-button" alt="즐겨찾기 아이콘"></p>
           <!--          <span><img src="/images/favorites_on.svg" alt="선택된 즐겨찾기 아이콘"></span>-->
         </div>
       </div>
