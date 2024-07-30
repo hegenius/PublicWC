@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
@@ -15,16 +14,15 @@
   <link rel="stylesheet" href="/css/style.css">
 
   <script th:inline="javascript">
-  //   사용자  ID
+    //   사용자  ID
     var userId = [[${userId}]];
-  // 화장실 번호
+    // 화장실 번호
     var wcId = [[${wcId}]];
   </script>
 
   <script>
     $(document).ready(function () {
       $("#like-button").on("click", function () {
-
         $.ajax({
           url: "/location/bestTest",
           type: "POST",
@@ -42,7 +40,6 @@
       });
 
       $("#hate-button").on("click", function () {
-
         $.ajax({
           url: "/location/hateTest",
           type: "POST",
@@ -58,13 +55,16 @@
           }
         });
       });
+
+      // 목록 버튼 클릭 이벤트
+      $("#btn-list").on("click", function() {
+        window.history.back(); // 이전 페이지로 이동
+      });
     });
   </script>
-
 </head>
 
 <body>
-
 <header th:replace="~{/layout/Header :: headerNavbar}"></header>
 
 <!-- 상세페이지 시작 -->
@@ -76,8 +76,6 @@
 
   <section class="boardBg p-5 mt-4 shadow">
     <!--  카카오맵 include 시작 -->
-
-
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=00e9042c7f04c04f3d386355eeaeb634&libraries=services"></script>
 
@@ -107,7 +105,7 @@
           <p class="me-3"><img src="/images/thumb_down.svg" alt="싫어요 아이콘" id="hate-button"><span class="ms-1" id="hate">0</span></p>
           <p id="favorite-icon" data-wc-id="512" data-favorite="false">
             <img src="/images/favorites_off.svg" alt="즐겨찾기 아이콘"></p>
-          <!--          <span><img src="/images/favorites_on.svg" alt="선택된 즐겨찾기 아이콘"></span>-->
+          <!-- <span><img src="/images/favorites_on.svg" alt="선택된 즐겨찾기 아이콘"></span>-->
         </div>
       </div>
     </div>
@@ -141,49 +139,6 @@
 </main>
 <!-- 상세페이지 끝 -->
 
-
-
 <footer th:replace="~{/layout/Footer :: footer}"></footer>
-
 </body>
 </html>
-
-<!--$(document).ready(function() {-->
-<!--// const userId = $("user-id"); // Thymeleaf에서 사용자 ID를 가져옴-->
-<!--// const wcId = $("wcId"); // Thymeleaf에서 화장실 ID를 가져옴-->
-
-<!--// 페이지 로드 시 즐겨찾기 상태 확인-->
-<!--$.get(`/users/${userId}/favorites/${wcId}`, function(isFavorite) {-->
-<!--const iconSrc = isFavorite ? '/images/favorites_on.svg' : '/images/favorites_off.svg';-->
-<!--$('#favorite-icon img').attr('src', iconSrc);-->
-<!--$('#favorite-icon').data('favorite', isFavorite);-->
-<!--});-->
-
-<!--// 즐겨찾기 버튼 클릭 이벤트-->
-<!--$('#favorite-icon').click(function() {-->
-<!--const isFavorite = $(this).data('favorite');-->
-<!--const newFavoriteStatus = !isFavorite;-->
-<!--const iconSrc = newFavoriteStatus ? '/images/favorites_on.svg' : '/images/favorites_off.svg';-->
-
-<!--$.ajax({-->
-<!--url: `/users/${userId}/favorites/${wcId}`,-->
-<!--type: 'POST',-->
-<!--success: function(response) {-->
-<!--$('#favorite-icon img').attr('src', iconSrc);-->
-<!--$('#favorite-icon').data('favorite', newFavoriteStatus);-->
-<!--},-->
-<!--error: function(xhr, status, error) {-->
-<!--alert('즐겨찾기 처리에 실패했습니다.'  + xhr.responseText);-->
-<!--}-->
-<!--});-->
-<!--});-->
-<!--});-->
-
-
-
-
-
-
-
-
-
