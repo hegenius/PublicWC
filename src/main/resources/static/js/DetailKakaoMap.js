@@ -34,7 +34,7 @@ $(document).ready(function () {
             var lat = 35.1560448378911, // 임의 위도
                 lon = 129.059564755963; // 임의 경도
 
-            var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+            var locPosition = new kakao.maps.LatLng(lat, lon),
                 message = '<div style="padding:5px;">내 위치</div>'; // 인포윈도우에 표시될 내용입니다
 
 
