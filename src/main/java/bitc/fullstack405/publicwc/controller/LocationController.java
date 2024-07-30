@@ -1,6 +1,7 @@
 package bitc.fullstack405.publicwc.controller;
 
 import bitc.fullstack405.publicwc.entity.WcInfo;
+import bitc.fullstack405.publicwc.service.BestService;
 import bitc.fullstack405.publicwc.service.JusoService;
 import bitc.fullstack405.publicwc.service.ToiletService;
 import jakarta.servlet.http.HttpSession;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/location") // API 경로를 통일하기 위한 기본 경로 설정
@@ -23,6 +26,9 @@ public class LocationController {
 
     @Autowired
     ToiletService toiletService;
+
+    @Autowired
+    BestService bestService;
 
 //    @Autowired
 //    public LocationController(LocationService locationService) {
@@ -91,9 +97,18 @@ public class LocationController {
         return mv;
     }
 
-    @GetMapping("/kakao")
-    public String kakao() {
-        return "kakaoWriteTest";
-    }
+    @ResponseBody
+    @PostMapping("/bestTest")
+    public Object bestTest(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
+//        카운트 업
+        bestService.likeCountUp(userId, wcId);
+//        현재 카운트 수 가져오기
+        int likeCount = bestService.getLikeCount(userId, wcId);
+        int hateCount = bestService.getHateCount(userId, wcId);
 
-}
+        Map<String, Integer> map = new HashMap<>();
+        map.put("likeCount", likeCount);
+        map.put("hateCount", hateCount);
+//        가져온 카운트 수 클라이언트로 반환
+        return map;
+    }

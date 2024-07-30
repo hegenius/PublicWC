@@ -17,7 +17,7 @@ public class Best {
     private int id;
 
     @Column(nullable = true)
-    private boolean good;
+    private int good;
 
     @JsonBackReference
     @ManyToOne
@@ -30,5 +30,4 @@ public class Best {
     @JoinColumn(name = "wcId")
     @ToString.Exclude
     private WcInfo bestWc;
-
 }

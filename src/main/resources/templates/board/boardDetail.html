@@ -14,66 +14,29 @@
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css">
 
+  <script th:inline="javascript">
+  //   사용자  ID
+    var userId = [[${userId}]];
+  // 화장실 번호
+    var wcId = [[${wcId}]];
+  </script>
+
   <script>
-    $(document).ready(function() {
-      // const userId = '현재 사용자 ID'; // 현재 로그인된 사용자 ID를 서버에서 동적으로 설정
-      // const wcId = '현재 화장실 ID'; // 현재 화장실 ID를 서버에서 동적으로 설정
+    $(document).ready(function () {
+      $("#like-button").on("click", function () {
 
-      const userId = $("#userIdInput").val();
-      const wcId = $("#wcIdInput").val();
-
-      // 좋아요/싫어요 상태 확인
-      $.ajax({
-        url: `/wcinfo/${wcId}/status/${userId}`,
-        type: 'GET',
-        success: function(response) {
-          if (response === 'like') {
-            $('#like-button').addClass('liked');
-          } else if (response === 'dislike') {
-            $('#dislike-button').addClass('disliked');
-          }
-        }
-      });
-
-      // 페이지 로드 시 즐겨찾기 상태 확인
-      // $.get(`/users/${userId}/favorites/${wcId}`, function(isFavorite) {
-      //   const iconSrc = isFavorite ? '/images/favorites_on.svg' : '/images/favorites_off.svg';
-      //   $('#favorite-icon img').attr('src', iconSrc);
-      //   $('#favorite-icon').data('favorite', isFavorite);
-      // });
-
-      // 좋아요 버튼 클릭 시 처리
-      $('#like-button').click(function() {
         $.ajax({
-          url: `/wcinfo/${wcId}/like/${userId}`,
-          type: 'POST',
-          success: function(response) {
-            $('#like-button').addClass('liked');
-            $('#dislike-button').removeClass('disliked');
+          url: "/location/bestTest",
+          type: "POST",
+          data: {userId : userId, wcId : wcId},
+          success: function (resData) {
+            if (resData != null) {
+              $("#like").text(resData.likeCount);
+              $("#hate").text(resData.hateCount);
+            }
           },
-          error: function(xhr, status, error) {
-            alert('좋아요 처리에 실패했습니다.');
-          }
-        });
-      });
-
-      // 싫어요 버튼 클릭 시 처리
-      $('#dislike-button').click(function() {
-        $.ajax({
-          url: `/wcinfo/${wcId}/dislike/${userId}`,
-          // url: "/users/favorites",
-          type: 'POST',
-          success: function(response) {
-            $('#dislike-button').addClass('disliked');
-            $('#like-button').removeClass('liked');
-          // data: {userIdParam : userId, wcIdParam : wcId},
-          // dataType: "json",
-          // success: function() {
-          //   $('#favorite-icon img').attr('src', iconSrc);
-          //   $('#favorite-icon').data('favorite', newFavoriteStatus);
-          },
-          error: function(xhr, status, error) {
-            alert('싫어요 처리에 실패했습니다.');
+          error: function (errData) {
+            alert("error");
           }
         });
       });
@@ -118,8 +81,12 @@
       <hr>
       <div class="float-end">
         <div class="d-flex">
-          <p class="me-3"><img src="/images/thumb_up.svg" alt="좋아요 아이콘"><span class="ms-1" id="like-button">10</span></p>
-          <p class="me-3"><img src="/images/thumb_down.svg" alt="싫어요 아이콘"><span class="ms-1" id="dislike-button">0</span></p>
+          <p class="me-2">
+            <img src="/images/thumb_up.svg" alt="좋아요 아이콘" id="like-button">
+            <span class="ms-1" id="like">10</span>
+          </p>
+
+          <p class="me-3"><img src="/images/thumb_down.svg" alt="싫어요 아이콘" id="hate-button"><span class="ms-1" id="hate">0</span></p>
           <p id="favorite-icon" data-wc-id="512" data-favorite="false">
             <img src="/images/favorites_off.svg" alt="즐겨찾기 아이콘"></p>
           <!--          <span><img src="/images/favorites_on.svg" alt="선택된 즐겨찾기 아이콘"></span>-->
