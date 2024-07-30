@@ -26,34 +26,28 @@ public class WcInfo {
     @ColumnDefault("1")
     private int level; // 화장실 등급
 
-    @Column(nullable = true)
     private String name; // 화장실 이름
 
     @Column(nullable = false)
     private String addr1; // 도로명 주소
 
-    @Column(nullable = true)
     private String addr2; // 지번 주소
 
     @Column(nullable = false)
-    private String detailAddr = ""; // 기본값 설정
+    private String detailAddr; // 기본값 설정
 
-    @Column(nullable = true)
     private String time; // 개방 시간
 
-    @Column(nullable = true)
     private String comment; // 상세글
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String latitude; // 위도
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String longitude;  // 경도
 
-    @Column(nullable = true)
     private String wcpass;
 
-    @Column(nullable = true)
     private String point;
 
     @Column(nullable = false)

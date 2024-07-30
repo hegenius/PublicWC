@@ -115,7 +115,6 @@ $(document).ready(function (wcId) {
     }
 
     function underListItem(index, place) {
-
         var wcId = place.id;
         var timeText = place.time;
         var addressText = place.addr1 + place.detailAddr;
