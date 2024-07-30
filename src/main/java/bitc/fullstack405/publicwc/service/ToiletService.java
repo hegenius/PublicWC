@@ -10,6 +10,7 @@ public interface ToiletService {
     List<WcInfo> getAllToilets(); // 모든 화장실 조회 메서드 추가
     WcInfo addWcInfo(WcInfo wcInfo);
     WcInfo updateWcInfo(int id, WcInfo wcInfo);
+    WcInfo findWcInfoById(int id);
     void deleteWcInfo(int id);
     List<WcInfo> parsingWc();
 }

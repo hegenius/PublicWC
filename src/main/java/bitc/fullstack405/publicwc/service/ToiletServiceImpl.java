@@ -52,6 +52,11 @@ public class ToiletServiceImpl implements ToiletService {
     }
 
     @Override
+    public WcInfo findWcInfoById(int id) {
+        return wcInfoRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public void deleteWcInfo(int id) {
         wcInfoRepository.deleteById(id);
     }
