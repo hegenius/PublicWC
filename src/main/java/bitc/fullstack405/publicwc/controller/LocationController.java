@@ -91,4 +91,9 @@ public class LocationController {
         return mv;
     }
 
+    @GetMapping("/kakao")
+    public String kakao() {
+        return "kakaoWriteTest";
+    }
+
 }
