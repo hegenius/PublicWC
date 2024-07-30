@@ -1,15 +1,15 @@
 
 
 <div th:fragment="favoriteView(item)">
-<!--  즐겨찾기 리스트 데이터 -->
-
+<!--  즐겨찾기 리스트 데이터-->
 <!--    <p th:text="${favoriteList}"></p>-->
     <div class="row listWrap">
     <div class="col-sm-6 mb-5" th:each="item : ${favoriteList}">
         <div class="d-flex position-relative">
-            <div class="box_img">
-                <img th:src="@{/images/step_icon01.svg}+${imagePath}" alt="1단계 아이콘">
-<!--                <img src="/images/step_icon01.svg" alt="1단계 아이콘">-->
+            <div th:switch="${item.level}" class="box_img">
+                <p th:case="1"><img th:src="@{/images/step_icon01.svg}" alt="1단계 아이콘"></p>
+                <p th:case="2"><img th:src="@{/images/step_icon02.svg}" alt="2단계 아이콘"></p>
+                <p th:case="3"><img th:src="@{/images/step_icon03.svg}" alt="3단계 아이콘"></p>
             </div>
             <div class="iconWrap">
                 <div class="d-flex icon">
@@ -37,8 +37,8 @@
             <p>키 : <span th:text="${item.wcpass}">${keyText}</span></p>
         </div>
         <div>
-            <button class="btn btn-primary mt-2" id="detailButton">자세히 보기</button>
+            <a th:href="@{//wcDetail?wcId(id=1)}" class="btn btn-primary mt-2" id="detailButton" >자세히 보기</a>
         </div>
     </div>
-</div>
+    </div>
 </div>
