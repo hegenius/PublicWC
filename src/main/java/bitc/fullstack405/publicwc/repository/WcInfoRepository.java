@@ -49,8 +49,7 @@ public interface WcInfoRepository extends JpaRepository<WcInfo, Integer> {
     @Query("SELECT wi FROM WcInfo wi WHERE wi.id IN (SELECT f.favoriteWc.id FROM Favorite f WHERE f.favoriteUsers.id = :userId)")
     List<WcInfo> findFavoriteWcListsByUserId(@Param("userId") String userId);
 
-    List<WcInfo> findAllByLevel(int i);
+    List<WcInfo> findAllByLevel(int level);
 
     List<WcInfo> findByAddr1Containing(String address);
 }
-

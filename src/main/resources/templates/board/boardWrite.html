@@ -12,6 +12,40 @@
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('submit-button').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const formData = {
+          name: document.getElementById('title').value,
+          addr1: document.getElementById('inputAddress').value,
+          detailAddr: document.getElementById('inputAddress2').value,
+          time: document.getElementById('time').value,
+          comment: document.getElementById('contents').value,
+          wcpass: document.getElementById('password').value,
+          gender: document.getElementById('users-gender').value,
+          handicap: document.getElementById('users-handicap').value
+        };
+
+        fetch('/api/wcs', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        })
+                .then(response => response.json())
+                .then(data => {
+                  alert('화장실 정보가 성공적으로 추가되었습니다.');
+                  window.location.href = '/board/list';  // 목록 페이지로 리다이렉트
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                });
+      });
+    });
+  </script>
 </head>
 <body>
 
@@ -29,7 +63,7 @@
     <!-- <div th:replace="~{/board/KakaoMap :: mapView}"></div> -->
     <!-- 카카오맵 include 끝 -->
 
-    <form class="row g-3 mt-4" th:action="@{/board/write}" th:object="${board}" method="post">
+    <form class="row g-3 mt-4">
       <div class="col-12">
         <label for="title" class="form-label">제목</label>
         <input type="text" class="form-control" id="title" name="name" placeholder="제목을 입력해주세요" required>
@@ -70,8 +104,8 @@
       </div>
 
       <div class="mt-5">
-        <button type="button" class="btn btn-secondary float-start" onclick="location.href='/board/list'">목록</button>
-        <button type="submit" class="btn btn-primary float-end">확인</button>
+        <button type="button" id="submit-button" class="btn btn-primary float-end">확인</button>
+        <a href="/board/list" class="btn btn-secondary float-start">목록</a>
       </div>
     </form>
   </section>
@@ -82,3 +116,4 @@
 
 </body>
 </html>
+

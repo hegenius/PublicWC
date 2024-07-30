@@ -30,7 +30,7 @@ public class WcInfo {
     @Column(nullable = false)
     private String addr1; // 도로명 주소
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String addr2; // 지번 주소
 
     @Column(nullable = false)
@@ -42,10 +42,10 @@ public class WcInfo {
     @Column(nullable = true)
     private String comment; // 상세글
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String latitude; // 위도
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String longitude;  // 경도
 
     @Column(nullable = true)
@@ -68,5 +68,6 @@ public class WcInfo {
     private List<Best> wcBestList = new ArrayList<>();
 
     public WcInfo(String title, String content) {
+        // constructor logic
     }
 }

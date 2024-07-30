@@ -70,3 +70,5 @@ public class ToiletServiceImpl implements ToiletService {
         return wcInfoRepository.pointWc(); // 특정 조건의 화장실 정보 조회
     }
 }
+
+
