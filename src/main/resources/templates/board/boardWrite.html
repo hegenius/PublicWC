@@ -39,16 +39,24 @@
 
     <form class="row g-3 mt-4" method="post" action="/board/write">
       <div class="col-12">
-        <label for="title" class="form-label">제목</label>
-        <input type="text" class="form-control" id="title" name="name" placeholder="제목을 입력해주세요" required>
-      </div>
-      <div class="col-12">
         <label for="inputAddress" class="form-label">주소</label>
         <input type="text" class="form-control" id="inputAddress" name="addr1" placeholder="도로명 주소를 입력해주세요" required>
       </div>
       <div class="col-12">
         <label for="inputAddress2" class="form-label">상세 주소</label>
         <input type="text" class="form-control" id="inputAddress2" name="detailAddr" placeholder="상세 주소를 입력해주세요" required>
+      </div>
+      <div class="col-12">
+        <label for="level" class="form-label">레벨</label>
+        <select class="form-select" id="level" name="level">
+          <option value="level1">level.1</option>
+          <option value="level2">level.2</option>
+          <option value="level3">level.3</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <label for="title" class="form-label">제목</label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" required>
       </div>
       <div class="col-12">
         <label for="time" class="form-label">개방시간</label>
@@ -62,29 +70,14 @@
         <label for="password" class="form-label">키</label>
         <input type="text" class="form-control" id="password" name="wcpass" placeholder="화장실 비밀번호 입력해주세요">
       </div>
-      <div class="col-12">
-        <label for="users-gender" class="form-label">성별</label>
-        <select class="form-select" id="users-gender" name="gender">
-          <option value="male">남성</option>
-          <option value="female">여성</option>
-        </select>
-      </div>
-      <div class="col-12">
-        <label for="users-handicap" class="form-label">장애인 화장실 여부</label>
-        <select class="form-select" id="users-handicap" name="handicap">
-          <option value="true">있음</option>
-          <option value="false">없음</option>
-        </select>
-      </div>
-
       <!-- Hidden fields for latitude, longitude, and createUserId -->
       <input type="hidden" id="latitude" name="latitude">
       <input type="hidden" id="longitude" name="longitude">
       <input type="hidden" id="createUserId" name="createUserId" value="currentUserId"> <!-- Replace 'currentUserId' with actual logged-in user ID -->
 
       <div class="mt-5">
-        <button type="submit" id="submit-button" class="btn btn-primary float-end">확인</button>
-        <a href="/" class="btn btn-secondary float-start">취소</a>
+        <button type="submit" id="submit-button" class="btn btn-outline-dark float-end">확인</button>
+          <a href="/" class="btn btn-secondary float-start">취소</a>
       </div>
     </form>
   </section>

@@ -117,7 +117,7 @@
     <!--  카카오맵 include 끝 -->
 
     <div class="mt-5">
-      <h3>부산공공화장실</h3>
+      <h3><span th:text="${wcInfo.name}"></span></h3>
       <hr>
       <div class="float-end">
         <div class="d-flex">
@@ -134,29 +134,25 @@
       </div>
     </div>
     <div class="listBox d-flex">
-      <p><img src="/images/address.svg" alt="주소 아이콘"></p>
-      <p>주소 : <span th:text="${wcInfo.addr1}">부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span></p>
+      <img src="/images/address.svg" alt="주소 아이콘">
+      <p>주소 : <span th:text="${wcInfo.addr1}"></span> <span th:text="${wcInfo.detailAddr}"></span></p>
     </div>
     <div class="listBox d-flex">
-      <p><img src="/images/time.svg" alt="시간 아이콘"></p>
-      <p>개방시간 : <span th:text="${wcInfo.time}">06:00 ~ 24:00</span></p>
+      <img src="/images/time.svg" alt="시간 아이콘">
+      <p>개방시간 : <span th:text="${wcInfo.time}"></span></p>
     </div>
     <div class="listBox d-flex">
-      <p><img src="/images/etc.svg" alt="기타 아이콘"></p>
-      <p>기타 : <span th:text="${wcInfo.comment}">기저귀교환대 있음</span></p>
+      <img src="/images/etc.svg" alt="기타 아이콘">
+      <p>기타 : <span th:text="${wcInfo.comment}"></span></p>
     </div>
     <div class="listBox d-flex">
-      <p><img src="/images/info.svg" alt="정보 아이콘"></p>
-      <p>정보 : <span>남자 화장실 O, 여자화장실 O, 장애인화장실 O</span></p>
-    </div>
-    <div class="listBox d-flex">
-      <p><img src="/images/key.svg" alt="비밀번호 아이콘"></p>
-      <p>키 : <span>*********</span></p>
+      <img src="/images/key.svg" alt="비밀번호 아이콘">
+      <p>키 : <span th:text="${wcInfo.wcpass}"></span></p>
     </div>
 
     <div class="row mt-3">
       <div class="col-sm text-end">
-        <button type="button" class="btn btn-secondary" id="btn-list">목록</button>
+        <button type="button" class="btn btn-primary" id="btn-list">목록</button>
       </div>
     </div>
   </section>

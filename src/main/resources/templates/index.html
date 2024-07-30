@@ -49,8 +49,8 @@
   <div class="favoriteWrap">
     <h3 class="mb-4">즐겨찾기 리스트</h3>
     <div class="row mt-3">
-      <div class="col-sm text-end">
-        <button type="button" class="btn btn-secondary" onclick="location.href='/board/write'">글쓰기</button>
+      <div class="col-sm text-end writeBtn">
+        <button type="button" class="btn btn-danger btn-lg" onclick="location.href='/board/write'">글쓰기</button>
       </div>
     </div>
      <div th:replace="~{/board/favoriteList :: favoriteView(${favoriteList})}"></div>
