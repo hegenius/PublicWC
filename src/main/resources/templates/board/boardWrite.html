@@ -12,6 +12,7 @@
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
 
@@ -40,16 +41,16 @@
 
     <form class="row g-3 mt-4" th:action="@{/board/write}" th:object="${board}" method="post">
       <div class="col-12">
-        <label for="title" class="form-label">제목</label>
-        <input type="text" class="form-control" id="title" name="name" placeholder="제목을 입력해주세요" required>
-      </div>
-      <div class="col-12">
         <label for="inputAddress" class="form-label">주소</label>
         <input type="text" class="form-control" id="inputAddress" name="addr1" placeholder="도로명 주소를 입력해주세요" required>
       </div>
       <div class="col-12">
         <label for="inputAddress2" class="form-label">상세 주소</label>
         <input type="text" class="form-control" id="inputAddress2" name="detailAddr" placeholder="상세 주소를 입력해주세요">
+      </div>
+      <div class="col-12">
+        <label for="title" class="form-label">제목</label>
+        <input type="text" class="form-control" id="title" name="name" placeholder="제목을 입력해주세요" required>
       </div>
       <div class="col-12">
         <label for="time" class="form-label">개방시간</label>
