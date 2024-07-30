@@ -40,6 +40,24 @@
           }
         });
       });
+
+      $("#hate-button").on("click", function () {
+
+        $.ajax({
+          url: "/location/hateTest",
+          type: "POST",
+          data: {userId: userId, wcId: wcId},
+          success: function (resData) {
+            if (resData != null) {
+              $("#like").text(resData.likeCount);
+              $("#hate").text(resData.hateCount);
+            }
+          },
+          error: function (errData) {
+            alert("error");
+          }
+        });
+      });
     });
   </script>
 
