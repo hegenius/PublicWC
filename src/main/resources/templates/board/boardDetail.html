@@ -105,12 +105,10 @@
     </div>
 
     <input type="hidden" th:value="${userId}" id="hiddenUserId">
-<!--    <input type="hidden" th:value="${wcId}" id="hiddenWcId">-->
     <input type="hidden" th:value="${wcInfo}" id="hiddenWcInfo">
     <input type="hidden" th:value="${wcInfo.latitude}" id="hiddenLati">
     <input type="hidden" th:value="${wcInfo.longitude}" id="hiddenLongi">
     <input type="hidden" th:value="${wcInfo.detailAddr}" id="hiddenDetail">
-
 
     <script src="/js/DetailKakaoMap.js"></script>
     <!--  카카오맵 include 끝 -->
@@ -130,15 +128,15 @@
     </div>
     <div class="listBox d-flex">
       <p><img src="/images/address.svg" alt="주소 아이콘"></p>
-      <p>주소 : <span>부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span></p>
+      <p>주소 : <span th:text="${wcInfo.addr1}">부산 부산진구 중앙대로 708 부산파이낸스센터 4층</span></p>
     </div>
     <div class="listBox d-flex">
       <p><img src="/images/time.svg" alt="시간 아이콘"></p>
-      <p>개방시간 : <span>06:00 ~ 24:00</span></p>
+      <p>개방시간 : <span th:text="${wcInfo.time}">06:00 ~ 24:00</span></p>
     </div>
     <div class="listBox d-flex">
       <p><img src="/images/etc.svg" alt="기타 아이콘"></p>
-      <p>기타 : <span>기저귀교환대 있음</span></p>
+      <p>기타 : <span th:text="${wcInfo.comment}">기저귀교환대 있음</span></p>
     </div>
     <div class="listBox d-flex">
       <p><img src="/images/info.svg" alt="정보 아이콘"></p>

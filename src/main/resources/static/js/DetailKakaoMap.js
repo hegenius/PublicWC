@@ -1,8 +1,5 @@
 $(document).ready(function () {
 
-    //TODO: wcinfo의 좌표 가져오기
-    //TODO: 내 위치 표시
-
     const userId = $("#hiddenUserId").val();
     const wcId = $("#hiddenWcId").val();
 
