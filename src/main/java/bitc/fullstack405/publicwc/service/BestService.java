@@ -39,4 +39,13 @@ public class BestService {
 
         bestRepository.save(best);
     }
+
+    public void hateCountUp(String userId, int wcId) {
+        Best best = new Best();
+        best.setBestUsers(usersRepository.findById(userId).get());
+        best.setBestWc(wcInfoRepository.findById(wcId).get());
+        best.setGood(0);
+
+        bestRepository.save(best);
+    }
 }

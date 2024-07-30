@@ -112,4 +112,20 @@ public class LocationController {
 //        가져온 카운트 수 클라이언트로 반환
         return map;
     }
+
+    @ResponseBody
+    @PostMapping("/hateTest")
+    public Object hateTest(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
+//        카운트 업
+        bestService.hateCountUp(userId, wcId);
+//        현재 카운트 수 가져오기
+        int likeCount = bestService.getLikeCount(userId, wcId);
+        int hateCount = bestService.getHateCount(userId, wcId);
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("likeCount", likeCount);
+        map.put("hateCount", hateCount);
+//        가져온 카운트 수 클라이언트로 반환
+        return map;
+    }
 }
