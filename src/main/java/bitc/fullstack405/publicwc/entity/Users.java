@@ -32,7 +32,7 @@ public class Users {
     private String handicap;
 
     @Column(nullable = true)
-    @ColumnDefault("0")
+    @ColumnDefault("5")
     private int passkey;
 
     @JsonManagedReference
@@ -44,5 +44,4 @@ public class Users {
     @OneToMany(mappedBy = "bestUsers", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Best> userBestList = new ArrayList<>();
-
 }
