@@ -25,9 +25,18 @@
   </div>
 
   <section class="boardBg p-5 mt-4 shadow">
-    <!-- 카카오맵 include 시작 -->
-    <!-- <div th:replace="~{/board/KakaoMap :: mapView}"></div> -->
-    <!-- 카카오맵 include 끝 -->
+    <!-- 카카오맵 시작 -->
+
+    <div class="map_wrap listMap">
+      <div id="map" class="mapSize"></div>
+    </div>
+
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=00e9042c7f04c04f3d386355eeaeb634&libraries=services"></script>
+
+    <script src="/js/WriteKakaoMap.js"></script>
+
+    <!-- 카카오맵 끝 -->
 
     <form class="row g-3 mt-4" th:action="@{/board/write}" th:object="${board}" method="post">
       <div class="col-12">
