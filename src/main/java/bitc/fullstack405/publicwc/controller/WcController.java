@@ -3,6 +3,8 @@ package bitc.fullstack405.publicwc.controller;
 import bitc.fullstack405.publicwc.entity.WcInfo;
 import bitc.fullstack405.publicwc.service.ToiletService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,29 +17,44 @@ public class WcController {
     private ToiletService toiletService;
 
     @GetMapping
-    public List<WcInfo> getWcs(@RequestParam(required = false) String address,
-                               @RequestParam(required = false) Integer level) {
+    public ResponseEntity<List<WcInfo>> getWcs(
+            @RequestParam(required = false) String address,
+            @RequestParam(required = false) Integer level) {
+        List<WcInfo> wcInfos;
         if (address != null) {
-            return toiletService.searchToiletsByAddress(address);
+            wcInfos = toiletService.searchToiletsByAddress(address);
         } else if (level != null) {
-            return toiletService.searchToiletsByLevel(level);
+            wcInfos = toiletService.searchToiletsByLevel(level);
         } else {
-            return toiletService.getAllToilets(); // 모든 화장실 조회 메서드
+            wcInfos = toiletService.getAllToilets(); // 모든 화장실 조회 메서드
         }
+        return new ResponseEntity<>(wcInfos, HttpStatus.OK);
     }
 
     @PostMapping
-    public WcInfo addWc(@RequestBody WcInfo wcInfo) {
-        return toiletService.addWcInfo(wcInfo);
+    public ResponseEntity<WcInfo> addWc(@RequestBody WcInfo wcInfo) {
+        WcInfo createdWc = toiletService.addWcInfo(wcInfo);
+        return new ResponseEntity<>(createdWc, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public WcInfo updateWc(@PathVariable int id, @RequestBody WcInfo wcInfo) {
-        return toiletService.updateWcInfo(id, wcInfo);
+    public ResponseEntity<WcInfo> updateWc(@PathVariable int id, @RequestBody WcInfo wcInfo) {
+        WcInfo updatedWc = toiletService.updateWcInfo(id, wcInfo);
+        if (updatedWc != null) {
+            return new ResponseEntity<>(updatedWc, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteWc(@PathVariable int id) {
-        toiletService.deleteWcInfo(id);
+    public ResponseEntity<Void> deleteWc(@PathVariable int id) {
+        boolean isDeleted = toiletService.deleteWcInfo(id);
+        if (isDeleted) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
+

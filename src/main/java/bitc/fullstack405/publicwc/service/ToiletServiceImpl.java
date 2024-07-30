@@ -15,20 +15,20 @@ public class ToiletServiceImpl implements ToiletService {
 
     @Override
     public List<WcInfo> searchToiletsByAddress(String address) {
-        return wcInfoRepository.findByAddressContaining(address);
+        return wcInfoRepository.findByAddr1Containing(address);
     }
 
     @Override
     public List<WcInfo> searchToiletsByLevel(int level) {
         switch (level) {
             case 1:
-                return wcInfoRepository.findAllLevel1();
+                return wcInfoRepository.findAllByLevel(1);
             case 2:
-                return wcInfoRepository.findAllLevel2();
+                return wcInfoRepository.findAllByLevel(2);
             case 3:
-                return wcInfoRepository.findAllLevel3();
+                return wcInfoRepository.findAllByLevel(3);
             default:
-                return List.of(); // 잘못된 등급일 경우 빈 리스트
+                return List.of(); // 잘못된 등급일 경우 빈 리스트 반환
         }
     }
 
@@ -39,7 +39,7 @@ public class ToiletServiceImpl implements ToiletService {
 
     @Override
     public WcInfo addWcInfo(WcInfo wcInfo) {
-        return wcInfoRepository.save(wcInfo);
+        return wcInfoRepository.save(wcInfo); // 새 화장실 정보 추가
     }
 
     @Override
@@ -52,12 +52,21 @@ public class ToiletServiceImpl implements ToiletService {
     }
 
     @Override
-    public void deleteWcInfo(int id) {
-        wcInfoRepository.deleteById(id);
+    public WcInfo findWcInfoById(int id) {
+        return wcInfoRepository.findById(id).orElse(null); // ID로 화장실 정보 조회
+    }
+
+    @Override
+    public boolean deleteWcInfo(int id) {
+        if (wcInfoRepository.existsById(id)) {
+            wcInfoRepository.deleteById(id); // ID로 화장실 정보 삭제
+            return true;
+        }
+        return false; // ID가 존재하지 않으면 false 반환
     }
 
     @Override
     public List<WcInfo> parsingWc() {
-        return wcInfoRepository.pointWc();
+        return wcInfoRepository.pointWc(); // 특정 조건의 화장실 정보 조회
     }
 }

@@ -80,10 +80,20 @@ public class LocationController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("board/boardDetail");
 
+        int wcIntId = Integer.parseInt(wcId);
+        WcInfo wcInfo = toiletService.findWcInfoById(wcIntId);
+
         mv.addObject("userId", session.getAttribute("userId"));
         mv.addObject("wcId", wcId);
+        mv.addObject("wcInfo", wcInfo);
+
 
         return mv;
+    }
+
+    @GetMapping("/kakao")
+    public String kakao() {
+        return "kakaoWriteTest";
     }
 
 }
