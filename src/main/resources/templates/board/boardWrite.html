@@ -22,7 +22,7 @@
 <main class="container">
   <div class="mainConWrap text-center text-white">
     <h2>글쓰기</h2>
-    <p>우리들의 공공화장실, 우화의 글쓰기페이지입니다.</p>
+    <p>우리들의 공공화장실, 우화의 글쓰기 페이지입니다.</p>
   </div>
 
   <section class="boardBg p-5 mt-4 shadow">
@@ -37,20 +37,18 @@
 
     <script src="/js/WriteKakaoMap.js"></script>
 
-    <!-- 카카오맵 끝 -->
-
-    <form class="row g-3 mt-4" th:action="@{/board/write}" th:object="${board}" method="post">
+    <form class="row g-3 mt-4" method="post" action="/board/write">
+      <div class="col-12">
+        <label for="title" class="form-label">제목</label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" required>
+      </div>
       <div class="col-12">
         <label for="inputAddress" class="form-label">주소</label>
         <input type="text" class="form-control" id="inputAddress" name="addr1" placeholder="도로명 주소를 입력해주세요" required>
       </div>
       <div class="col-12">
         <label for="inputAddress2" class="form-label">상세 주소</label>
-        <input type="text" class="form-control" id="inputAddress2" name="detailAddr" placeholder="상세 주소를 입력해주세요">
-      </div>
-      <div class="col-12">
-        <label for="title" class="form-label">제목</label>
-        <input type="text" class="form-control" id="title" name="name" placeholder="제목을 입력해주세요" required>
+        <input type="text" class="form-control" id="inputAddress2" name="addr2" placeholder="상세 주소를 입력해주세요" required>
       </div>
       <div class="col-12">
         <label for="time" class="form-label">개방시간</label>
@@ -58,7 +56,7 @@
       </div>
       <div class="col-12">
         <label for="contents" class="form-label">기타</label>
-        <textarea class="form-control" id="contents" name="comment" placeholder="추가사항 작성해주세요" style="height:100px"></textarea>
+        <textarea class="form-control" id="contents" name="content" placeholder="추가사항 작성해주세요" style="height:100px"></textarea>
       </div>
       <div class="col-12">
         <label for="password" class="form-label">키</label>
@@ -79,9 +77,14 @@
         </select>
       </div>
 
+      <!-- Hidden fields for latitude, longitude, and createUserId -->
+      <input type="hidden" id="latitude" name="latitude">
+      <input type="hidden" id="longitude" name="longitude">
+      <input type="hidden" id="createUserId" name="createUserId" value="currentUserId"> <!-- Replace 'currentUserId' with actual logged-in user ID -->
+
       <div class="mt-5">
-        <button type="button" class="btn btn-secondary float-start" onclick="location.href='/board/list'">목록</button>
-        <button type="submit" class="btn btn-primary float-end">확인</button>
+        <button type="submit" id="submit-button" class="btn btn-primary float-end">확인</button>
+        <a href="/board/list" class="btn btn-secondary float-start">목록</a>
       </div>
     </form>
   </section>
