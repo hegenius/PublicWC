@@ -7,10 +7,10 @@ import java.util.List;
 public interface ToiletService {
     List<WcInfo> searchToiletsByAddress(String address);
     List<WcInfo> searchToiletsByLevel(int level);
-    List<WcInfo> getAllToilets(); // 모든 화장실 조회 메서드 추가
+    List<WcInfo> getAllToilets();
     WcInfo addWcInfo(WcInfo wcInfo);
     WcInfo updateWcInfo(int id, WcInfo wcInfo);
     WcInfo findWcInfoById(int id);
-    void deleteWcInfo(int id);
+    boolean deleteWcInfo(int id);
     List<WcInfo> parsingWc();
 }

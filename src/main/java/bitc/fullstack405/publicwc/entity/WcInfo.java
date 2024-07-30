@@ -66,4 +66,7 @@ public class WcInfo {
     @OneToMany(mappedBy = "bestWc", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Best> wcBestList = new ArrayList<>();
+
+    public WcInfo(String title, String content) {
+    }
 }
