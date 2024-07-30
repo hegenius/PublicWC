@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
@@ -55,8 +54,7 @@ public class AuthController {
                          @RequestParam String userEmail,
                          @RequestParam String gender,
                          @RequestParam String handicap,
-                         Model model,
-                         HttpSession session) {
+                         Model model) {
 
         if (!password.equals(password2)) {
             model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
@@ -77,8 +75,6 @@ public class AuthController {
 
         userService.saveUser(newUser);
 
-        session.setAttribute("userId", newUser.getId());
-
         // 회원가입 성공 후 로그인 페이지로 리다이렉트
         return "redirect:/auth/login?signupSuccess=true";
     }
@@ -88,7 +84,5 @@ public class AuthController {
         session.invalidate(); // 세션 무효화
         return "redirect:/";
     }
-
-
-
 }
+

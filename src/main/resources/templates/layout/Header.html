@@ -55,17 +55,20 @@
         $('[data-toggle="popover"]').popover();
       });
 
-      $("#btn-logout").on("click", function () {
+      $("#btn-logout").on("click", function (e) {
+        e.preventDefault(); // 링크의 기본 동작을 막기 위해 추가
         const confirmed = confirm("로그아웃 하시겠습니까?");
         if (confirmed) {
-          location.href = "/auth/logout";
+          location.href = "/auth/logout"; // 사용자가 '확인'을 누르면 로그아웃 진행
         }
+        // '취소'를 누를 경우 아무 동작도 하지 않음
       });
 
       $("#btn-edit").on("click", function () {
         location.href = "/users/mypage";
       });
     </script>
+
   </div>
 </header>
 </body>
