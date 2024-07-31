@@ -176,4 +176,24 @@ public class LocationController {
             return false;
         }
     }
+
+    @ResponseBody
+    @GetMapping("/removeFavorites")
+    public boolean removeFavorites(@RequestParam("userId") String userId,@RequestParam("wcId") int wcId) {
+        boolean result = false;
+
+        if ((!userId.equals("") && userId != null) && (wcId > 0)) {
+            Optional<Users> user = favoriteService.getUserById(userId);
+            Optional<WcInfo> wcInfo = favoriteService.getWcInfoById(wcId);
+
+            if (user.isPresent() && wcInfo.isPresent()) {
+                var isUser = user.get();
+                var isWcInfo = wcInfo.get();
+
+                result =  favoriteService.removeFavorite(isUser, isWcInfo);
+            }
+        }
+
+        return result;
+    }
 }
