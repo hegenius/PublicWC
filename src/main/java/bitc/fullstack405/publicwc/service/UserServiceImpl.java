@@ -1,15 +1,10 @@
 package bitc.fullstack405.publicwc.service;
 
-import bitc.fullstack405.publicwc.entity.Favorite;
 import bitc.fullstack405.publicwc.entity.Users;
 import bitc.fullstack405.publicwc.entity.WcInfo;
-import bitc.fullstack405.publicwc.repository.FavoriteRepository;
 import bitc.fullstack405.publicwc.repository.UsersRepository;
-import bitc.fullstack405.publicwc.repository.WcInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,8 +38,17 @@ public class UserServiceImpl implements UserService {
         usersRepository.deleteUsers(userId);
     }
 
-//    @Override
-//    public void addFavorite(String userId, int wcId) {
-//
-//    }
+    @Override
+    public boolean useKeyForLevel3(String userId) {
+        Optional<Users> userOptional = usersRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            Users user = userOptional.get();
+            if (user.getPasskey() > 0) {
+                user.setPasskey(user.getPasskey() - 1);
+                usersRepository.save(user);
+                return true;
+            }
+        }
+        return false;
+    }
 }
