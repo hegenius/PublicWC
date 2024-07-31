@@ -10,4 +10,5 @@ public interface ToiletService {
     WcInfo findWcInfoById(int id);
     boolean deleteWcInfo(int id);
     List<WcInfo> parsingWc(String juso);
+    void usePasskey(String userId); // 사용자 passkey 감소 메서드
 }
