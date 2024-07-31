@@ -1,7 +1,6 @@
 package bitc.fullstack405.publicwc.controller;
 
 import bitc.fullstack405.publicwc.entity.Users;
-import bitc.fullstack405.publicwc.service.FavoriteService;
 import bitc.fullstack405.publicwc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,8 +44,8 @@ public class UserInfoController {
     }
 
     @PostMapping("/mypage")
-    public ResponseEntity<?> updateUser(@RequestParam String password,
-                                        @RequestParam String password2,
+    public ResponseEntity<?> updateUser(@RequestParam(required = false) String password,
+                                        @RequestParam(required = false) String password2,
                                         @RequestParam String gender,
                                         @RequestParam String handicap,
                                         HttpSession session) {
@@ -56,27 +55,35 @@ public class UserInfoController {
             return ResponseEntity.status(403).body(Map.of("error", "로그인 후 접근 가능합니다."));
         }
 
-        // 비밀번호와 비밀번호 확인 필드가 일치하지 않을 때 오류 처리
-        if (!password.equals(password2)) {
-            return ResponseEntity.badRequest().body(Map.of("error", "비밀번호가 일치하지 않습니다."));
-        }
-
         Optional<Users> userOptional = userService.findById(userId);
 
         if (userOptional.isPresent()) {
             Users user = userOptional.get();
 
-            // 비밀번호가 기존 비밀번호와 동일한지 확인
-            if (user.getPassword().equals(password)) {
-                return ResponseEntity.badRequest().body(Map.of("error", "새 비밀번호는 기존 비밀번호와 달라야 합니다."));
+            if (password != null && !password.isEmpty()) {
+                // 비밀번호 길이 확인
+                if (password.length() < 4 || password2.length() < 4) {
+                    return ResponseEntity.badRequest().body(Map.of("error", "비밀번호는 최소 4자 이상이어야 합니다."));
+                }
+
+                // 비밀번호와 비밀번호 확인 필드가 일치하지 않을 때 오류 처리
+                if (!password.equals(password2)) {
+                    return ResponseEntity.badRequest().body(Map.of("error", "비밀번호가 일치하지 않습니다."));
+                }
+
+                // 비밀번호가 기존 비밀번호와 동일한지 확인
+                if (user.getPassword().equals(password)) {
+                    return ResponseEntity.badRequest().body(Map.of("error", "새 비밀번호는 기존 비밀번호와 달라야 합니다."));
+                }
+
+                user.setPassword(password); // 비밀번호 암호화는 필요 없음 (비즈니스 로직에 따라)
             }
 
-            user.setPassword(password); // 비밀번호 암호화는 필요 없음 (비즈니스 로직에 따라)
             user.setGender(gender);
             user.setHandicap(handicap);
             userService.saveUser(user);
 
-            return ResponseEntity.ok(Map.of("success", "비밀번호가 성공적으로 변경되었습니다."));
+            return ResponseEntity.ok(Map.of("success", "회원 정보가 성공적으로 수정되었습니다."));
         } else {
             return ResponseEntity.badRequest().body(Map.of("error", "사용자를 찾을 수 없습니다."));
         }

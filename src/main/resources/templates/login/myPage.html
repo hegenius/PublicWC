@@ -19,6 +19,19 @@
             $("form").on("submit", function(event) {
                 event.preventDefault(); // 폼 제출 방지
 
+                var password = $("#user-pw").val();
+                var password2 = $("#user-pw2").val();
+
+                if (password.length > 0 && password.length < 4) {
+                    $("#password-error").text("비밀번호는 최소 4자 이상이어야 합니다.").show();
+                    return;
+                }
+
+                if (password !== password2) {
+                    $("#password-error").text("비밀번호가 일치하지 않습니다.").show();
+                    return;
+                }
+
                 var formData = $(this).serialize(); // 폼 데이터 직렬화
 
                 $.ajax({
@@ -107,4 +120,3 @@
 <footer th:replace="~{/layout/footer :: footer}"></footer>
 </body>
 </html>
-

@@ -56,6 +56,11 @@ public class AuthController {
                          @RequestParam String handicap,
                          Model model) {
 
+        if (password.length() < 4 || password2.length() < 4) {
+            model.addAttribute("error", "비밀번호는 최소 4자 이상이어야 합니다.");
+            return "login/signUp";
+        }
+
         if (!password.equals(password2)) {
             model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
             return "login/signUp";
@@ -85,4 +90,5 @@ public class AuthController {
         return "redirect:/";
     }
 }
+
 
