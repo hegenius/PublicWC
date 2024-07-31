@@ -122,15 +122,29 @@ $(document).ready(function (wcId) {
         var wcId = place.id;
         var timeText = place.time;
         var addressText = place.addr1 + place.detailAddr;
-        var keyText = '********';
+        var keyText = '';
 
         var div = document.createElement('div');
         div.className = 'col-sm-6 mb-5';
 
+        let imgScr = "";
+
+        switch (place.level){
+            case 1 :
+                imgScr = '/images/step_icon01.svg';
+                break;
+            case 2 :
+                imgScr = '/images/step_icon02.svg';
+                break;
+            default:
+                imgScr = '/images/step_icon03.svg';
+            break;
+        }
+
         var itemStr = `
         <div class="d-flex position-relative">
             <div class="box_img">
-                <img src="/images/step_icon01.svg" alt="1단계 아이콘">
+                <span><img id="levelImg" src="${imgScr}" alt="레벨아이콘" "></span>
             </div>
             <div class="iconWrap">
                 <div class="d-flex icon">
@@ -169,8 +183,8 @@ $(document).ready(function (wcId) {
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
     function addMarker(position, idx, title) {
         var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        // var imageSrc = "/images/marker.gif", // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        //     imageSize = new kakao.maps.Size(70, 70),  // 마커 이미지의 크기
+            // var imageSrc = "/images/marker.gif", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+            //     imageSize = new kakao.maps.Size(70, 70),  // 마커 이미지의 크기
             imageSize = new kakao.maps.Size(39, 40),  // 마커 이미지의 크기
             imgOptions = {
                 spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
