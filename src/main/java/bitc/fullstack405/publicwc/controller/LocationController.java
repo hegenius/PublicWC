@@ -132,6 +132,20 @@ public class LocationController {
         return map;
     }
 
+//    등록되어있는 좋아요 싫어요 띄움
+    @ResponseBody
+    @GetMapping("/getCount")
+    public Object getCount(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
+        int likeCount = bestService.getLikeCount(userId, wcId);
+        int hateCount = bestService.getHateCount(userId, wcId);
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("likeCount", likeCount);
+        map.put("hateCount", hateCount);
+
+        return map;
+    }
+
     // 즐겨찾기부분
     @ResponseBody
     @PostMapping("/favorites")
@@ -143,5 +157,21 @@ public class LocationController {
         Favorite favorite = favoriteService.addFavorite(user.orElse(null), wcInfo.orElse(null));
 
         return favorite;
+    }
+
+    @ResponseBody
+    @GetMapping("/isFavorites")
+    public Object isFavorites(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
+        Optional<Users> user = favoriteService.getUserById(userId);
+        Optional<WcInfo> wcInfo = favoriteService.getWcInfoById(wcId);
+
+        if (user.isPresent() && wcInfo.isPresent()) {
+            var isUser = user.get();
+            var isWcInfo = wcInfo.get();
+            return favoriteService.selectFavoriteList(isUser, isWcInfo);
+        }
+        else {
+            return null;
+        }
     }
 }

@@ -36,7 +36,7 @@
             }
           },
           error: function (errData) {
-            alert("error");
+            alert("로그인 해주세요.");
           }
         });
       });
@@ -54,7 +54,7 @@
             }
           },
           error: function (errData) {
-            alert("error");
+            alert("로그인 해주세요.");
           }
         });
       });
@@ -68,18 +68,57 @@
           success: function (favData) {
             if (favData != null) {
               $("#favorite-button").attr("src", "/images/favorites_on.svg");
+              alert("즐겨찾기가 추가되었습니다.");
             }
           },
           error: function (errData) {
-            alert("error")
+            alert("로그인 해주세요.")
           }
         })
       })
+
+      function loadFavorites() {
+        $.ajax({
+          url: "/location/isFavorites",
+          type: "GET",
+          data: {userId: userId, wcId: wcId},
+          success: function (favData) {
+            if (favData != null) {
+              $("#favorite-button").attr("src", "/images/favorites_on.svg");
+            }
+            else {
+              $("#favorite-button").attr("src", "/images/favorites_off.svg");
+            }
+          },
+          error: function (errData) {
+            console.log(errData);
+          }
+        });
+      }
+      loadFavorites();
 
       // 목록 버튼 클릭 이벤트
       $("#btn-list").on("click", function() {
         window.history.back(); // 이전 페이지로 이동
       });
+
+      function loadCounts() {
+        $.ajax({
+          url: "/location/getCount",
+          type: "GET",
+          data: {userId: userId, wcId: wcId},
+          success: function (resData) {
+            if (resData != null) {
+              $("#like").text(resData.likeCount);
+              $("#hate").text(resData.hateCount);
+            }
+          },
+          error: function (errDate) {
+            alert("로드 실패.");
+          }
+        });
+      }
+      loadCounts();
     });
   </script>
 
@@ -123,7 +162,7 @@
         <div class="d-flex">
           <p class="me-2">
             <img src="/images/thumb_up.svg" alt="좋아요 아이콘" id="like-button">
-            <span class="ms-1" id="like">10</span>
+            <span class="ms-1" id="like">0</span>
           </p>
 
           <p class="me-3"><img src="/images/thumb_down.svg" alt="싫어요 아이콘" id="hate-button"><span class="ms-1" id="hate">0</span></p>
