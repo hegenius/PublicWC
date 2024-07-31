@@ -32,7 +32,7 @@
                         }
                     },
                     error: function (errData) {
-                        alert("로드 실패.");
+                        console.log(errData);
                     }
                 });
             }
@@ -44,7 +44,6 @@
 <!--    <p th:text="${itemList}"></p>-->
     <div class="row listWrap">
     <div class="col-sm-6 mb-5" th:each="item : ${itemList}">
-        <p th:text="${item}"></p>
         <div class="d-flex position-relative">
             <div th:switch="${item.favoriteWc.level}" class="box_img">
                 <p th:case="1"><img th:src="@{/images/step_icon01.svg}" alt="1단계 아이콘"></p>

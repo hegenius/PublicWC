@@ -189,7 +189,6 @@ $(document).ready(function (wcId) {
         `;
         }
 
-
         itemStr += `
         <div>
         <a href="/location/wcDetail?wcId=${wcId}" class="btn btn-primary mt-2">자세히 보기</a>
