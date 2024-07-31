@@ -15,5 +15,6 @@ public interface UserService {
     boolean checkPassword(Users user, String rawPassword); // 비밀번호 확인
     void deleteUser(String userId); // 사용자 삭제
 
+    boolean useKeyForLevel3(String userId);
 //    void addFavorite(String userId, int wcId); // 즐겨찾기 추가
 }

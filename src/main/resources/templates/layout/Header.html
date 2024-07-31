@@ -21,7 +21,7 @@
         <ul class="d-flex me-4 menuTxt">
           <li class="me-3">
             <div class="keyTxt">
-              <p class="keyWrap"><img src="/images/keyImg.png" alt="열쇠 모양" class="keyImg"> <span>0</span></p>
+              <p class="keyWrap"><img src="/images/keyImg.png" alt="열쇠 모양" class="keyImg"> <span id="passkey-count">0</span></p>
               <p class="arrow_box">Level 3 비밀번호 풀 수 있는 키입니다. 글 작성 시 키 3개 부여됩니다.</p>
             </div>
           </li>
@@ -47,24 +47,40 @@
 
     <script>
       $(function () {
-        $('[data-toggle="popover"]').popover();
-      });
-
-      $("#btn-logout").on("click", function (e) {
-        e.preventDefault(); // 링크의 기본 동작을 막기 위해 추가
-        const confirmed = confirm("로그아웃 하시겠습니까?");
-        if (confirmed) {
-          location.href = "/auth/logout"; // 사용자가 '확인'을 누르면 로그아웃 진행
+        // 현재 passkey 값을 조회하고 업데이트하는 함수
+        function updatePasskeyCount() {
+          $.ajax({
+            url: '/users/passkey', // passkey 조회를 위한 엔드포인트
+            method: 'GET',
+            success: function (data) {
+              $('#passkey-count').text(data.passkey);
+            },
+            error: function (error) {
+              console.error('Error fetching passkey:', error);
+            }
+          });
         }
-        // '취소'를 누를 경우 아무 동작도 하지 않음
-      });
 
-      $("#btn-edit").on("click", function () {
-        location.href = "/users/mypage";
+        updatePasskeyCount(); // 페이지 로드 시 passkey 값을 업데이트
+
+        $('[data-toggle="popover"]').popover();
+
+        $("#btn-logout").on("click", function (e) {
+          e.preventDefault(); // 링크의 기본 동작을 막기 위해 추가
+          const confirmed = confirm("로그아웃 하시겠습니까?");
+          if (confirmed) {
+            location.href = "/auth/logout"; // 사용자가 '확인'을 누르면 로그아웃 진행
+          }
+          // '취소'를 누를 경우 아무 동작도 하지 않음
+        });
+
+        $("#btn-edit").on("click", function () {
+          location.href = "/users/mypage";
+        });
       });
     </script>
-
   </div>
 </header>
 </body>
 </html>
+
