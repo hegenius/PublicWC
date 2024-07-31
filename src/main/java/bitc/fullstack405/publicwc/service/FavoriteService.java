@@ -11,7 +11,7 @@ public interface FavoriteService {
 
     public Favorite addFavorite(Users user, WcInfo wcInfo);
 
-    public List<Favorite> removeFavorite(String userId, int wcId);
+    public boolean removeFavorite(String userId, int wcId);
 
     public void updateFavorite(String userId, int wcId);
 
@@ -21,5 +21,5 @@ public interface FavoriteService {
 
     public Optional<WcInfo> getWcInfoById(int wcId);
 
-    public Favorite selectFavoriteList(Users user, WcInfo wcInfo);
+    public boolean isFavorite(Users user, WcInfo wcInfo);
 }

@@ -27,8 +27,10 @@ public class FavoriteServiceImle implements FavoriteService {
 
 
     @Override
-    public List<Favorite> removeFavorite(String userId, int wcId) {
-        return favoriteRepository.removeFavorite(userId, wcId);
+    public boolean removeFavorite(String userId, int wcId) {
+        var favorite = favoriteRepository.removeFavorite(userId, wcId);
+
+        return true;
     }
     @Override
     public void updateFavorite(String userId, int wcId) {
@@ -40,8 +42,14 @@ public class FavoriteServiceImle implements FavoriteService {
     }
 
     @Override
-    public Favorite selectFavoriteList(Users user, WcInfo wcInfo) {
-        return favoriteRepository.findByUserAndWcInfo(user, wcInfo);
+    public boolean isFavorite(Users user, WcInfo wcInfo) {
+
+        var favorite = favoriteRepository.findByUserAndWcInfo(user, wcInfo);
+        if (favorite != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

@@ -2,127 +2,128 @@
 
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상세페이지</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상세페이지</title>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-          crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css">
 
-  <script th:inline="javascript">
-  //   사용자  ID
-    var userId = [[${userId}]];
-  // 화장실 번호
-    var wcId = [[${wcId}]];
-  </script>
+    <script th:inline="javascript">
+        //   사용자  ID
+        var userId = [[${userId}]];
+        // 화장실 번호
+        var wcId = [[${wcId}]];
+    </script>
 
-  <script>
-    $(document).ready(function () {
-      $("#like-button").on("click", function () {
+    <script>
+        $(document).ready(function () {
 
-        $.ajax({
-          url: "/location/bestTest",
-          type: "POST",
-          data: {userId : userId, wcId : wcId},
-          success: function (resData) {
-            if (resData != null) {
-              $("#like").text(resData.likeCount);
-              $("#hate").text(resData.hateCount);
+            function loadCounts() {
+                $.ajax({
+                    url: "/location/getCount",
+                    type: "GET",
+                    data: {wcId: wcId},
+                    success: function (resData) {
+                        if (resData != null) {
+                            $("#like").text(resData.likeCount);
+                            $("#hate").text(resData.hateCount);
+                        }
+                    },
+                    error: function (errDate) {
+                        alert("로드 실패.");
+                    }
+                });
             }
-          },
-          error: function (errData) {
-            alert("로그인 해주세요.");
-          }
+
+            loadCounts();
+
+            $("#like-button, #hate-button").on("click", function () {
+
+                var inputId = (this.id === "like-button" ? "like" : "hate");
+
+                if (userId != null) {
+                    $.ajax({
+                        url: "/location/best",
+                        type: "POST",
+                        data: {userId: userId, wcId: wcId, kind: inputId},
+                        success: function (resData) {
+                            if (resData != null) {
+                                $("#like").text(resData.likeCount);
+                                $("#hate").text(resData.hateCount);
+                            }
+                        },
+                        error: function (errData) {
+                            alert("로그인 해주세요.");
+                        }
+                    });
+                } else {
+                    var answer = confirm("로그인 페이지로 이동하시겠습니까?");
+                    if (answer) {
+                        location.href = "/auth/login";
+                    }
+                }
+            });
+
+            function loadFavorites() {
+                $.ajax({
+                    url: "/location/isFavorites",
+                    type: "GET",
+                    data: {userId: userId, wcId: wcId},
+                    success: function (isFavorite) {
+                        if (isFavorite) {
+                            $("#favorite-button").attr("src", "/images/favorites_on.svg");
+                        } else {
+                            $("#favorite-button").attr("src", "/images/favorites_off.svg");
+                        }
+                    },
+                    error: function (errData) {
+                        console.log(errData);
+                    }
+                });
+            }
+
+            if (userId != null) {
+                loadFavorites();
+            }
+
+            $("#favorite-button").on("click", function () {
+                if (userId != null) {
+                    $.ajax({
+                        url: "/location/favorites",
+                        type: "POST",
+                        data: {userId: userId, wcId: wcId},
+                        success: function (favData) {
+                            if (favData != null) {
+                                $("#favorite-button").attr("src", "/images/favorites_on.svg");
+                                alert("즐겨찾기가 추가되었습니다.");
+                            }
+                        },
+                        error: function (errData) {
+                            alert("로그인 해주세요.")
+                        }
+                    })
+                } else {
+                    var answer = confirm("로그인 페이지로 이동하시겠습니까?");
+                    if (answer) {
+                        location.href = "/auth/login";
+                    }
+                }
+            })
+
+            // 목록 버튼 클릭 이벤트
+            $("#btn-list").on("click", function () {
+                window.history.back(); // 이전 페이지로 이동
+            });
+
+
         });
-      });
-
-      $("#hate-button").on("click", function () {
-
-        $.ajax({
-          url: "/location/hateTest",
-          type: "POST",
-          data: {userId: userId, wcId: wcId},
-          success: function (resData) {
-            if (resData != null) {
-              $("#like").text(resData.likeCount);
-              $("#hate").text(resData.hateCount);
-            }
-          },
-          error: function (errData) {
-            alert("로그인 해주세요.");
-          }
-        });
-      });
-
-      $("#favorite-button").on("click", function () {
-
-        $.ajax({
-          url: "/location/favorites",
-          type: "POST",
-          data: {userId: userId, wcId: wcId},
-          success: function (favData) {
-            if (favData != null) {
-              $("#favorite-button").attr("src", "/images/favorites_on.svg");
-              alert("즐겨찾기가 추가되었습니다.");
-            }
-          },
-          error: function (errData) {
-            alert("로그인 해주세요.")
-          }
-        });
-      });
-
-      $("#")
-
-      function loadFavorites() {
-        $.ajax({
-          url: "/location/isFavorites",
-          type: "GET",
-          data: {userId: userId, wcId: wcId},
-          success: function (favData) {
-            if (favData != null) {
-              $("#favorite-button").attr("src", "/images/favorites_on.svg");
-            }
-            else {
-              $("#favorite-button").attr("src", "/images/favorites_off.svg");
-            }
-          },
-          error: function (errData) {
-            console.log(errData);
-          }
-        });
-      }
-      loadFavorites();
-
-      // 목록 버튼 클릭 이벤트
-      $("#btn-list").on("click", function() {
-        window.history.back(); // 이전 페이지로 이동
-      });
-
-      function loadCounts() {
-        $.ajax({
-          url: "/location/getCount",
-          type: "GET",
-          data: {userId: userId, wcId: wcId},
-          success: function (resData) {
-            if (resData != null) {
-              $("#like").text(resData.likeCount);
-              $("#hate").text(resData.hateCount);
-            }
-          },
-          error: function (errDate) {
-            alert("로드 실패.");
-          }
-        });
-      }
-      loadCounts();
-    });
-  </script>
+    </script>
 
 </head>
 
@@ -132,74 +133,75 @@
 
 <!-- 상세페이지 시작 -->
 <main class="container">
-  <div class="mainConWrap text-center text-white">
-    <h2>상세페이지</h2>
-    <p>우리들의 공공화장실, 우화의 상세페이지입니다.</p>
-  </div>
-
-  <section class="boardBg p-5 mt-4 shadow">
-    <!--  카카오맵 include 시작 -->
-
-
-    <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=00e9042c7f04c04f3d386355eeaeb634&libraries=services"></script>
-
-    <div class="map_wrap listMap">
-      <div id="map" class="mapSize"></div>
+    <div class="mainConWrap text-center text-white">
+        <h2>상세페이지</h2>
+        <p>우리들의 공공화장실, 우화의 상세페이지입니다.</p>
     </div>
 
-    <input type="hidden" th:value="${userId}" id="hiddenUserId">
-    <input type="hidden" th:value="${wcInfo}" id="hiddenWcInfo">
-    <input type="hidden" th:value="${wcInfo.latitude}" id="hiddenLati">
-    <input type="hidden" th:value="${wcInfo.longitude}" id="hiddenLongi">
-    <input type="hidden" th:value="${wcInfo.detailAddr}" id="hiddenDetail">
+    <section class="boardBg p-5 mt-4 shadow">
+        <!--  카카오맵 include 시작 -->
 
-    <script src="/js/DetailKakaoMap.js"></script>
-    <!--  카카오맵 include 끝 -->
 
-    <div class="mt-5">
-      <h3><span th:text="${wcInfo.name}"></span></h3>
-      <hr>
-      <div class="float-end">
-        <div class="d-flex">
-          <p class="me-2">
-            <img src="/images/thumb_up.svg" alt="좋아요 아이콘" id="like-button">
-            <span class="ms-1" id="like">0</span>
-          </p>
+        <script type="text/javascript"
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=00e9042c7f04c04f3d386355eeaeb634&libraries=services"></script>
 
-          <p class="me-3"><img src="/images/thumb_down.svg" alt="싫어요 아이콘" id="hate-button"><span class="ms-1" id="hate">0</span></p>
-          <p>
-            <img src="/images/favorites_off.svg" id="favorite-button" alt="즐겨찾기 아이콘"></p>
-          <!--          <span><img src="/images/favorites_on.svg" alt="선택된 즐겨찾기 아이콘"></span>-->
+        <div class="map_wrap listMap">
+            <div id="map" class="mapSize"></div>
         </div>
-      </div>
-    </div>
-    <div class="listBox d-flex">
-      <img src="/images/address.svg" alt="주소 아이콘">
-      <p>주소 : <span th:text="${wcInfo.addr1}"></span> <span th:text="${wcInfo.detailAddr}"></span></p>
-    </div>
-    <div class="listBox d-flex">
-      <img src="/images/time.svg" alt="시간 아이콘">
-      <p>개방시간 : <span th:text="${wcInfo.time}"></span></p>
-    </div>
-    <div class="listBox d-flex">
-      <img src="/images/etc.svg" alt="기타 아이콘">
-      <p>기타 : <span th:text="${wcInfo.comment}"></span></p>
-    </div>
-    <div class="listBox d-flex">
-      <img src="/images/key.svg" alt="비밀번호 아이콘">
-      <p>키 : <span th:text="${wcInfo.wcpass}"></span></p>
-    </div>
 
-    <div class="row mt-3">
-      <div class="col-sm text-end">
-        <button type="button" class="btn btn-primary" id="btn-list">목록</button>
-      </div>
-    </div>
-  </section>
+        <input type="hidden" th:value="${userId}" id="hiddenUserId">
+        <input type="hidden" th:value="${wcInfo}" id="hiddenWcInfo">
+        <input type="hidden" th:value="${wcInfo.latitude}" id="hiddenLati">
+        <input type="hidden" th:value="${wcInfo.longitude}" id="hiddenLongi">
+        <input type="hidden" th:value="${wcInfo.detailAddr}" id="hiddenDetail">
+
+        <script src="/js/DetailKakaoMap.js"></script>
+        <!--  카카오맵 include 끝 -->
+
+        <div class="mt-5">
+            <!--      <h3><span th:text="${wcInfo.name}"></span></h3>-->
+            <hr>
+            <div class="float-end">
+                <div class="d-flex">
+                    <p class="me-2">
+                        <img src="/images/thumb_up.svg" alt="좋아요 아이콘" id="like-button" style="cursor: pointer">
+                        <span class="ms-1" id="like">0</span>
+                    </p>
+
+                    <p class="me-3"><img src="/images/thumb_down.svg" alt="싫어요 아이콘" id="hate-button"
+                                         style="cursor: pointer"><span class="ms-1" id="hate">0</span></p>
+                    <p>
+                        <img src="/images/favorites_off.svg" id="favorite-button" alt="즐겨찾기 아이콘"
+                             style="cursor: pointer"></p>
+                    <!--          <span><img src="/images/favorites_on.svg" alt="선택된 즐겨찾기 아이콘"></span>-->
+                </div>
+            </div>
+        </div>
+        <div class="listBox d-flex">
+            <img src="/images/address.svg" alt="주소 아이콘">
+            <p>주소 : <span th:text="${wcInfo.addr1}"></span> <span th:text="${wcInfo.detailAddr}"></span></p>
+        </div>
+        <div class="listBox d-flex">
+            <img src="/images/time.svg" alt="시간 아이콘">
+            <p>개방시간 : <span th:text="${wcInfo.time}"></span></p>
+        </div>
+        <div class="listBox d-flex">
+            <img src="/images/etc.svg" alt="기타 아이콘">
+            <p>기타 : <span th:text="${wcInfo.comment}"></span></p>
+        </div>
+        <div class="listBox d-flex">
+            <img src="/images/key.svg" alt="비밀번호 아이콘">
+            <p>키 : <span th:text="${wcInfo.wcpass}"></span></p>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-sm text-end">
+                <button type="button" class="btn btn-primary" id="btn-list">목록</button>
+            </div>
+        </div>
+    </section>
 </main>
 <!-- 상세페이지 끝 -->
-
 
 
 <footer th:replace="~{/layout/Footer :: footer}"></footer>

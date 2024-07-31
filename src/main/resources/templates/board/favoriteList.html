@@ -1,10 +1,50 @@
+<div th:fragment="favoriteView(itemList)">
 
+    <script>
+        $(document).ready(function () {
+            var wcIdTags = $(".inputWcId");
+            var wcIdList = [];
 
-<div th:fragment="favoriteView(item)">
+            for (var i = 0; i < wcIdTags.length; i++) {
+                var wcId = $(wcIdTags[i]).val();
+                wcIdList.push(wcId);
+            }
+
+            function loadCounts() {
+
+                $.ajax({
+                    url: "/location/getCountList",
+                    type: "GET",
+                    data: {wcIdList: wcIdList},
+                    success: function (resData) {
+                        if (resData != null) {
+                            var likeList = resData.likeList;
+                            var hateList = resData.hateList;
+
+                            for (var i = 0; i < likeList.length; i++) {
+                                parentTag = $(wcIdTags[i]).parent();
+                                likeTag = parentTag.find("span.like");
+                                hateTag = parentTag.find("span.hate");
+
+                                $(likeTag).text(likeList[i].cnt);
+                                $(hateTag).text(hateList[i].cnt);
+                            }
+                        }
+                    },
+                    error: function (errData) {
+                        alert("로드 실패.");
+                    }
+                });
+            }
+            loadCounts();
+        });
+    </script>
+
 <!--  즐겨찾기 리스트 데이터-->
-<!--    <p th:text="${favoriteList}"></p>-->
+<!--    <p th:text="${itemList}"></p>-->
     <div class="row listWrap">
-    <div class="col-sm-6 mb-5" th:each="item : ${favoriteList}">
+    <div class="col-sm-6 mb-5" th:each="item : ${itemList}">
+        <p th:text="${item}"></p>
         <div class="d-flex position-relative">
             <div th:switch="${item.favoriteWc.level}" class="box_img">
                 <p th:case="1"><img th:src="@{/images/step_icon01.svg}" alt="1단계 아이콘"></p>
@@ -13,12 +53,14 @@
             </div>
             <div class="iconWrap">
                 <div class="d-flex icon">
+                    <input type="hidden" class="inputWcId" th:value="${item.favoriteWc.id}">
                     <p class="me-3">
                         <img src="/images/thumb_up.svg" alt="좋아요 아이콘">
-                        <span class="ms-1">10</span>
+                        <span class="ms-1 like">0</span>
                     </p>
                     <p>
-                        <img src="/images/thumb_down.svg" alt="싫어요 아이콘"><span class="ms-1">0</span>
+                        <img src="/images/thumb_down.svg" alt="싫어요 아이콘">
+                        <span class="ms-1 hate">0</span>
                     </p>
                 </div>
             </div>
@@ -37,7 +79,7 @@
             <p>키 : <span th:text="${item.favoriteWc.wcpass}">${keyText}</span></p>
         </div>
         <div>
-            <a href="/location/wcDetail?wcId=${wcId}" class="btn btn-primary mt-2">자세히 보기</a>
+            <a th:href="@{/location/wcDetail(wcId=${item.favoriteWc.id})}" class="btn btn-primary mt-2">자세히 보기</a>
         </div>
     </div>
 </div>

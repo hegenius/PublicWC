@@ -78,8 +78,8 @@ public class LocationController {
 
     @PostMapping("/wcInfoList")
     @ResponseBody
-    public Object getWcInfoList() {
-        List<WcInfo> wcInfoList = toiletService.parsingWc();
+    public Object getWcInfoList(String juso) {
+        List<WcInfo> wcInfoList = toiletService.parsingWc(juso);
 
         return wcInfoList;
     }
@@ -101,13 +101,18 @@ public class LocationController {
     }
 
     @ResponseBody
-    @PostMapping("/bestTest")
-    public Object bestTest(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
+    @PostMapping("/best")
+    public Object bestTest(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId, String kind) {
 //        카운트 업
-        bestService.likeCountUp(userId, wcId);
+        if (kind.equals("like")) {
+            bestService.likeCountUp(userId, wcId);
+        } else {
+            bestService.hateCountUp(userId, wcId);
+        }
+
 //        현재 카운트 수 가져오기
-        int likeCount = bestService.getLikeCount(userId, wcId);
-        int hateCount = bestService.getHateCount(userId, wcId);
+        int likeCount = bestService.getLikeCount(wcId);
+        int hateCount = bestService.getHateCount(wcId);
 
         Map<String, Integer> map = new HashMap<>();
         map.put("likeCount", likeCount);
@@ -116,32 +121,30 @@ public class LocationController {
         return map;
     }
 
-    @ResponseBody
-    @PostMapping("/hateTest")
-    public Object hateTest(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
-//        카운트 다운
-        bestService.hateCountUp(userId, wcId);
-//        현재 카운트 수 가져오기
-        int likeCount = bestService.getLikeCount(userId, wcId);
-        int hateCount = bestService.getHateCount(userId, wcId);
-
-        Map<String, Integer> map = new HashMap<>();
-        map.put("likeCount", likeCount);
-        map.put("hateCount", hateCount);
-//        가져온 카운트 수 클라이언트로 반환
-        return map;
-    }
-
-//    등록되어있는 좋아요 싫어요 띄움
+    //    등록되어있는 좋아요 싫어요 띄움
     @ResponseBody
     @GetMapping("/getCount")
-    public Object getCount(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
-        int likeCount = bestService.getLikeCount(userId, wcId);
-        int hateCount = bestService.getHateCount(userId, wcId);
+    public Object getCount(@RequestParam("wcId") int wcId) {
+        int likeCount = bestService.getLikeCount(wcId);
+        int hateCount = bestService.getHateCount(wcId);
 
         Map<String, Integer> map = new HashMap<>();
         map.put("likeCount", likeCount);
         map.put("hateCount", hateCount);
+
+        return map;
+    }
+
+    @ResponseBody
+    @GetMapping("/getCountList")
+    public Object getCount(@RequestParam("wcIdList") List<Integer> wcIdList) throws Exception {
+
+        List<Map<String, Integer>> likeCountList = bestService.getLikeCountList(wcIdList);
+        List<Map<String, Integer>> hateCountList = bestService.getHateCountList(wcIdList);
+
+        Map<String, List<Map<String, Integer>>> map = new HashMap<>();
+        map.put("likeList", likeCountList);
+        map.put("hateList", hateCountList);
 
         return map;
     }
@@ -150,7 +153,7 @@ public class LocationController {
     @ResponseBody
     @PostMapping("/favorites")
     public Object addFavorite(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
-        
+
         Optional<Users> user = favoriteService.getUserById(userId);
         Optional<WcInfo> wcInfo = favoriteService.getWcInfoById(wcId);
 
@@ -161,17 +164,16 @@ public class LocationController {
 
     @ResponseBody
     @GetMapping("/isFavorites")
-    public Object isFavorites(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
+    public boolean isFavorites(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
         Optional<Users> user = favoriteService.getUserById(userId);
         Optional<WcInfo> wcInfo = favoriteService.getWcInfoById(wcId);
 
         if (user.isPresent() && wcInfo.isPresent()) {
             var isUser = user.get();
             var isWcInfo = wcInfo.get();
-            return favoriteService.selectFavoriteList(isUser, isWcInfo);
-        }
-        else {
-            return null;
+            return favoriteService.isFavorite(isUser, isWcInfo);
+        } else {
+            return false;
         }
     }
 }
