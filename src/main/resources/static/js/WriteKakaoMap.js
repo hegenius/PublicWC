@@ -1,8 +1,8 @@
 $(document).ready(function (){
 
-    var resultDiv = document.getElementById('inputAddress');
-    var resultDiv2 = document.getElementById('jusoSpan');
     var resultInput = $("#inputAddress");
+    var latiInput = $("#latitude");
+    var longiInput = $("#longitude")
 
     var lat = 35.1560448378911, // 임의 위도
         lon = 129.059564755963; // 임의 경도
@@ -48,9 +48,9 @@ $(document).ready(function (){
 
         var callback = function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                // resultDiv.innerText = result[0].road_address.address_name;
-                // resultDiv2.innerText = result[0].address.address_name;
-                // resultInput.val(result[0].road_address.address_name);
+
+                latiInput.val(latLogi.getLat());
+                longiInput.val(latLogi.getLng());
 
                 if (result && result[0]) {
                     if (result[0].road_address && result[0].road_address.address_name) {

@@ -63,8 +63,4 @@ public class WcInfo {
     @ToString.Exclude
     private List<Best> wcBestList = new ArrayList<>();
 
-    // No-args constructor is needed for JPA
-    public WcInfo(String title, String content) {
-        // constructor logic
-    }
 }

@@ -2,6 +2,7 @@ package bitc.fullstack405.publicwc.controller;
 
 import bitc.fullstack405.publicwc.entity.WcInfo;
 import bitc.fullstack405.publicwc.service.ToiletService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,17 +62,19 @@ public class BoardController {
 //    }
 
     @PostMapping("/write")
-    public String submitPost(@ModelAttribute WcInfo wcinfo, @RequestParam("latitude") String lati, @RequestParam("longitude") String longi) {
+    public String submitPost(@ModelAttribute WcInfo wcinfo, HttpSession session) {
 
-        // 파라미터를 WcInfo 객체로 변환
-        String latitude = "173812873.892";
-        String longitude = "12839.1298";
+        if (session.getAttribute("userId") != null) {
+            wcinfo.setCreateUserId(session.getAttribute("userId").toString());
 
-        toiletService.addWcInfo(wcinfo);
+            toiletService.addWcInfo(wcinfo);
 
-        // 저장 완료 후 목록 페이지로 리다이렉트
+            // 저장 완료 후 목록 페이지로 리다이렉트
 //        return "redirect:/board/list?message=게시물이%20성공적으로%20등록되었습니다.";
-        return "index";
+            return "index";
+        } else {
+            return "redirect:login/login";
+        }
     }
 
     @GetMapping("/list")
