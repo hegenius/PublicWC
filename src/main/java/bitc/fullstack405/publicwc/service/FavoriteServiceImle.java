@@ -39,8 +39,14 @@ public class FavoriteServiceImle implements FavoriteService {
     }
 
     @Override
-    public Favorite selectFavoriteList(Users user, WcInfo wcInfo) {
-        return favoriteRepository.findByUserAndWcInfo(user, wcInfo);
+    public boolean isFavorite(Users user, WcInfo wcInfo) {
+
+        var favorite = favoriteRepository.findByUserAndWcInfo(user, wcInfo);
+        if (favorite != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

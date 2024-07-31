@@ -23,12 +23,12 @@ public class BestService {
     @Autowired
     private UsersRepository usersRepository;
 
-    public int getLikeCount(String userId, int wcId) {
-        return bestRepository.getLikeCount(userId, wcId);
+    public int getLikeCount(int wcId) {
+        return bestRepository.getLikeCount(wcId);
     }
 
-    public int getHateCount(String userId, int wcId) {
-        return bestRepository.getHateCount(userId, wcId);
+    public int getHateCount(int wcId) {
+        return bestRepository.getHateCount(wcId);
     }
 
     public void likeCountUp(String userId, int wcId) {

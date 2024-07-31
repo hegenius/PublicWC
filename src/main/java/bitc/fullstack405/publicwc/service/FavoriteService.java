@@ -21,5 +21,5 @@ public interface FavoriteService {
 
     public Optional<WcInfo> getWcInfoById(int wcId);
 
-    public Favorite selectFavoriteList(Users user, WcInfo wcInfo);
+    public boolean isFavorite(Users user, WcInfo wcInfo);
 }
