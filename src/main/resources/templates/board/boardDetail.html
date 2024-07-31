@@ -191,7 +191,10 @@
         </div>
         <div class="listBox d-flex">
             <img src="/images/key.svg" alt="비밀번호 아이콘">
-            <p>키 : <span th:text="${wcInfo.wcpass}" style="cursor: url('/images/keyMouse.png');"></span></p>
+            <p>키 :
+                <span th:text="${wcInfo.wcpass}" style="cursor: url('/images/keyMouse.png'), auto;">****</span>
+<!--                <span style="cursor: url('/images/keyMouse.png'), auto;">****</span>-->
+            </p>
         </div>
 
         <div class="row mt-3">
