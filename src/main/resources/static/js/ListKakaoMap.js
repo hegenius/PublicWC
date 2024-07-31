@@ -1,4 +1,7 @@
 $(document).ready(function (wcId) {
+
+    var searchInput = $("#address-input");
+
 // 마커를 담을 배열입니다
     var markers = [];
 
@@ -29,6 +32,7 @@ $(document).ready(function (wcId) {
         $.ajax({
             url: "/location/wcInfoList",
             type: "POST",
+            data: {juso: searchInput.val()},
             dataType: "json",
             success: function (response) {
                 var wcInfoList = response.data || response;

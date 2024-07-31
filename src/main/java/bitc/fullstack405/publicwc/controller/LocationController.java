@@ -78,8 +78,8 @@ public class LocationController {
 
     @PostMapping("/wcInfoList")
     @ResponseBody
-    public Object getWcInfoList() {
-        List<WcInfo> wcInfoList = toiletService.parsingWc();
+    public Object getWcInfoList(String juso) {
+        List<WcInfo> wcInfoList = toiletService.parsingWc(juso);
 
         return wcInfoList;
     }

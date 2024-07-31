@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 @Controller
@@ -31,7 +33,16 @@ public class BoardController {
 
             toiletService.addWcInfo(wcinfo);
 
-            return "index";
+            String addr1 = wcinfo.getAddr1();
+            String encodedAddr1 = "";
+
+            try {
+                encodedAddr1 = URLEncoder.encode(addr1, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            return "redirect:/location/search.do?juso=" + encodedAddr1;
         } else {
             return "redirect:login/login";
         }
