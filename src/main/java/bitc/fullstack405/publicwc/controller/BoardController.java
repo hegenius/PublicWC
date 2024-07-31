@@ -31,7 +31,7 @@ public class BoardController {
 
             toiletService.addWcInfo(wcinfo);
 
-            return "redirect:/location/search.do?jusoValue=";
+            return "index";
         } else {
             return "redirect:login/login";
         }
