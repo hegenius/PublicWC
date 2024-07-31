@@ -20,4 +20,6 @@ public interface FavoriteService {
     public Optional<Users> getUserById(String userId);
 
     public Optional<WcInfo> getWcInfoById(int wcId);
+
+    public boolean isFavorite(Users user, WcInfo wcInfo);
 }

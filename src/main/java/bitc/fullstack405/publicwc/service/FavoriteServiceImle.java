@@ -23,6 +23,7 @@ public class FavoriteServiceImle implements FavoriteService {
 
     @Autowired
     private FavoriteRepository favoriteRepository;
+    private List<bitc.fullstack405.publicwc.entity.Favorite> Favorite;
 
 
     @Override
@@ -35,6 +36,17 @@ public class FavoriteServiceImle implements FavoriteService {
     @Override
     public List<Favorite> selectFavoriteList(Users user) {
         return favoriteRepository.findByUser(user);
+    }
+
+    @Override
+    public boolean isFavorite(Users user, WcInfo wcInfo) {
+
+        var favorite = favoriteRepository.findByUserAndWcInfo(user, wcInfo);
+        if (favorite != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

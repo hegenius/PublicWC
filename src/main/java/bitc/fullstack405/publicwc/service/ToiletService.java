@@ -12,5 +12,5 @@ public interface ToiletService {
     WcInfo updateWcInfo(int id, WcInfo wcInfo);
     WcInfo findWcInfoById(int id);
     boolean deleteWcInfo(int id);
-    List<WcInfo> parsingWc();
+    List<WcInfo> parsingWc(String juso);
 }

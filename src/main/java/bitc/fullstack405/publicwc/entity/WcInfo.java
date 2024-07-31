@@ -26,8 +26,6 @@ public class WcInfo {
     @ColumnDefault("1")
     private int level; // 화장실 등급
 
-    private String name; // 화장실 이름
-
     @Column(nullable = false)
     private String addr1; // 도로명 주소
 
@@ -63,8 +61,4 @@ public class WcInfo {
     @ToString.Exclude
     private List<Best> wcBestList = new ArrayList<>();
 
-    // No-args constructor is needed for JPA
-    public WcInfo(String title, String content) {
-        // constructor logic
-    }
 }
