@@ -20,4 +20,7 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
 
     @Query("SELECT fa FROM Favorite fa WHERE fa.favoriteUsers = :user AND fa.favoriteWc = :wcInfo")
     Favorite findByUserAndWcInfo(Users user, WcInfo wcInfo);
+
+    @Query("DELETE FROM Favorite fa WHERE fa.favoriteUsers = :userId AND fa.favoriteWc = :wcId")
+    List<Favorite> removeFavorite(String userId, int wcId);
 }

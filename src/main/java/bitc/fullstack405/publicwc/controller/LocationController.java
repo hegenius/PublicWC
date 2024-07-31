@@ -135,6 +135,20 @@ public class LocationController {
         return map;
     }
 
+    @ResponseBody
+    @GetMapping("/getCountList")
+    public Object getCount(@RequestParam("wcIdList") List<Integer> wcIdList) throws Exception {
+
+        List<Map<String, Integer>> likeCountList = bestService.getLikeCountList(wcIdList);
+        List<Map<String, Integer>> hateCountList = bestService.getHateCountList(wcIdList);
+
+        Map<String, List<Map<String, Integer>>> map = new HashMap<>();
+        map.put("likeList", likeCountList);
+        map.put("hateList", hateCountList);
+
+        return map;
+    }
+
     // 즐겨찾기부분
     @ResponseBody
     @PostMapping("/favorites")
