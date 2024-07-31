@@ -1,11 +1,13 @@
 package bitc.fullstack405.publicwc.service;
 
+import bitc.fullstack405.publicwc.entity.Users;
 import bitc.fullstack405.publicwc.entity.WcInfo;
+import bitc.fullstack405.publicwc.repository.UsersRepository;
 import bitc.fullstack405.publicwc.repository.WcInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ToiletServiceImpl implements ToiletService {
@@ -13,19 +15,8 @@ public class ToiletServiceImpl implements ToiletService {
     @Autowired
     private WcInfoRepository wcInfoRepository;
 
-//    @Override
-//    public List<WcInfo> searchToiletsByLevel(int level) {
-//        switch (level) {
-//            case 1:
-//                return wcInfoRepository.findAllByLevel(1);
-//            case 2:
-//                return wcInfoRepository.findAllByLevel(2);
-//            case 3:
-//                return wcInfoRepository.findAllByLevel(3);
-//            default:
-//                return List.of(); // 잘못된 등급일 경우 빈 리스트 반환
-//        }
-//    }
+    @Autowired
+    private UsersRepository usersRepository;
 
     @Override
     public List<WcInfo> getAllToilets() {
@@ -71,6 +62,18 @@ public class ToiletServiceImpl implements ToiletService {
                 return wcInfoRepository.pointWc("내위치");
         }
     }
-}
 
+    @Override
+    public void usePasskey(String userId) {
+        Optional<Users> userOptional = usersRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            Users user = userOptional.get();
+            int currentPasskey = user.getPasskey();
+            if (currentPasskey > 0) {
+                user.setPasskey(currentPasskey - 1);
+                usersRepository.save(user);
+            }
+        }
+    }
+}
 
