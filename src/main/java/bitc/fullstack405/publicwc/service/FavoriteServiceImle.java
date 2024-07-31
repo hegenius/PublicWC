@@ -27,7 +27,8 @@ public class FavoriteServiceImle implements FavoriteService {
 
 
     @Override
-    public void removeFavorite(String userId, int wcId) {
+    public List<Favorite> removeFavorite(String userId, int wcId) {
+        return favoriteRepository.removeFavorite(userId, wcId);
     }
     @Override
     public void updateFavorite(String userId, int wcId) {
