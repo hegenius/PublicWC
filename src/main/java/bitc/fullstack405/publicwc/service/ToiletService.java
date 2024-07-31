@@ -10,4 +10,11 @@ public interface ToiletService {
     WcInfo findWcInfoById(int id);
     boolean deleteWcInfo(int id);
     List<WcInfo> parsingWc(String juso);
+<<<<<<< HEAD
 }
+=======
+    void usePasskey(String userId); // 사용자 passkey 감소 메서드
+
+    Object getToiletsForUser(String userId);
+}
+>>>>>>> chanyun/keyController
