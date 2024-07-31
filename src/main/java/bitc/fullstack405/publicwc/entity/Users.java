@@ -31,9 +31,9 @@ public class Users {
     @ColumnDefault("false")
     private String handicap;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     @ColumnDefault("5")
-    private int passkey;
+    private int passkey = 5;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "favoriteUsers", cascade = CascadeType.ALL)
