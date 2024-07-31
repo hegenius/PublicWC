@@ -12,6 +12,7 @@
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
 <header th:replace="~{/layout/Header :: headerNavbar}"></header>
 
@@ -37,7 +38,13 @@
     <script src="/js/SearchJuso.js"></script>
 
     <div class="mx-auto text-center mt-5">
-      <button type="button" class="mainBtn01"></button>
+      <button type="button" class="mainBtn01" onclick="toDetailPage()"></button>
+      <script>
+        function toDetailPage(){
+          location.href="/location/wcDetail?wcId=1081"
+        }
+      </script>
+
       <p class="text-center mt-4 pointTxt">급할때 누르세요! 급똥버튼</p>
     </div>
   </section>
