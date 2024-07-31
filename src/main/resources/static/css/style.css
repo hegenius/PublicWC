@@ -177,14 +177,12 @@ label {font-weight:bold;}
 
 
 /* 키 */
-.keyStyle:hover {cursor: pointer;}
-
+.keyStyle {border: none!important; background: #fff; width: 40px; font-weight:500;}
+.keyBtn {border: 2px solid #ffca2c; padding:5px; margin-left: 10px;}
 
 
 /* 로그인 login */
     .loginBg {background-color: #fff;  border-radius:20px;}
-
-
 
     /* 회원가입 signUp */
 
