@@ -27,7 +27,27 @@ public class FavoriteServiceImle implements FavoriteService {
 
 
     @Override
-    public void removeFavorite(String userId, int wcId) {
+    public boolean removeFavorite(Users user, WcInfo wcInfo) {
+        var result = favoriteRepository.findByUserAndWcInfo(user, wcInfo);
+
+        // not null 이면 기존 즐겨찾기 정보 있음
+        // 기존 정보 삭제
+        // 컨트롤러로 정보 없을을 전달 (off 이미지)
+        if (result != null) {
+            favoriteRepository.delete(result);
+            return false;
+        }
+        // null 이면 기존 즐겨찾기 정보 없음
+        // 데이터 추가
+        // 컨트롤러로 정보가 있음을 전달 (on 이미지)
+        else {
+            Favorite favorite = new Favorite();
+            favorite.setFavoriteUsers(user);
+            favorite.setFavoriteWc(wcInfo);
+
+            favoriteRepository.save(favorite);
+            return true;
+        }
     }
     @Override
     public void updateFavorite(String userId, int wcId) {

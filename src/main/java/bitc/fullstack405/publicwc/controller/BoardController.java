@@ -63,10 +63,4 @@ public class BoardController {
         }
     }
 
-    @GetMapping("/list")
-    public String boardList(Model model) {
-        // 모든 화장실 정보를 가져와서 모델에 추가
-        model.addAttribute("wcList", toiletService.getAllToilets());
-        return "board/boardList"; // boardList.html을 렌더링
-    }
 }
