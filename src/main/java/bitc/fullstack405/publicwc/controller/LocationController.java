@@ -73,5 +73,4 @@ public class LocationController {
 
         return mv;
     }
-
 }
