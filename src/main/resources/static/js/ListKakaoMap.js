@@ -137,10 +137,11 @@ $(document).ready(function (wcId) {
         var itemStr = `
         <div class="d-flex position-relative">
             <div class="box_img">
-                <span><img id="levelImg" src=${imgScrs[level-1]} alt="레벨아이콘" "></span>
+                <span><img id="levelImg" src=${imgScrs[level - 1]} alt="레벨아이콘" "></span>
             </div>
             <div class="iconWrap">
                 <div class="d-flex icon">
+                <input type="hidden" class="inputWcId" th:value="${wcId}">
                     <p class="me-3">
                         <img src="/images/thumb_up.svg" alt="좋아요 아이콘">
                         <span class="ms-1">10</span>
@@ -176,6 +177,33 @@ $(document).ready(function (wcId) {
         return div;
     }
 
+    // 좋아요, 싫어요 갯수 ajax
+    function loadCounts(wcIdList) {
+        $.ajax({
+            url: "/best/getCountList",
+            type: "GET",
+            data: {wcIdList: wcIdList},
+            dataType: "json",
+            success: function (resData) {
+                if (resData != null) {
+                    var likeList = resData.likeList;
+                    var hateList = resData.hateList;
+
+                    for (var i = 0; i < likeList.length; i++) {
+                        parentTag = $(wcIdTags[i]).parent();
+                        likeTag = parentTag.find("span.like");
+                        hateTag = parentTag.find("span.hate");
+
+                        $(likeTag).text(likeList[i].cnt);
+                        $(hateTag).text(hateList[i].cnt);
+                    }
+                }
+            },
+            error: function (errData) {
+                console.log(errData);
+            }
+        });
+    };
 
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다

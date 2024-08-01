@@ -1,9 +1,6 @@
 var wcIdTags = $(".inputWcId");
 var wcIdList = [];
 
-// const userId = $("#hiddenUserId").val();
-// const wcId = $("#hiddenWcInfo").val();
-
 for (var i = 0; i < wcIdTags.length; i++) {
     var wcId = $(wcIdTags[i]).val();
     wcIdList.push(wcId);
@@ -81,13 +78,6 @@ function clickBest(where) {
                         $(hateTag).text( parseInt($(hateTag).text(), 10) - 1);
                         break;
                 }
-
-
-
-                // if (resData != null) {
-                //     $("#like").text(resData.likeCount);
-                //     $("#hate").text(resData.hateCount);
-                // }
             },
             error: function (errData) {
                 alert("로그인 해주세요.");

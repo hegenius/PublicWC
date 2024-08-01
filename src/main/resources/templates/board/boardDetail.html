@@ -118,6 +118,8 @@
                 let keyValues = confirm("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
                 $('button').prop('disabled', true);
                 if (keyValues == true) {
+
+
                     if ($(".keyStyle").is(":checked")) {
                         $('.keyStyle').prop("type", "password");
                         $('button').prop('disabled', false);

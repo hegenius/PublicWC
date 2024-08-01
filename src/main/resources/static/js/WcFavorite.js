@@ -1,11 +1,9 @@
-
 const onFavoriteImg = "/images/favorites_on.svg";
 const offFavoriteImg = "/images/favorites_off.svg"
 
-
 function loadFavorites() {
     $.ajax({
-        url: "/location/isFavorites",
+        url: "/isFavorites",
         type: "GET",
         data: {userId: userId, wcId: wcId},
         success: function (isFavorite) {
@@ -28,13 +26,13 @@ if (userId != null) {
 $("#favorite-button").on("click", function () {
 
     $.ajax({
-        url: "/location/removeFavorites",
+        url: "/removeFavorites",
         type: "GET",
         data: {userId: userId, wcId: wcId},
         success: function (removeFavorite) {
             if (removeFavorite) {
                 $("#favorite-button").attr("src", "/images/favorites_on.svg");
-                alert("즐찾 추가완")
+                alert("즐겨찾기 추가 되었습니다.")
             } else {
                 $("#favorite-button").attr("src", "/images/favorites_off.svg");
             }
