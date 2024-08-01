@@ -54,8 +54,8 @@
             url: "/users/passkey", // passkey 조회를 위한 엔드포인트
             type: 'GET',
             dataType: "json",
-            success: function (keyValue) {
-              $('#passkey-count').text(keyValue);
+            success: function (response) {
+              $('#passkey-count').text(response.passkey);
             },
             error: function (error) {
               console.error('Error fetching passkey:', error);
@@ -64,8 +64,6 @@
         }
 
         updatePasskeyCount(); // 페이지 로드 시 passkey 값을 업데이트
-
-        $('[data-toggle="popover"]').popover();
 
         $("#btn-logout").on("click", function (e) {
           e.preventDefault(); // 링크의 기본 동작을 막기 위해 추가
@@ -85,5 +83,7 @@
 </header>
 </body>
 </html>
+
+
 
 

@@ -106,32 +106,65 @@
                         <span th:case="1" th:text="${wcInfo.wcpass}"></span>
                         <span th:case="2" th:text="${wcInfo.wcpass}"></span>
                         <span th:case="3">
-                    <input type="password" name="key" id="keyvalue" class="keyStyle" th:value="${wcInfo.wcpass}" disabled>
-                    <button type="button" onclick="showPassKey()" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
+                    <input type="password" name="key" id="keyvalue-${wcInfo.id}" class="keyStyle" th:value="${wcInfo.wcpass}" disabled>
+                    <button type="button" onclick="showPassKey('${wcInfo.id}')" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
                 </span>
                     </div>
                 </div>
                 </p>
             </div>
         </div>
-
         <script>
-            $(".keyBtn").click(function() {
-                let keyValues = confirm ("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
-                $('.keyBtn').prop('disabled', true);
-                if(keyValues == true){
-                    if($(".keyStyle").is(":checked")){
-                        $('.keyStyle').prop("type", "password");
-                        $('button').prop('disabled', false);
-                    }else{
-                        $('.keyStyle').prop("type", "text");
-                    }
-                }else{
+            function setPasskeyCookie() {
+                document.cookie = "passkeyVerified=true; expires=Fri, 02 Aug 2024 12:00:00 GMT; path=/";
+            }
 
+            function getPasskeyCookie() {
+                let name = "passkeyVerified=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let cookieArr = decodedCookie.split(';');
+                for (let i = 0; i < cookieArr.length; i++) {
+                    let cookie = cookieArr[i];
+                    while (cookie.charAt(0) === ' ') {
+                        cookie = cookie.substring(1);
+                    }
+                    if (cookie.indexOf(name) === 0) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            $(document).ready(function () {
+                // 비밀번호 확인 버튼 클릭 이벤트
+                $(".keyBtn").click(function () {
+                    let keyValues = confirm("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
+                    if (keyValues === true) {
+                        $.ajax({
+                            url: "/users/usePasskey",
+                            type: "POST",
+                            success: function (response) {
+                                if (response.passkey !== undefined) {
+                                    $("#passkey-count").text(response.passkey);
+                                    setPasskeyCookie(); // 쿠키 설정
+                                    $(".keyStyle").attr("type", "text"); // 비밀번호를 숫자로 표기
+                                } else {
+                                    alert("키가 부족합니다.");
+                                }
+                            },
+                            error: function (err) {
+                                alert("키 차감 실패.");
+                            }
+                        });
+                    }
+                });
+
+                // 페이지 로드 시 쿠키 검사
+                if (getPasskeyCookie()) {
+                    $(".keyStyle").attr("type", "text"); // 쿠키가 존재하면 비밀번호를 숫자로 표기
                 }
             });
         </script>
-
         <div class="row mt-3">
             <div class="col-sm text-end">
                 <button type="button" class="btn btn-primary" id="btn-list">목록</button>
