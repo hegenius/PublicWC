@@ -95,20 +95,16 @@ public class UserInfoController {
 
     @GetMapping("/passkey")
     @ResponseBody
-    public Integer getPasskey(HttpSession session) {
+    public Map<String, Integer> getPasskey(HttpSession session) {
         Object userId = session.getAttribute("userId");
         if (userId != null) {
             Optional<Users> userOptional = userService.findById(userId.toString());
             if (userOptional.isPresent()) {
                 Users user = userOptional.get();
-                int passkey = user.getPasskey();
-                return passkey;
-            } else {
-                return 0;
+                return Map.of("passkey", user.getPasskey());
             }
-        } else {
-            return 0;
         }
+        return Map.of("passkey", 0);
     }
 
     @PostMapping("/usePasskey")
@@ -116,16 +112,24 @@ public class UserInfoController {
     public ResponseEntity<?> usePasskey(HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         if (userId != null) {
-            toiletService.usePasskey(userId);
             Optional<Users> userOptional = userService.findById(userId);
             if (userOptional.isPresent()) {
                 Users user = userOptional.get();
-                return ResponseEntity.ok().body(Map.of("passkey", user.getPasskey()));
+
+                // 비밀번호 검증 로직을 여기에 추가 (예: user.getPassword().equals(password))
+
+                if (user.getPasskey() > 0) {
+                    user.setPasskey(user.getPasskey() - 1);
+                    userService.saveUser(user);
+                    return ResponseEntity.ok(Map.of("passkey", user.getPasskey()));
+                } else {
+                    return ResponseEntity.status(400).body(Map.of("error", "Insufficient passkeys"));
+                }
             } else {
-                return ResponseEntity.status(404).body("User not found");
+                return ResponseEntity.status(404).body(Map.of("error", "User not found"));
             }
         } else {
-            return ResponseEntity.status(403).body("Not logged in");
+            return ResponseEntity.status(403).body(Map.of("error", "Not logged in"));
         }
     }
 }
