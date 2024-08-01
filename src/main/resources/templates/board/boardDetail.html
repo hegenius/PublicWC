@@ -21,109 +21,18 @@
         var wcId = [[${wcId}]];
     </script>
 
+    <script src="/js/DetailKakaoMap.js" defer></script>
+    <script src="/js/WcBest.js" defer></script>
+    <script src="/js/WcFavorite.js" defer></script>
+
     <script>
         $(document).ready(function () {
-
-            function loadCounts() {
-                $.ajax({
-                    url: "/location/getCount",
-                    type: "GET",
-                    data: {wcId: wcId},
-                    success: function (resData) {
-                        if (resData != null) {
-                            $("#like").text(resData.likeCount);
-                            $("#hate").text(resData.hateCount);
-                        }
-                    },
-                    error: function (errDate) {
-                        alert("로드 실패.");
-                    }
-                });
-            }
-
-            loadCounts();
-
-            $("#like-button, #hate-button").on("click", function () {
-
-                var inputId = (this.id === "like-button" ? "like" : "hate");
-
-                if (userId != null) {
-                    $.ajax({
-                        url: "/location/best",
-                        type: "POST",
-                        data: {userId: userId, wcId: wcId, kind: inputId},
-                        success: function (resData) {
-                            if (resData != null) {
-                                $("#like").text(resData.likeCount);
-                                $("#hate").text(resData.hateCount);
-                            }
-                        },
-                        error: function (errData) {
-                            alert("로그인 해주세요.");
-                        }
-                    });
-                } else {
-                    var answer = confirm("로그인 페이지로 이동하시겠습니까?");
-                    if (answer) {
-                        location.href = "/auth/login";
-                    }
-                }
-            });
-
-            function loadFavorites() {
-                $.ajax({
-                    url: "/location/isFavorites",
-                    type: "GET",
-                    data: {userId: userId, wcId: wcId},
-                    success: function (isFavorite) {
-                        if (isFavorite) {
-                            $("#favorite-button").attr("src", "/images/favorites_on.svg");
-                        } else {
-                            $("#favorite-button").attr("src", "/images/favorites_off.svg");
-                        }
-                    },
-                    error: function (errData) {
-                        console.log(errData);
-                    }
-                });
-            }
-
-            if (userId != null) {
-                loadFavorites();
-            }
-
-            $("#favorite-button").on("click", function () {
-
-                $.ajax({
-                    url: "/location/removeFavorites",
-                    type: "GET",
-                    data: {userId: userId, wcId: wcId},
-                    success: function (removeFavorite) {
-                        if (removeFavorite) {
-                            $("#favorite-button").attr("src", "/images/favorites_on.svg");
-                            alert("즐찾 추가완")
-                        } else {
-                            $("#favorite-button").attr("src", "/images/favorites_off.svg");
-                        }
-                    },
-                    error: function (errData) {
-                        console.log(errData);
-                    }
-                });
-
-            })
-
-
             // 목록 버튼 클릭 이벤트
             $("#btn-list").on("click", function () {
                 window.history.back(); // 이전 페이지로 이동
             });
-
-
-        });
-
+        })
     </script>
-
 </head>
 
 <body>
@@ -140,7 +49,6 @@
     <section class="boardBg p-5 mt-4 shadow">
         <!--  카카오맵 include 시작 -->
 
-
         <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=00e9042c7f04c04f3d386355eeaeb634&libraries=services"></script>
 
@@ -154,7 +62,6 @@
         <input type="hidden" th:value="${wcInfo.longitude}" id="hiddenLongi">
         <input type="hidden" th:value="${wcInfo.detailAddr}" id="hiddenDetail">
 
-        <script src="/js/DetailKakaoMap.js"></script>
         <!--  카카오맵 include 끝 -->
 
         <div class="mt-5">
@@ -162,13 +69,15 @@
             <hr>
             <div class="float-end">
                 <div class="d-flex">
-                    <p class="me-2">
-                        <img src="/images/thumb_up.svg" alt="좋아요 아이콘" id="like-button" style="cursor: pointer">
-                        <span class="ms-1" id="like">0</span>
+                    <input type="hidden" class="inputWcId" th:value="${wcInfo.id}">
+                    <p class="me-2" >
+                        <img src="/images/thumb_up.svg" alt="좋아요 아이콘" onclick="clickBest('like')" style="cursor: pointer">
+                        <span class="ms-1 like">0</span>
                     </p>
-
-                    <p class="me-3"><img src="/images/thumb_down.svg" alt="싫어요 아이콘" id="hate-button"
-                                         style="cursor: pointer"><span class="ms-1" id="hate">0</span></p>
+                    <p class="me-3">
+                        <img src="/images/thumb_down.svg" alt="싫어요 아이콘" onclick="clickBest('hate')" style="cursor: pointer">
+                        <span class="ms-1 hate">0</span>
+                    </p>
                     <p>
                         <img src="/images/favorites_off.svg" id="favorite-button" alt="즐겨찾기 아이콘"
                              style="cursor: pointer"></p>
@@ -176,6 +85,7 @@
                 </div>
             </div>
         </div>
+
         <div class="listBox d-flex">
             <img src="/images/address.svg" alt="주소 아이콘">
             <p>주소 : <span th:text="${wcInfo.addr1}"></span> <span th:text="${wcInfo.detailAddr}"></span></p>
@@ -188,32 +98,35 @@
             <img src="/images/etc.svg" alt="기타 아이콘">
             <p>기타 : <span th:text="${wcInfo.comment}"></span></p>
         </div>
-        <div class="listBox d-flex" >
+        <div class="listBox d-flex">
             <img src="/images/key.svg" alt="비밀번호 아이콘">
             <p>키 :
             <div th:switch="${wcInfo.level}" class="ms-2">
                 <span th:case="1" th:text="${wcInfo.wcpass}"></span>
                 <span th:case="2" th:text="${wcInfo.wcpass}"></span>
                 <span th:case="3">
-                    <input type="password" name="key" id="keyvalue" class="keyStyle" th:value="${wcInfo.wcpass}" disabled></span>
-                    <button type="button" onclick="showPassKey()"  class="keyBtn btn btn-outline-warning btn-sm" >비밀번호 확인</button>
+                    <input type="password" name="key" class="keyStyle" th:value="${wcInfo.wcpass}" disabled></span>
+                <button type="button" onclick="showPassKey()" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인
+                </button>
                 </span>
             </div>
             </p>
         </div>
 
         <script>
-            $(".keyBtn").click(function() {
-                let keyValues = confirm ("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
+            $(".keyBtn").click(function () {
+                let keyValues = confirm("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
                 $('button').prop('disabled', true);
-                if(keyValues == true){
-                    if($(".keyStyle").is(":checked")){
+                if (keyValues == true) {
+
+
+                    if ($(".keyStyle").is(":checked")) {
                         $('.keyStyle').prop("type", "password");
                         $('button').prop('disabled', false);
-                    }else{
+                    } else {
                         $('.keyStyle').prop("type", "text");
                     }
-                }else{
+                } else {
 
                 }
             });

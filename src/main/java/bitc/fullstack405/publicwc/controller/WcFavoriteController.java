@@ -9,6 +9,9 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -39,5 +42,54 @@ public class WcFavoriteController {
             }
         }
         return mv;
+    }
+
+
+    // 즐겨찾기부분
+    @ResponseBody
+    @PostMapping("/favorites")
+    public Object addFavorite(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
+
+        Optional<Users> user = favoriteService.getUserById(userId);
+        Optional<WcInfo> wcInfo = favoriteService.getWcInfoById(wcId);
+
+        Favorite favorite = favoriteService.addFavorite(user.orElse(null), wcInfo.orElse(null));
+
+        return favorite;
+    }
+
+    @ResponseBody
+    @GetMapping("/isFavorites")
+    public boolean isFavorites(@RequestParam("userId") String userId, @RequestParam("wcId") int wcId) {
+        Optional<Users> user = favoriteService.getUserById(userId);
+        Optional<WcInfo> wcInfo = favoriteService.getWcInfoById(wcId);
+
+        if (user.isPresent() && wcInfo.isPresent()) {
+            var isUser = user.get();
+            var isWcInfo = wcInfo.get();
+            return favoriteService.isFavorite(isUser, isWcInfo);
+        } else {
+            return false;
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/removeFavorites")
+    public boolean removeFavorites(@RequestParam("userId") String userId,@RequestParam("wcId") int wcId) {
+        boolean result = false;
+
+        if ((!userId.equals("") && userId != null) && (wcId > 0)) {
+            Optional<Users> user = favoriteService.getUserById(userId);
+            Optional<WcInfo> wcInfo = favoriteService.getWcInfoById(wcId);
+
+            if (user.isPresent() && wcInfo.isPresent()) {
+                var isUser = user.get();
+                var isWcInfo = wcInfo.get();
+
+                result =  favoriteService.removeFavorite(isUser, isWcInfo);
+            }
+        }
+
+        return result;
     }
 }
