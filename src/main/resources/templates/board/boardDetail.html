@@ -93,28 +93,26 @@
             }
 
             $("#favorite-button").on("click", function () {
-                if (userId != null) {
-                    $.ajax({
-                        url: "/location/favorites",
-                        type: "POST",
-                        data: {userId: userId, wcId: wcId},
-                        success: function (favData) {
-                            if (favData != null) {
-                                $("#favorite-button").attr("src", "/images/favorites_on.svg");
-                                alert("즐겨찾기가 추가되었습니다.");
-                            }
-                        },
-                        error: function (errData) {
-                            alert("로그인 해주세요.")
+
+                $.ajax({
+                    url: "/location/removeFavorites",
+                    type: "GET",
+                    data: {userId: userId, wcId: wcId},
+                    success: function (removeFavorite) {
+                        if (removeFavorite) {
+                            $("#favorite-button").attr("src", "/images/favorites_on.svg");
+                            alert("즐찾 추가완")
+                        } else {
+                            $("#favorite-button").attr("src", "/images/favorites_off.svg");
                         }
-                    })
-                } else {
-                    var answer = confirm("로그인 페이지로 이동하시겠습니까?");
-                    if (answer) {
-                        location.href = "/auth/login";
+                    },
+                    error: function (errData) {
+                        console.log(errData);
                     }
-                }
+                });
+
             })
+
 
             // 목록 버튼 클릭 이벤트
             $("#btn-list").on("click", function () {

@@ -94,22 +94,25 @@ public class UserInfoController {
     }
 
     @GetMapping("/passkey")
-    public ResponseEntity<?> getPasskey(HttpSession session) {
-        String userId = (String) session.getAttribute("userId");
+    @ResponseBody
+    public Integer getPasskey(HttpSession session) {
+        Object userId = session.getAttribute("userId");
         if (userId != null) {
-            Optional<Users> userOptional = userService.findById(userId);
+            Optional<Users> userOptional = userService.findById(userId.toString());
             if (userOptional.isPresent()) {
                 Users user = userOptional.get();
-                return ResponseEntity.ok().body(Map.of("passkey", user.getPasskey()));
+                int passkey = user.getPasskey();
+                return passkey;
             } else {
-                return ResponseEntity.status(404).body("User not found");
+                return 0;
             }
         } else {
-            return ResponseEntity.status(403).body("Not logged in");
+            return 0;
         }
     }
 
     @PostMapping("/usePasskey")
+    @ResponseBody
     public ResponseEntity<?> usePasskey(HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         if (userId != null) {

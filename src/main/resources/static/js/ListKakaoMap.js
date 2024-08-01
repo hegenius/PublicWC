@@ -122,31 +122,22 @@ $(document).ready(function (wcId) {
         var wcId = place.id;
         var timeText = place.time;
         var addressText = place.addr1 + place.detailAddr;
-        var keyText = place.wcpass;
         var level = place.level;
+        var keyText = (level === 3) ? "*".repeat(place.wcpass.length) : place.wcpass;
 
-        var div = document.createElement('div');
+        const imgScrs = [
+            "/images/step_icon01.svg",
+            "/images/step_icon02.svg",
+            "/images/step_icon03.svg"
+        ];
+
+        const div = document.createElement('div');
         div.className = 'col-sm-6 mb-5';
-
-        let imgScr = "";
-
-        switch (level) {
-            case 1 :
-                imgScr = '/images/step_icon01.svg';
-                break;
-            case 2 :
-                imgScr = '/images/step_icon02.svg';
-                break;
-            default:
-                imgScr = '/images/step_icon03.svg';
-                keyText = "****"
-                break;
-        }
-
+        
         var itemStr = `
         <div class="d-flex position-relative">
             <div class="box_img">
-                <span><img id="levelImg" src="${imgScr}" alt="레벨아이콘" "></span>
+                <span><img id="levelImg" src=${imgScrs[level-1]} alt="레벨아이콘" "></span>
             </div>
             <div class="iconWrap">
                 <div class="d-flex icon">
@@ -169,10 +160,27 @@ $(document).ready(function (wcId) {
             <img src="/images/address.svg" alt="위치 아이콘">
             <p>주소 : <span>${addressText}</span></p>
         </div>
+        `;
+
+        if (level == 3) {
+        itemStr += `
+        <div class="listBox d-flex">
+            <img src="/images/key.svg" alt="키 아이콘">
+            <p >키 : <input type="password" name="key" id="keyvalue" class="keyStyle"  value="${keyText}"  disabled></p>
+            <button type="button" onclick="showPassKey()" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
+        </div>
+        `;
+
+        } else {
+            itemStr += `
         <div class="listBox d-flex">
             <img src="/images/key.svg" alt="키 아이콘">
             <p>키 : <span>${keyText}</span></p>
         </div>
+        `;
+        }
+
+        itemStr += `
         <div>
         <a href="/location/wcDetail?wcId=${wcId}" class="btn btn-primary mt-2">자세히 보기</a>
     </div>
@@ -182,6 +190,8 @@ $(document).ready(function (wcId) {
 
         return div;
     }
+
+
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
     function addMarker(position, idx, title) {

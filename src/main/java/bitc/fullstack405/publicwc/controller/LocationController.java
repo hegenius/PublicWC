@@ -135,6 +135,20 @@ public class LocationController {
         return map;
     }
 
+    @ResponseBody
+    @GetMapping("/getCountList")
+    public Object getCount(@RequestParam("wcIdList") List<Integer> wcIdList) throws Exception {
+
+        List<Map<String, Integer>> likeCountList = bestService.getLikeCountList(wcIdList);
+        List<Map<String, Integer>> hateCountList = bestService.getHateCountList(wcIdList);
+
+        Map<String, List<Map<String, Integer>>> map = new HashMap<>();
+        map.put("likeList", likeCountList);
+        map.put("hateList", hateCountList);
+
+        return map;
+    }
+
     // 즐겨찾기부분
     @ResponseBody
     @PostMapping("/favorites")
@@ -161,5 +175,25 @@ public class LocationController {
         } else {
             return false;
         }
+    }
+
+    @ResponseBody
+    @GetMapping("/removeFavorites")
+    public boolean removeFavorites(@RequestParam("userId") String userId,@RequestParam("wcId") int wcId) {
+        boolean result = false;
+
+        if ((!userId.equals("") && userId != null) && (wcId > 0)) {
+            Optional<Users> user = favoriteService.getUserById(userId);
+            Optional<WcInfo> wcInfo = favoriteService.getWcInfoById(wcId);
+
+            if (user.isPresent() && wcInfo.isPresent()) {
+                var isUser = user.get();
+                var isWcInfo = wcInfo.get();
+
+                result =  favoriteService.removeFavorite(isUser, isWcInfo);
+            }
+        }
+
+        return result;
     }
 }
