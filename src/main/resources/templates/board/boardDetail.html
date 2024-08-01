@@ -117,9 +117,11 @@
         <script>
             function setPasskeyCookie() {
                 document.cookie = "passkeyVerified=true; expires=Fri, 02 Aug 2024 12:00:00 GMT; path=/";
+                // wcId
             }
 
             function getPasskeyCookie() {
+                // cookie -> wcId , page wcId
                 let name = "passkeyVerified=";
                 let decodedCookie = decodeURIComponent(document.cookie);
                 let cookieArr = decodedCookie.split(';');
