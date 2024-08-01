@@ -17,6 +17,7 @@
           src="//dapi.kakao.com/v2/maps/sdk.js?appkey=00e9042c7f04c04f3d386355eeaeb634&libraries=services"></script>
   <script src="/js/WriteKakaoMap.js"></script>
 
+
   <script>
     $(document).ready(function () {
       // 레벨 선택 시 키 입력 필드 활성화/비활성화
@@ -55,7 +56,16 @@
           }
         });
       });
+
+      $("#submit-button").on("click", function () {
+          var str = $("#contents").val();
+          str = str.replace(/(?:\r\n|\r|\n)/g, "<br />");
+          $("#contents").val(str);
+      });
     });
+
+
+
   </script>
 
 </head>
@@ -90,21 +100,21 @@
         <label for="level" class="form-label">레벨</label>
         <select class="form-select" id="level" name="level">
           <option value="1">level.1 (국가가 관리하는 개방형 공공화장실)</option>
-          <option value="2">level.2 (일반 상가 및 건물 화장실)</option>
-          <option value="3">level.3 (비밀번호 있는 일반 상가 및 건물화장실)</option>
+          <option value="2">level.2 (일반상가 및 건물 화장실)</option>
+          <option value="3">level.3 (비밀번호 있는 일반상가 및 건물 화장실)</option>
         </select>
       </div>
       <div class="col-12">
         <label for="password" class="form-label">키</label>
         <input type="text" class="form-control" id="password" name="wcpass" placeholder="화장실 비밀번호 입력해주세요">
       </div>
-      <div class="col-12">`
+      <div class="col-12">
         <label for="time" class="form-label">개방시간</label>
         <input type="text" class="form-control" id="time" name="time" placeholder="개방시간을 입력해주세요">
       </div>
       <div class="col-12">
         <label for="contents" class="form-label">기타</label>
-        <textarea class="form-control" id="contents" name="comment" placeholder="추가사항 작성해주세요" style="height:100px"></textarea>
+        <textarea class="form-control" id="contents" name="comment" placeholder="추가사항 작성해주세요" style="height:100px; white-space: pre-wrap;"></textarea>
       </div>
       <!-- Hidden fields for latitude, longitude, and createUserId -->
       <input type="hidden" id="latitude" name="latitude">
@@ -122,3 +132,4 @@
 <footer th:replace="~{/layout/Footer :: footer}"></footer>
 </body>
 </html>
+
