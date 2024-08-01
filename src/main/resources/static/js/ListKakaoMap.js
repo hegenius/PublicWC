@@ -131,12 +131,6 @@ $(document).ready(function (wcId) {
             "/images/step_icon03.svg"
         ];
 
-        loadCounts(wcId, function (){
-            
-
-        });
-
-
         const div = document.createElement('div');
         div.className = 'col-sm-6 mb-5';
 
