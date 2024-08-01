@@ -20,13 +20,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/login", "/signup", "/"); // 로그인 및 회원가입 페이지는 제외
     }
 
-    @Configuration
-    public class SecretConfig implements WebMvcConfigurer {
-
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/**")
-                    .addResourceLocations("classpath:/static/", "classpath:/templates/");
-        }
-    }
 }

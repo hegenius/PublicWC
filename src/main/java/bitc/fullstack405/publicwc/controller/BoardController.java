@@ -64,10 +64,4 @@ public class BoardController {
         }
     }
 
-    @GetMapping("/secret")
-    public ModelAndView secret() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("board/secret");
-        return mv;
-    }
 }
