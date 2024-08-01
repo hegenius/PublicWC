@@ -106,8 +106,9 @@
                         <span th:case="1" th:text="${wcInfo.wcpass}"></span>
                         <span th:case="2" th:text="${wcInfo.wcpass}"></span>
                         <span th:case="3">
-                    <input type="password" name="key" id="keyvalue-${wcInfo.id}" class="keyStyle" th:value="${wcInfo.wcpass}" disabled>
-                    <button type="button" onclick="showPassKey('${wcInfo.id}')" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
+                    <input type="password" name="key" id="keyvalue" class="keyStyle" th:if="${siren} == 'off'" th:value="${wcInfo.wcpass}" disabled>
+                        <input type="text" name="key" class="keyStyle" th:if="${siren} == 'on'" th:value="${wcInfo.wcpass}" disabled>
+                    <button type="button" onclick="showPassKey()" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
                 </span>
                     </div>
                 </div>
@@ -197,40 +198,6 @@
 
 </body>
 </html>
-
-<!--$(document).ready(function() {-->
-<!--// const userId = $("user-id"); // Thymeleaf에서 사용자 ID를 가져옴-->
-<!--// const wcId = $("wcId"); // Thymeleaf에서 화장실 ID를 가져옴-->
-
-<!--// 페이지 로드 시 즐겨찾기 상태 확인-->
-<!--$.get(`/users/${userId}/favorites/${wcId}`, function(isFavorite) {-->
-<!--const iconSrc = isFavorite ? '/images/favorites_on.svg' : '/images/favorites_off.svg';-->
-<!--$('#favorite-icon img').attr('src', iconSrc);-->
-<!--$('#favorite-icon').data('favorite', isFavorite);-->
-<!--});-->
-
-<!--// 즐겨찾기 버튼 클릭 이벤트-->
-<!--$('#favorite-icon').click(function() {-->
-<!--const isFavorite = $(this).data('favorite');-->
-<!--const newFavoriteStatus = !isFavorite;-->
-<!--const iconSrc = newFavoriteStatus ? '/images/favorites_on.svg' : '/images/favorites_off.svg';-->
-
-<!--$.ajax({-->
-<!--url: `/users/${userId}/favorites/${wcId}`,-->
-<!--type: 'POST',-->
-<!--success: function(response) {-->
-<!--$('#favorite-icon img').attr('src', iconSrc);-->
-<!--$('#favorite-icon').data('favorite', newFavoriteStatus);-->
-<!--},-->
-<!--error: function(xhr, status, error) {-->
-<!--alert('즐겨찾기 처리에 실패했습니다.'  + xhr.responseText);-->
-<!--}-->
-<!--});-->
-<!--});-->
-<!--});-->
-
-
-
 
 
 

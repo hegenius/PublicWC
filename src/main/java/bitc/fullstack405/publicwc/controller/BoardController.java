@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -63,4 +64,10 @@ public class BoardController {
         }
     }
 
+    @GetMapping("/secret")
+    public ModelAndView secret() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("board/secret");
+        return mv;
+    }
 }

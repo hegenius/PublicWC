@@ -47,13 +47,25 @@ public class LocationController {
     }
 
     @GetMapping("/wcDetail")
-    public ModelAndView wcDetail(@RequestParam("wcId") String wcId, HttpSession session) {
+    public ModelAndView wcDetail(@RequestParam("wcId") String wcId, HttpSession session, @RequestParam(required = false, value = "siren") String siren) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("board/boardDetail");
 
         int wcIntId = Integer.parseInt(wcId);
         WcInfo wcInfo = toiletService.findWcInfoById(wcIntId);
 
+//        if (siren == null) {
+//            siren = "off";
+//        }
+        if ("on".equals(siren)) {
+            mv.addObject("siren", siren);
+        }
+        else if (siren == null) {
+            siren = "off";
+            mv.addObject("siren", siren);
+        }
+
+//        mv.addObject("siren", siren);
         mv.addObject("userId", session.getAttribute("userId"));
         mv.addObject("wcId", wcId);
         mv.addObject("wcInfo", wcInfo);
@@ -61,5 +73,4 @@ public class LocationController {
 
         return mv;
     }
-
 }
