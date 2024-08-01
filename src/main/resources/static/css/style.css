@@ -108,7 +108,10 @@ label {font-weight:bold;}
 
 }
 
-.boardBg {background-color: #fff; border-radius:20px;}
+.boardBg {background-color: #fff; border-radius:20px;  }
+.mainBg {position: relative;}
+.mainBg:after {content:""; display:block; background:url("../images/person.png") no-repeat 60%; width: 130px; height: 170px; background-size: 80%; position: absolute;  bottom:0; right:35px;}
+
 
 .iconWrap {position: absolute; bottom:0; right:0;}
 .iconWrap p {margin-bottom:0;}
@@ -217,7 +220,6 @@ label {font-weight:bold;}
 .icoKey:before {content:""; display: block; clear: both;
     width:32px; height:30px;
     background:url("../images/key.svg") no-repeat; position: absolute; top: 0; left: 0;}
-
 
 
 /* 키 */
@@ -342,6 +344,7 @@ label {font-weight:bold;}
         margin-bottom: 10px;
     }
 
+    .mainBg:after {background:none!important;}
 
     .mainBox {display:block !important;}
     .mainBox01 {width:92%!important; }
