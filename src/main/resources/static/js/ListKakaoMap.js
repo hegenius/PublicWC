@@ -131,6 +131,12 @@ $(document).ready(function (wcId) {
             "/images/step_icon03.svg"
         ];
 
+        loadCounts(wcId, function (){
+            
+
+        });
+
+
         const div = document.createElement('div');
         div.className = 'col-sm-6 mb-5';
 
@@ -178,7 +184,7 @@ $(document).ready(function (wcId) {
     }
 
     // 좋아요, 싫어요 갯수 ajax
-    function loadCounts(wcIdList) {
+    function loadCounts(wcIdList, callBack) {
         $.ajax({
             url: "/best/getCountList",
             type: "GET",
@@ -189,14 +195,15 @@ $(document).ready(function (wcId) {
                     var likeList = resData.likeList;
                     var hateList = resData.hateList;
 
-                    for (var i = 0; i < likeList.length; i++) {
-                        parentTag = $(wcIdTags[i]).parent();
-                        likeTag = parentTag.find("span.like");
-                        hateTag = parentTag.find("span.hate");
-
-                        $(likeTag).text(likeList[i].cnt);
-                        $(hateTag).text(hateList[i].cnt);
-                    }
+                    callBack(likeList[0].cnt, hateList[0].cnt);
+                    // for (var i = 0; i < likeList.length; i++) {
+                    //     parentTag = $(wcIdTags[i]).parent();
+                    //     likeTag = parentTag.find("span.like");
+                    //     hateTag = parentTag.find("span.hate");
+                    //
+                    //     $(likeTag).text(likeList[i].cnt);
+                    //     $(hateTag).text(hateList[i].cnt);
+                    // }
                 }
             },
             error: function (errData) {
