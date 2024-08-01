@@ -116,12 +116,19 @@
         </div>
         <script>
             function setPasskeyCookie() {
-                document.cookie = "passkeyVerified=true; expires=Fri, 02 Aug 2024 12:00:00 GMT; path=/";
-                // wcId
+                // 24시간 후 만료되는 쿠키 설정
+                const expires = new Date();
+                expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000)); // 24시간
+                document.cookie = `passkeyVerified=true; expires=${expires.toUTCString()}; path=/`;
+            }
+
+            function setPasskeyLocalStorage() {
+                const expires = new Date();
+                expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000)); // 24시간
+                localStorage.setItem('passkeyVerified', expires.getTime());
             }
 
             function getPasskeyCookie() {
-                // cookie -> wcId , page wcId
                 let name = "passkeyVerified=";
                 let decodedCookie = decodeURIComponent(document.cookie);
                 let cookieArr = decodedCookie.split(';');
@@ -137,8 +144,15 @@
                 return false;
             }
 
+            function getPasskeyLocalStorage() {
+                const expires = localStorage.getItem('passkeyVerified');
+                if (expires) {
+                    return new Date().getTime() < parseInt(expires, 10);
+                }
+                return false;
+            }
+
             $(document).ready(function () {
-                // 비밀번호 확인 버튼 클릭 이벤트
                 $(".keyBtn").click(function () {
                     let keyValues = confirm("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
                     if (keyValues === true) {
@@ -149,6 +163,7 @@
                                 if (response.passkey !== undefined) {
                                     $("#passkey-count").text(response.passkey);
                                     setPasskeyCookie(); // 쿠키 설정
+                                    setPasskeyLocalStorage(); // 로컬 스토리지 설정
                                     $(".keyStyle").attr("type", "text"); // 비밀번호를 숫자로 표기
                                 } else {
                                     alert("키가 부족합니다.");
@@ -161,9 +176,9 @@
                     }
                 });
 
-                // 페이지 로드 시 쿠키 검사
-                if (getPasskeyCookie()) {
-                    $(".keyStyle").attr("type", "text"); // 쿠키가 존재하면 비밀번호를 숫자로 표기
+                // 페이지 로드 시 쿠키와 로컬 스토리지 검사
+                if (getPasskeyCookie() || getPasskeyLocalStorage()) {
+                    $(".keyStyle").attr("type", "text"); // 쿠키나 로컬 스토리지가 존재하면 비밀번호를 숫자로 표기
                 }
             });
         </script>
