@@ -63,14 +63,4 @@ public class BoardController {
         }
     }
 
-    @GetMapping("/list")
-    public String boardList(HttpSession session, Model model) {
-        String userId = (String) session.getAttribute("userId");
-        if (userId != null) {
-            model.addAttribute("wcList", toiletService.getToiletsForUser(userId));
-        } else {
-            model.addAttribute("wcList", toiletService.getAllToilets()); // 로그인하지 않은 경우 모든 화장실 정보 반환
-        }
-        return "board/boardList"; // boardList.html을 렌더링
-    }
 }

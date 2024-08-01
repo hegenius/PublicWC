@@ -77,9 +77,3 @@ public class ToiletServiceImpl implements ToiletService {
         }
     }
 }
-
-    @Override
-    public Object getToiletsForUser(String userId) {
-        return null;
-    }
-}
