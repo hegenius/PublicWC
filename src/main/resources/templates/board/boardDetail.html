@@ -64,12 +64,10 @@
 
         <!--  카카오맵 include 끝 -->
 
-        <div class="mt-5">
-            <!--      <h3><span th:text="${wcInfo.name}"></span></h3>-->
-            <hr>
-            <div class="float-end">
-                <div class="d-flex">
-                    <input type="hidden" class="inputWcId" th:value="${wcInfo.id}">
+        <!--      <h3><span th:text="${wcInfo.name}"></span></h3>-->
+        <div class="float-end mt-4">
+            <div class="d-flex">
+                <input type="hidden" class="inputWcId" th:value="${wcInfo.id}">
                     <p class="me-2" >
                         <img src="/images/thumb_up.svg" alt="좋아요 아이콘" onclick="clickBest('like')" style="cursor: pointer">
                         <span class="ms-1 like">0</span>
@@ -82,51 +80,53 @@
                         <img src="/images/favorites_off.svg" id="favorite-button" alt="즐겨찾기 아이콘"
                              style="cursor: pointer"></p>
                     <!--          <span><img src="/images/favorites_on.svg" alt="선택된 즐겨찾기 아이콘"></span>-->
-                </div>
+
             </div>
         </div>
 
-        <div class="listBox d-flex">
-            <img src="/images/address.svg" alt="주소 아이콘">
-            <p>주소 : <span th:text="${wcInfo.addr1}"></span> <span th:text="${wcInfo.detailAddr}"></span></p>
-        </div>
-        <div class="listBox d-flex">
-            <img src="/images/time.svg" alt="시간 아이콘">
-            <p>개방시간 : <span th:text="${wcInfo.time}"></span></p>
-        </div>
-        <div class="listBox d-flex">
-            <img src="/images/etc.svg" alt="기타 아이콘">
-            <p>기타 : <span th:text="${wcInfo.comment}"></span></p>
-        </div>
-        <div class="listBox d-flex">
-            <img src="/images/key.svg" alt="비밀번호 아이콘">
-            <p>키 :
-            <div th:switch="${wcInfo.level}" class="ms-2">
-                <span th:case="1" th:text="${wcInfo.wcpass}"></span>
-                <span th:case="2" th:text="${wcInfo.wcpass}"></span>
-                <span th:case="3">
-                    <input type="password" name="key" class="keyStyle" th:value="${wcInfo.wcpass}" disabled></span>
-                <button type="button" onclick="showPassKey()" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인
-                </button>
-                </span>
+        <div class="mt-5 clearBoth">
+            <hr class="mb-4">
+            <div class="listBox">
+                <img src="/images/address.svg" alt="주소 아이콘">
+                <p>주소 : <span th:text="${wcInfo.addr1}"></span> <span th:text="${wcInfo.detailAddr}"></span></p>
             </div>
-            </p>
+            <div class="listBox">
+                <img src="/images/time.svg" alt="시간 아이콘">
+                <p>개방시간 : <span th:text="${wcInfo.time}"></span></p>
+            </div>
+            <div class="listBox">
+                <img src="/images/etc.svg" alt="기타 아이콘">
+                <p>기타 : <span th:text="${wcInfo.comment}"></span></p>
+            </div>
+            <div class="listBox">
+                <img src="/images/key.svg" alt="비밀번호 아이콘">
+                <div class="d-flex">
+                    <p>키 :
+                    <div th:switch="${wcInfo.level}" class="ms-2">
+                        <span th:case="1" th:text="${wcInfo.wcpass}"></span>
+                        <span th:case="2" th:text="${wcInfo.wcpass}"></span>
+                        <span th:case="3">
+                    <input type="password" name="key" id="keyvalue" class="keyStyle" th:value="${wcInfo.wcpass}" disabled>
+                    <button type="button" onclick="showPassKey()" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
+                </span>
+                    </div>
+                </div>
+                </p>
+            </div>
         </div>
 
         <script>
-            $(".keyBtn").click(function () {
-                let keyValues = confirm("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
-                $('button').prop('disabled', true);
-                if (keyValues == true) {
-
-
-                    if ($(".keyStyle").is(":checked")) {
+            $(".keyBtn").click(function() {
+                let keyValues = confirm ("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
+                $('.keyBtn').prop('disabled', true);
+                if(keyValues == true){
+                    if($(".keyStyle").is(":checked")){
                         $('.keyStyle').prop("type", "password");
                         $('button').prop('disabled', false);
-                    } else {
+                    }else{
                         $('.keyStyle').prop("type", "text");
                     }
-                } else {
+                }else{
 
                 }
             });
@@ -140,6 +140,7 @@
     </section>
 </main>
 <!-- 상세페이지 끝 -->
+
 
 
 <footer th:replace="~{/layout/Footer :: footer}"></footer>
