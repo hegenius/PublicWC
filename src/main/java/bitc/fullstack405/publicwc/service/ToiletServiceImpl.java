@@ -2,13 +2,13 @@ package bitc.fullstack405.publicwc.service;
 
 import bitc.fullstack405.publicwc.entity.Users;
 import bitc.fullstack405.publicwc.entity.WcInfo;
+import bitc.fullstack405.publicwc.repository.BestRepository;
 import bitc.fullstack405.publicwc.repository.UsersRepository;
 import bitc.fullstack405.publicwc.repository.WcInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ToiletServiceImpl implements ToiletService {
@@ -18,6 +18,8 @@ public class ToiletServiceImpl implements ToiletService {
 
     @Autowired
     private UsersRepository usersRepository;
+    @Autowired
+    private BestRepository bestRepository;
 
     @Override
     public List<WcInfo> getAllToilets() {
@@ -62,6 +64,25 @@ public class ToiletServiceImpl implements ToiletService {
             default:
                 return wcInfoRepository.pointWc("내위치");
         }
+
+////        화장실 리스트
+//        List<WcInfo> wcInfoList = wcInfoRepository.pointWc("내위치");
+//        wcInfoList.sort((o1, o2) ->  Integer.compare(o1.getId(), o2.getId()));
+//
+//        List<Integer> wcIdList = new ArrayList<>();
+//
+//        for (WcInfo wcInfo : wcInfoList) {
+//            wcIdList.add(wcInfo.getId());
+//        }
+//
+////        추천 리스트
+//        List<Map<String, Integer>> bestList = bestRepository.getLikeCountList(wcIdList);
+////        비추천 리스트 가져오기
+//
+//
+////        반복문
+//
+//        return null;
     }
 
     @Override

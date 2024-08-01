@@ -1,9 +1,13 @@
-$(document).ready(function (wcId) {
+$(document).ready(function () {
 
     var searchInput = $("#address-input");
 
-// 마커를 담을 배열입니다
+    // 마커를 담을 배열입니다
     var markers = [];
+
+    // 목록에 나온 화장실 아이디들을 담은 배열
+    var wcIdList = [];
+    // var wcIdTags = $(".inputWcId");
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
@@ -11,17 +15,16 @@ $(document).ready(function (wcId) {
             level: 3 // 지도의 확대 레벨
         };
 
-
-// 지도를 생성합니다
+    // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
-// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+    // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
     var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
 
-// 키워드로 장소를 검색합니다
+    // 키워드로 장소를 검색합니다
     searchPlaces();
 
-// 키워드 검색을 요청하는 함수입니다
+    // 키워드 검색을 요청하는 함수입니다
     function searchPlaces() {
         var keyword = document.getElementById("address-input").value;
         if (!keyword.replace(/^\s+|\s+$/g, '')) {
@@ -36,7 +39,7 @@ $(document).ready(function (wcId) {
             dataType: "json",
             success: function (response) {
                 var wcInfoList = response.data || response;
-                placesSearchCB(wcInfoList, kakao.maps.services.Status.OK)
+                placesSearchCB(wcInfoList, kakao.maps.services.Status.OK);
             },
             error: function () {
                 console.log("Request failed: " + textStatus);
@@ -46,34 +49,25 @@ $(document).ready(function (wcId) {
                 placesSearchCB(null, kakao.maps.services.Status.ERROR())
             }
         });
-
     }
 
     function placesSearchCB(data, status, pagination) {
-
         if (status === kakao.maps.services.Status.OK) {
-
             displayPlaces(data);
-
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
             alert('검색 결과가 존재하지 않습니다.');
             return;
-
         } else if (status === kakao.maps.services.Status.ERROR) {
-
             alert('검색 결과 중 오류가 발생했습니다.');
             return;
-
         }
     }
 
-// 검색 결과 목록과 마커를 표출하는 함수입니다
+    // 검색 결과 목록과 마커를 표출하는 함수입니다
     function displayPlaces(places) {
-        // var listEl = document.getElementById('placesList'),
         var listEl = document.getElementById('underList'),
             fragment = document.createDocumentFragment(),
-            bounds = new kakao.maps.LatLngBounds()
+            bounds = new kakao.maps.LatLngBounds();
 
         // 검색 결과 목록에 추가된 항목들을 제거합니다
         removeAllChildNods(listEl);
@@ -82,8 +76,6 @@ $(document).ready(function (wcId) {
         removeMarker();
 
         for (var i = 0; i < places.length; i++) {
-
-            // 마커를 생성하고 지도에 표시합니다
             var placePosition = new kakao.maps.LatLng(places[i].latitude, places[i].longitude),
                 marker = addMarker(placePosition, i),
                 itemEl = underListItem(i, places[i]);
@@ -116,6 +108,9 @@ $(document).ready(function (wcId) {
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
+
+        // HTML 생성이 완료된 후 loadCounts 호출
+        loadCounts(wcIdList);
     }
 
     function underListItem(index, place) {
@@ -124,6 +119,8 @@ $(document).ready(function (wcId) {
         var addressText = place.addr1 + place.detailAddr;
         var level = place.level;
         var keyText = (level === 3) ? "*".repeat(place.wcpass.length) : place.wcpass;
+
+        wcIdList.push(wcId);
 
         const imgScrs = [
             "/images/step_icon01.svg",
@@ -137,17 +134,18 @@ $(document).ready(function (wcId) {
         var itemStr = `
         <div class="d-flex position-relative">
             <div class="box_img">
-                <span><img id="levelImg" src=${imgScrs[level - 1]} alt="레벨아이콘" "></span>
+                <span><img id="levelImg" src=${imgScrs[level - 1]} alt="레벨아이콘"></span>
             </div>
             <div class="iconWrap">
                 <div class="d-flex icon">
                 <input type="hidden" class="inputWcId" th:value="${wcId}">
                     <p class="me-3">
                         <img src="/images/thumb_up.svg" alt="좋아요 아이콘">
-                        <span class="ms-1">10</span>
+                        <span class="ms-1 like">10</span>
                     </p>
                     <p>
-                        <img src="/images/thumb_down.svg" alt="싫어요 아이콘"><span class="ms-1">0</span>
+                        <img src="/images/thumb_down.svg" alt="싫어요 아이콘">
+                        <span class="ms-1 hate">0</span>
                     </p>
                 </div>
             </div>
@@ -178,7 +176,7 @@ $(document).ready(function (wcId) {
     }
 
     // 좋아요, 싫어요 갯수 ajax
-    function loadCounts(wcIdList, callBack) {
+    function loadCounts(wcIdList) {
         $.ajax({
             url: "/best/getCountList",
             type: "GET",
@@ -189,15 +187,17 @@ $(document).ready(function (wcId) {
                     var likeList = resData.likeList;
                     var hateList = resData.hateList;
 
-                    callBack(likeList[0].cnt, hateList[0].cnt);
-                    // for (var i = 0; i < likeList.length; i++) {
-                    //     parentTag = $(wcIdTags[i]).parent();
-                    //     likeTag = parentTag.find("span.like");
-                    //     hateTag = parentTag.find("span.hate");
-                    //
-                    //     $(likeTag).text(likeList[i].cnt);
-                    //     $(hateTag).text(hateList[i].cnt);
-                    // }
+                    // HTML 요소가 업데이트되기 전에 모든 wcIdTags를 다시 가져옵니다
+                    var wcIdTags = $(".inputWcId");
+
+                    for (var i = 0; i < likeList.length; i++) {
+                        var parentTag = $(wcIdTags[i]).parent();
+                        var likeTag = parentTag.find("span.like");
+                        var hateTag = parentTag.find("span.hate");
+
+                        $(likeTag).text(likeList[i].cnt);
+                        $(hateTag).text(hateList[i].cnt);
+                    }
                 }
             },
             error: function (errData) {
@@ -206,6 +206,26 @@ $(document).ready(function (wcId) {
         });
     };
 
+    // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+    function addMarker(position, idx, title) {
+        var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png',
+            imageSize = new kakao.maps.Size(39, 40),
+            imgOptions = {
+                spriteSize: new kakao.maps.Size(36, 691),
+                spriteOrigin: new kakao.maps.Point(0, (idx * 46) + 10),
+                offset: new kakao.maps.Point(13, 37)
+            },
+            markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+            marker = new kakao.maps.Marker({
+                position: position,
+                image: markerImage
+            });
+
+        marker.setMap(map);
+        markers.push(marker);
+
+        return marker;
+    }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
     function addMarker(position, idx, title) {
