@@ -103,9 +103,9 @@
                 <span th:case="1" th:text="${wcInfo.wcpass}"></span>
                 <span th:case="2" th:text="${wcInfo.wcpass}"></span>
                 <span th:case="3">
-                <input type="password" name="key" id="keyvalue" class="keyStyle" th:value="${wcInfo.wcpass}" disabled>
-                <button type="button" id="check-password" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
-            </span>
+                    <input type="password" name="key" id="keyvalue-${wcInfo.id}" class="keyStyle" th:value="${wcInfo.wcpass}" disabled>
+                    <button type="button" onclick="showPassKey('${wcInfo.id}')" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
+                </span>
             </div>
             </p>
         </div>
