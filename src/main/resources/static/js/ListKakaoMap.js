@@ -122,31 +122,22 @@ $(document).ready(function (wcId) {
         var wcId = place.id;
         var timeText = place.time;
         var addressText = place.addr1 + place.detailAddr;
-        var keyText = place.wcpass;
-        // var keyText = '';
         var level = place.level;
+        var keyText = (level === 3) ? "*".repeat(place.wcpass.length) : place.wcpass;
 
-        var div = document.createElement('div');
+        const imgScrs = [
+            "/images/step_icon01.svg",
+            "/images/step_icon02.svg",
+            "/images/step_icon03.svg"
+        ];
+
+        const div = document.createElement('div');
         div.className = 'col-sm-6 mb-5';
-
-        let imgScr = "";
-
-        switch (level) {
-            case 1 :
-                imgScr = '/images/step_icon01.svg';
-                break;
-            case 2 :
-                imgScr = '/images/step_icon02.svg';
-                break;
-            case 3 :
-                imgScr = '/images/step_icon03.svg';
-                break;
-        }
-
+        
         var itemStr = `
         <div class="d-flex position-relative">
             <div class="box_img">
-                <span><img id="levelImg" src="${imgScr}" alt="레벨아이콘" "></span>
+                <span><img id="levelImg" src=${imgScrs[level-1]} alt="레벨아이콘" "></span>
             </div>
             <div class="iconWrap">
                 <div class="d-flex icon">
