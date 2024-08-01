@@ -178,8 +178,8 @@ label {font-weight:bold;}
 
 /* 키 */
 .keyStyle {border: none!important; background: #fff; width:60px; font-weight:500;}
-.keyStyle:hover {cursor: url('/images/keyMouse.png'), auto;}
 .keyBtn {border: 2px solid #ffca2c; padding:5px;  margin-top:-10px;}
+.keyBtn:hover {cursor: url('/images/keyMouse.png'), auto;}
 
     /* 로그인 login */
     .loginBg {background-color: #fff; border-radius:20px;}
