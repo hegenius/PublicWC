@@ -140,6 +140,7 @@ $(document).ready(function (wcId) {
                 break;
             case 3 :
                 imgScr = '/images/step_icon03.svg';
+                keyText = '*****'
                 break;
         }
 
@@ -169,28 +170,12 @@ $(document).ready(function (wcId) {
             <img src="/images/address.svg" alt="위치 아이콘">
             <p>주소 : <span>${addressText}</span></p>
         </div>
-        `;
-
-        if (level == 3) {
-        itemStr += `
-        <div class="listBox d-flex">
-            <img src="/images/key.svg" alt="키 아이콘">
-            <p >키 : <input type="password" name="key" id="keyvalue" class="keyStyle"  value="${keyText}"  disabled></p>
-            <button type="button" onclick="showPassKey()" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
-        </div>
-        `;
-
-        } else {
-            itemStr += `
+  
         <div class="listBox d-flex">
             <img src="/images/key.svg" alt="키 아이콘">
             <p>키 : <span>${keyText}</span></p>
         </div>
-        `;
-        }
 
-
-        itemStr += `
         <div>
         <a href="/location/wcDetail?wcId=${wcId}" class="btn btn-primary mt-2">자세히 보기</a>
     </div>

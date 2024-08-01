@@ -123,6 +123,7 @@
 
 
         });
+
     </script>
 
 </head>
@@ -189,13 +190,36 @@
             <img src="/images/etc.svg" alt="기타 아이콘">
             <p>기타 : <span th:text="${wcInfo.comment}"></span></p>
         </div>
-        <div class="listBox d-flex">
+        <div class="listBox d-flex" >
             <img src="/images/key.svg" alt="비밀번호 아이콘">
             <p>키 :
-                <span th:text="${wcInfo.wcpass}" style="cursor: url('/images/keyMouse.png'), auto;">****</span>
-<!--                <span style="cursor: url('/images/keyMouse.png'), auto;">****</span>-->
+            <div th:switch="${wcInfo.level}" class="ms-2">
+                <span th:case="1" th:text="${wcInfo.wcpass}"></span>
+                <span th:case="2" th:text="${wcInfo.wcpass}"></span>
+                <span th:case="3">
+                    <input type="password" name="key" id="keyvalue" class="keyStyle" th:value="${wcInfo.wcpass}" disabled></span>
+                    <button type="button" onclick="showPassKey()" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
+                </span>
+            </div>
             </p>
         </div>
+
+        <script>
+            $(".keyBtn").click(function() {
+
+                let keyValues = confirm ("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
+
+                if(keyValues == true){
+                    if($(".keyStyle").is(":checked")){
+                        $('.keyStyle').prop("type", "password");
+                    }else{
+                        $('.keyStyle').prop("type", "text");
+                    }
+                }else{
+
+                }
+            });
+        </script>
 
         <div class="row mt-3">
             <div class="col-sm text-end">
