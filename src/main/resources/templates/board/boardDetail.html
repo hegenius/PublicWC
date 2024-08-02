@@ -31,6 +31,28 @@
             $("#btn-list").on("click", function () {
                 window.history.back(); // 이전 페이지로 이동
             });
+
+            // 패스워드 클릭 이벤트
+            $(".keyBtn").click(function () {
+                let keyValues = confirm("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
+                if (keyValues === true) {
+                    $.ajax({
+                        url: "/users/usePasskey",
+                        type: "POST",
+                        data: {"wcId": wcId},
+                        dataType: "json",
+                        success: function (response) {
+                            $("#passkey-count").text(response.passkey);
+                            $(".keyStyle").attr("type", "text"); // 비밀번호를 숫자로 표기
+                        },
+                        error: function (xhr, status, error) {
+                            let errorMsg = xhr.responseJSON ? xhr.responseJSON.error : "An unknown error occurred";
+                            alert(xhr.status + ": " + errorMsg);
+                        }
+                    });
+                }
+            });
+
         })
     </script>
 </head>
@@ -68,18 +90,18 @@
         <div class="float-end mt-4">
             <div class="d-flex">
                 <input type="hidden" class="inputWcId" th:value="${wcInfo.id}">
-                    <p class="me-2" >
-                        <img src="/images/thumb_up.svg" alt="좋아요 아이콘" onclick="clickBest('like')" style="cursor: pointer">
-                        <span class="ms-1 like">0</span>
-                    </p>
-                    <p class="me-3">
-                        <img src="/images/thumb_down.svg" alt="싫어요 아이콘" onclick="clickBest('hate')" style="cursor: pointer">
-                        <span class="ms-1 hate">0</span>
-                    </p>
-                    <p>
-                        <img src="/images/favorites_off.svg" id="favorite-button" alt="즐겨찾기 아이콘"
-                             style="cursor: pointer"></p>
-                    <!--          <span><img src="/images/favorites_on.svg" alt="선택된 즐겨찾기 아이콘"></span>-->
+                <p class="me-2">
+                    <img src="/images/thumb_up.svg" alt="좋아요 아이콘" onclick="clickBest('like')" style="cursor: pointer">
+                    <span class="ms-1 like">0</span>
+                </p>
+                <p class="me-3">
+                    <img src="/images/thumb_down.svg" alt="싫어요 아이콘" onclick="clickBest('hate')" style="cursor: pointer">
+                    <span class="ms-1 hate">0</span>
+                </p>
+                <p>
+                    <img src="/images/favorites_off.svg" id="favorite-button" alt="즐겨찾기 아이콘"
+                         style="cursor: pointer"></p>
+                <!--          <span><img src="/images/favorites_on.svg" alt="선택된 즐겨찾기 아이콘"></span>-->
 
             </div>
         </div>
@@ -106,83 +128,20 @@
                         <span th:case="1" th:text="${wcInfo.wcpass}"></span>
                         <span th:case="2" th:text="${wcInfo.wcpass}"></span>
                         <span th:case="3">
-                    <input type="password" name="key" id="keyvalue" class="keyStyle" th:if="${siren} == 'off'" th:value="${wcInfo.wcpass}" disabled>
-                        <input type="text" name="key" class="keyStyle" th:if="${siren} == 'on'" th:value="${wcInfo.wcpass}" disabled>
-                    <button type="button" onclick="showPassKey()" class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
+                    <input th:attr="type=${showPassKey} ? 'text' : 'password'"
+                           name="key"
+                           id="keyvalue"
+                           class="keyStyle"
+                           th:value="${wcInfo.wcpass}"
+                           disabled/>
+                    <button type="button"
+                            class="keyBtn btn btn-outline-warning btn-sm">비밀번호 확인</button>
                 </span>
                     </div>
                 </div>
                 </p>
             </div>
         </div>
-        <script>
-            function setPasskeyCookie() {
-                // 24시간 후 만료되는 쿠키 설정
-                const expires = new Date();
-                expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000)); // 24시간
-                document.cookie = `passkeyVerified=true; expires=${expires.toUTCString()}; path=/`;
-            }
-
-            function setPasskeyLocalStorage() {
-                const expires = new Date();
-                expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000)); // 24시간
-                localStorage.setItem('passkeyVerified', expires.getTime());
-            }
-
-            function getPasskeyCookie() {
-                let name = "passkeyVerified=";
-                let decodedCookie = decodeURIComponent(document.cookie);
-                let cookieArr = decodedCookie.split(';');
-                for (let i = 0; i < cookieArr.length; i++) {
-                    let cookie = cookieArr[i];
-                    while (cookie.charAt(0) === ' ') {
-                        cookie = cookie.substring(1);
-                    }
-                    if (cookie.indexOf(name) === 0) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            function getPasskeyLocalStorage() {
-                const expires = localStorage.getItem('passkeyVerified');
-                if (expires) {
-                    return new Date().getTime() < parseInt(expires, 10);
-                }
-                return false;
-            }
-
-            $(document).ready(function () {
-                $(".keyBtn").click(function () {
-                    let keyValues = confirm("확인 시 키 1개 차감됩니다. 사용하시겠습니까?");
-                    if (keyValues === true) {
-                        $.ajax({
-                            url: "/users/usePasskey",
-                            type: "POST",
-                            success: function (response) {
-                                if (response.passkey !== undefined) {
-                                    $("#passkey-count").text(response.passkey);
-                                    setPasskeyCookie(); // 쿠키 설정
-                                    setPasskeyLocalStorage(); // 로컬 스토리지 설정
-                                    $(".keyStyle").attr("type", "text"); // 비밀번호를 숫자로 표기
-                                } else {
-                                    alert("키가 부족합니다.");
-                                }
-                            },
-                            error: function (err) {
-                                alert("키 차감 실패.");
-                            }
-                        });
-                    }
-                });
-
-                // 페이지 로드 시 쿠키와 로컬 스토리지 검사
-                if (getPasskeyCookie() || getPasskeyLocalStorage()) {
-                    $(".keyStyle").attr("type", "text"); // 쿠키나 로컬 스토리지가 존재하면 비밀번호를 숫자로 표기
-                }
-            });
-        </script>
         <div class="row mt-3">
             <div class="col-sm text-end">
                 <button type="button" class="btn btn-primary" id="btn-list">목록</button>
@@ -191,7 +150,6 @@
     </section>
 </main>
 <!-- 상세페이지 끝 -->
-
 
 
 <footer th:replace="~{/layout/Footer :: footer}"></footer>

@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -108,28 +111,43 @@ public class UserInfoController {
     }
 
     @PostMapping("/usePasskey")
-    @ResponseBody
-    public ResponseEntity<?> usePasskey(HttpSession session) {
+    public ResponseEntity<Map<String, String>> usePasskey(String wcId, HttpSession session) {
+
         String userId = (String) session.getAttribute("userId");
+
+        // 로그인 되어 있는지 확인
         if (userId != null) {
             Optional<Users> userOptional = userService.findById(userId);
+
+            // user 정보 로드 확인
             if (userOptional.isPresent()) {
                 Users user = userOptional.get();
 
-                // 비밀번호 검증 로직을 여기에 추가 (예: user.getPassword().equals(password))
-
+                // pass key 갯수 확인
                 if (user.getPasskey() > 0) {
                     user.setPasskey(user.getPasskey() - 1);
                     userService.saveUser(user);
-                    return ResponseEntity.ok(Map.of("passkey", user.getPasskey()));
+
+                    // 연 화장실 id 저장
+                    Object passedWcIds = session.getAttribute("passedWcIds");
+                            if (passedWcIds != null) {
+                                List<String> passedWcIdList = (List<String>) passedWcIds;
+                                passedWcIdList.add(wcId);
+                                session.setAttribute("passedWcIds", passedWcIdList);
+                            } else {
+                                List<String> passedWcIdList = new ArrayList<>();
+                                passedWcIdList.add(wcId);
+                                session.setAttribute("passedWcIds", passedWcIdList);
+                            }
+                    return ResponseEntity.ok(Map.of("passkey", String.valueOf(user.getPasskey())));
                 } else {
-                    return ResponseEntity.status(400).body(Map.of("error", "Insufficient passkeys"));
+                    return ResponseEntity.status(400).body(Map.of("error", "키가 부족합니다"));
                 }
             } else {
-                return ResponseEntity.status(404).body(Map.of("error", "User not found"));
+                return ResponseEntity.status(404).body(Map.of("error", "회원 정보 오류"));
             }
         } else {
-            return ResponseEntity.status(403).body(Map.of("error", "Not logged in"));
+            return ResponseEntity.status(403).body(Map.of("error", "로그인이 필요합니다."));
         }
     }
 }
