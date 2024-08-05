@@ -36,6 +36,14 @@ public class BoardController {
 
         if (userId != null) {
             wcinfo.setCreateUserId(userId);
+
+            String pass = "";
+            if (wcinfo.getLevel() == 1) {
+                pass = "개방형";
+            } else if (wcinfo.getLevel() == 2) {
+                pass = "눈치형";
+            }
+            wcinfo.setWcpass(pass);
             toiletService.addWcInfo(wcinfo);
 
             // 사용자 정보 업데이트
