@@ -20,7 +20,6 @@ public class JusoService {
     }
 
     public String getAddress(String query) {
-//        String url = "https://dapi.kakao.com/v2/local/search/address.json?query=" + query;
         String url = "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + query;
 
         HttpHeaders headers = new HttpHeaders();

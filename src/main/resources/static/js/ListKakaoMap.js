@@ -27,10 +27,10 @@ $(document).ready(function () {
     // 키워드 검색을 요청하는 함수입니다
     function searchPlaces() {
         var keyword = document.getElementById("address-input").value;
-        if (!keyword.replace(/^\s+|\s+$/g, '')) {
-            alert('키워드를 입력해주세요!');
-            return false;
-        }
+        // if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        //     alert('키워드를 입력해주세요!');
+        //     return false;
+        // }
 
         $.ajax({
             url: "/location/wcInfoList",

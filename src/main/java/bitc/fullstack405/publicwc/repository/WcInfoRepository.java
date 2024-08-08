@@ -30,7 +30,7 @@ public interface WcInfoRepository extends JpaRepository<WcInfo, Integer> {
     List<WcInfo> findAllLevel3();
 
     // 포인트가 '내위치'인 화장실 리스트 조회
-    @Query("SELECT wi FROM WcInfo wi WHERE wi.point = :juso ORDER BY wi.id DESC")
+    @Query(value = "SELECT * FROM wcinfo WHERE point LIKE :juso ORDER BY CAST(SUBSTRING(point, 4) AS UNSIGNED)", nativeQuery = true)
     List<WcInfo> pointWc(String juso);
 
 //    회원이 찜한 즐겨찾기 리스트 조회

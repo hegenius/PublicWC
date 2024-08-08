@@ -62,27 +62,8 @@ public class ToiletServiceImpl implements ToiletService {
             case "부전역":
                 return wcInfoRepository.pointWc("부전역");
             default:
-                return wcInfoRepository.pointWc("내위치");
+                return wcInfoRepository.pointWc("내위치%");
         }
-
-////        화장실 리스트
-//        List<WcInfo> wcInfoList = wcInfoRepository.pointWc("내위치");
-//        wcInfoList.sort((o1, o2) ->  Integer.compare(o1.getId(), o2.getId()));
-//
-//        List<Integer> wcIdList = new ArrayList<>();
-//
-//        for (WcInfo wcInfo : wcInfoList) {
-//            wcIdList.add(wcInfo.getId());
-//        }
-//
-////        추천 리스트
-//        List<Map<String, Integer>> bestList = bestRepository.getLikeCountList(wcIdList);
-////        비추천 리스트 가져오기
-//
-//
-////        반복문
-//
-//        return null;
     }
 
     @Override
